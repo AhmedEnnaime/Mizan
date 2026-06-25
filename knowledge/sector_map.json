@@ -1,0 +1,90 @@
+{
+  "Banking": {
+    "stocks": ["ATW", "BCP", "BOA", "CIH", "CDM", "BMCI"],
+    "sensitive_to": ["Bank Al-Maghrib policy rate", "credit growth", "EUR/MAD rate", "sovereign credit rating", "NPL ratio"],
+    "rate_hike_impact": "negative short-term — cost of funds rises, margins compress on variable-rate loans",
+    "rate_cut_impact": "positive — stimulates credit demand, improves loan affordability",
+    "dirham_weakness_impact": "mixed — pan-African banks (ATW, BOA) lose on currency translation; domestic-only banks neutral",
+    "gdp_growth_impact": "positive — economic expansion drives loan demand and reduces defaults"
+  },
+  "Mining / Fertilizers": {
+    "stocks": ["OCP", "MNG"],
+    "sensitive_to": ["phosphate price", "copper price", "gold price", "cobalt price", "USD/MAD rate", "energy cost"],
+    "commodity_rise_impact": "strongly positive — direct revenue uplift for respective metals",
+    "oil_rise_impact": "negative — energy-intensive operations across all mines",
+    "dirham_weakness_impact": "positive — revenues are USD-denominated exports",
+    "global_recession_impact": "negative — industrial and agricultural commodity demand falls"
+  },
+  "Telecommunications": {
+    "stocks": ["IAM"],
+    "sensitive_to": ["regulatory tariff decisions", "mobile subscriber growth", "ARPU", "dividend policy"],
+    "rate_hike_impact": "low — telecom is defensive with stable cash flows",
+    "gdp_growth_impact": "low — defensive stock, not strongly correlated to economic cycle",
+    "note": "Most defensive sector on the BVC; moves primarily on company-specific news and dividends"
+  },
+  "Cement": {
+    "stocks": ["LHM", "CIMAR"],
+    "sensitive_to": ["construction activity", "government infrastructure spending", "energy cost", "cement price"],
+    "rate_hike_impact": "negative — slows mortgage origination and housing starts",
+    "oil_rise_impact": "negative — kiln fuel costs rise directly",
+    "gdp_growth_impact": "positive — construction closely tracks economic growth",
+    "government_spend_impact": "strongly positive — infrastructure contracts are bulk cement demand"
+  },
+  "Energy / Fuel Distribution": {
+    "stocks": ["TQM"],
+    "sensitive_to": ["crude oil price", "USD/MAD rate", "domestic fuel consumption", "government price caps"],
+    "oil_rise_impact": "mixed — higher pump prices raise revenue but compress margins if caps prevent full pass-through",
+    "dirham_weakness_impact": "negative — imported refined products cost more in MAD"
+  },
+  "Real Estate": {
+    "stocks": ["ADH", "ADI"],
+    "sensitive_to": ["Bank Al-Maghrib rate", "mortgage availability", "government housing programs", "construction material costs"],
+    "rate_hike_impact": "strongly negative — mortgage affordability falls, buyer demand collapses",
+    "rate_cut_impact": "strongly positive — unlocks latent housing demand",
+    "steel_rise_impact": "negative — construction input costs rise"
+  },
+  "Retail / Consumer": {
+    "stocks": ["LBV"],
+    "sensitive_to": ["consumer spending", "food price inflation", "purchasing power"],
+    "inflation_impact": "mixed — boosts headline revenue but squeezes margins on non-food items",
+    "gdp_growth_impact": "positive — higher incomes drive discretionary spending",
+    "dirham_weakness_impact": "negative — imported goods cost more"
+  },
+  "Insurance": {
+    "stocks": ["WAA", "ATL"],
+    "sensitive_to": ["bond yields (investment portfolio)", "premium growth", "claims ratio"],
+    "rate_rise_impact": "positive — higher bond yields boost investment income",
+    "market_crash_impact": "negative — equity portfolio losses",
+    "gdp_growth_impact": "positive — higher incomes drive insurance adoption"
+  },
+  "Ports / Logistics": {
+    "stocks": ["MSA"],
+    "sensitive_to": ["trade volumes", "OCP phosphate export volumes", "Tanger Med competition"],
+    "global_trade_growth_impact": "positive — higher throughput volumes",
+    "dirham_weakness_impact": "positive — some fees are USD/EUR denominated"
+  },
+  "Hospitality": {
+    "stocks": ["RISMA"],
+    "sensitive_to": ["tourist arrivals", "EUR/MAD rate", "oil price (affects European airfares)", "global travel demand"],
+    "eur_mad_rise_impact": "positive — European tourists spend more in MAD terms",
+    "global_recession_impact": "negative — discretionary travel is first cut"
+  },
+  "Fintech / Payments": {
+    "stocks": ["HPS"],
+    "sensitive_to": ["software contract wins", "digital payment adoption", "USD/EUR revenue (international clients)"],
+    "dirham_weakness_impact": "positive — significant international revenues",
+    "note": "Low-liquidity stock; large price moves on thin volume are common"
+  },
+  "Food / Agribusiness": {
+    "stocks": ["CSUMAR"],
+    "sensitive_to": ["global sugar price", "government subsidy policy", "harvest quality"],
+    "sugar_price_rise_impact": "negative — raises input costs if government caps prevent price pass-through"
+  },
+  "Steel": {
+    "stocks": ["SON"],
+    "sensitive_to": ["global steel price", "scrap metal price", "electricity cost", "construction activity"],
+    "steel_price_rise_impact": "positive — direct revenue uplift",
+    "scrap_price_rise_impact": "negative — main raw material input",
+    "electricity_cost_impact": "high — electric arc furnace production"
+  }
+}
