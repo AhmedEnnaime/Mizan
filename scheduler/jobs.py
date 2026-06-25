@@ -5,6 +5,14 @@ from pathlib import Path
 
 import pytz
 
+BREAKING_NEWS_KEYWORDS = [
+    "rate decision", "interest rate", "bank al-maghrib", "bam decision",
+    "earnings", "résultats", "dividende", "dividend",
+    "opa", "takeover", "acquisition", "fusion", "merger",
+    "profit warning", "avertissement", "ammc", "regulatory filing",
+    "sovereign rating", "credit rating", "fitch", "moody", "s&p",
+]
+
 from config import (
     COLLECT_HOUR, COLLECT_MINUTE, BRIEFING_HOUR, BRIEFING_MINUTE,
     ALERT_INTERVAL_MINUTES, MARKET_OPEN_HOUR, MARKET_CLOSE_HOUR, MARKET_CLOSE_MINUTE,
@@ -99,9 +107,36 @@ def run_morning_briefing(dry_run: bool = False) -> None:
 
     logger.info("Running morning briefing")
     context = collect_and_persist()
+    date_str = context["date"]
     analysis = run_morning_analysis(context)
-    html = format_morning_briefing(analysis, context["date"])
-    save_briefing(context["date"], html, context)
+
+    if "error" in analysis:
+        # AI unavailable — send simplified briefing with raw data only (spec requirement)
+        logger.warning("AI analysis unavailable; sending fallback briefing with raw data")
+        raw_bvc = context.get("bvc", {}).get("data", {})
+        raw_json = json.dumps(raw_bvc, indent=2, default=str)[:3000]
+        html = (
+            f"<html><body>"
+            f"<h2>BVC Briefing — {date_str} (AI Unavailable)</h2>"
+            f"<p>AI analysis could not be generated today. Raw market data below.</p>"
+            f"<pre>{raw_json}</pre>"
+            f"</body></html>"
+        )
+        save_briefing(date_str, html, context)
+        if dry_run:
+            print("\n" + "=" * 60)
+            print("FALLBACK BRIEFING (AI unavailable — DRY RUN)")
+            print("=" * 60)
+            print(html[:500])
+        else:
+            try:
+                send_morning_briefing(html)
+            except Exception as exc:
+                logger.error(f"Fallback briefing email delivery failed: {exc}", exc_info=True)
+        return
+
+    html = format_morning_briefing(analysis, date_str)
+    save_briefing(date_str, html, context)
 
     if dry_run:
         print("\n" + "=" * 60)
@@ -222,3 +257,25 @@ def run_alert_check(dry_run: bool = False) -> None:
                     log_alert(name, f"commodity_shock_{abs(change_pct):.1f}pct", html)
                 except Exception as exc:
                     logger.error(f"Commodity shock alert failed for {name}: {exc}")
+
+    # --- Breaking news alerts ---
+    articles = news["data"].get("articles", [])
+    for article in articles[:20]:
+        title = article.get("title", "").lower()
+        summary = article.get("summary", "").lower()
+        text = title + " " + summary
+        if any(kw in text for kw in BREAKING_NEWS_KEYWORDS):
+            logger.info(f"Breaking news detected: {article.get('title', '')!r}")
+            context = {"article": article, "recent_news": articles[:5]}
+            analysis = run_alert_analysis("breaking_news", context)
+            html = format_alert(analysis)
+            if dry_run:
+                print(f"\n[BREAKING NEWS DRY RUN] {article.get('title', '')}")
+                print(html[:500])
+            else:
+                try:
+                    send_alert(html, None, "breaking_news")
+                    log_alert(None, "breaking_news", html)
+                except Exception as exc:
+                    logger.error(f"Breaking news alert delivery failed: {exc}")
+            break  # Only one breaking news alert per cycle

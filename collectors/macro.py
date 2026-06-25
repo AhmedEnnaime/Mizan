@@ -66,8 +66,28 @@ def collect() -> dict:
         usd_mad = rates.get("MAD")
         eur_rate = rates.get("EUR")
         eur_mad = round(usd_mad / eur_rate, 4) if usd_mad and eur_rate else None
-        forex["usd_mad"] = {"price": usd_mad, "change_pct": None}
-        forex["eur_mad"] = {"price": eur_mad, "change_pct": None}
+        # Try to get USD/MAD and EUR/MAD day-over-day change via yfinance
+        try:
+            usd_mad_yf = _fetch_yf("USDMAD=X")
+            if usd_mad_yf.get("price"):
+                forex["usd_mad"] = {
+                    "price": usd_mad or usd_mad_yf["price"],
+                    "change_pct": usd_mad_yf.get("change_pct"),
+                }
+            else:
+                forex["usd_mad"] = {"price": usd_mad, "change_pct": None}
+            eur_mad_yf = _fetch_yf("EURMAD=X")
+            if eur_mad_yf.get("price"):
+                forex["eur_mad"] = {
+                    "price": eur_mad or eur_mad_yf["price"],
+                    "change_pct": eur_mad_yf.get("change_pct"),
+                }
+            else:
+                forex["eur_mad"] = {"price": eur_mad, "change_pct": None}
+        except Exception as yf_exc:
+            logger.warning(f"yfinance MAD change_pct unavailable: {yf_exc}")
+            forex["usd_mad"] = {"price": usd_mad, "change_pct": None}
+            forex["eur_mad"] = {"price": eur_mad, "change_pct": None}
     except Exception as exc:
         logger.error(f"Macro MAD rates: {exc}")
         errors.append(f"MAD rates: {exc}")

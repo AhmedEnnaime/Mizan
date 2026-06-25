@@ -71,10 +71,14 @@ def get_price_history(ticker: str, days: int = 200) -> list[dict]:
     with get_connection() as conn:
         rows = conn.execute("""
             SELECT ticker, date, open, high, low, close, volume
-            FROM prices WHERE ticker = ?
-            ORDER BY date DESC LIMIT ?
+            FROM (
+                SELECT ticker, date, open, high, low, close, volume
+                FROM prices WHERE ticker = ?
+                ORDER BY date DESC LIMIT ?
+            )
+            ORDER BY date ASC
         """, (ticker, days)).fetchall()
-    return [dict(r) for r in reversed(rows)]
+    return [dict(r) for r in rows]
 
 
 def save_briefing(date: str, content: str, raw_data: dict) -> None:
