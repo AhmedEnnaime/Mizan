@@ -1,4 +1,5 @@
 import json
+import re
 import logging
 import anthropic
 
@@ -12,6 +13,16 @@ logger = logging.getLogger(__name__)
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
 
+def _extract_json(text: str) -> dict:
+    text = text.strip()
+    if not text:
+        raise ValueError("Empty response from model")
+    fence = re.search(r"```(?:json)?\s*([\s\S]+?)\s*```", text)
+    if fence:
+        text = fence.group(1)
+    return json.loads(text)
+
+
 def run_morning_analysis(context: dict) -> dict:
     prompt = build_morning_briefing_prompt(context)
     for attempt in range(2):
@@ -22,7 +33,7 @@ def run_morning_analysis(context: dict) -> dict:
                 system=MORNING_BRIEFING_SYSTEM,
                 messages=[{"role": "user", "content": prompt}],
             )
-            return json.loads(message.content[0].text)
+            return _extract_json(message.content[0].text)
         except Exception as exc:
             logger.error(f"Morning analysis attempt {attempt + 1} failed: {exc}", exc_info=True)
     return {"error": "AI analysis unavailable", "raw_context": context}
@@ -34,11 +45,11 @@ def run_alert_analysis(alert_type: str, context: dict) -> dict:
         try:
             message = client.messages.create(
                 model=ALERT_MODEL,
-                max_tokens=1024,
+                max_tokens=2048,
                 system=ALERT_SYSTEM,
                 messages=[{"role": "user", "content": prompt}],
             )
-            return json.loads(message.content[0].text)
+            return _extract_json(message.content[0].text)
         except Exception as exc:
             logger.error(f"Alert analysis attempt {attempt + 1} failed: {exc}", exc_info=True)
     return {"error": "AI analysis unavailable", "context": context}
