@@ -92,15 +92,8 @@ def collect() -> dict:
             logger.error(f"News: failed to fetch {feed_cfg['name']}: {exc}")
             errors.append(f"{feed_cfg['name']}: {exc}")
 
-    try:
-        all_articles.extend(_scrape_ammc())
-    except Exception as exc:
-        logger.error(f"News: AMMC scraper raised unexpectedly: {exc}")
-
-    try:
-        all_articles.extend(_scrape_bam())
-    except Exception as exc:
-        logger.error(f"News: BAM scraper raised unexpectedly: {exc}")
+    all_articles.extend(_scrape_ammc())
+    all_articles.extend(_scrape_bam())
 
     return {
         "success": len(all_articles) > 0,

@@ -45,12 +45,11 @@ def test_scrape_bam_returns_empty_list_on_failure():
 
 def test_collect_still_returns_articles_when_scrapers_fail():
     from collectors.news import collect
-    import feedparser
     mock_feed = MagicMock()
     mock_feed.bozo = False
     mock_feed.entries = [MagicMock(title="Test", summary="Test summary", published="", link="http://example.com")]
     with patch("collectors.news.feedparser.parse", return_value=mock_feed), \
-         patch("collectors.news._scrape_ammc", side_effect=Exception("scrape failed")), \
-         patch("collectors.news._scrape_bam", side_effect=Exception("scrape failed")):
+         patch("collectors.news.requests.get", side_effect=Exception("network error")):
         result = collect()
     assert result["success"] is True
+    assert any(a["source"] != "AMMC" and a["source"] != "Bank Al-Maghrib" for a in result["data"]["articles"])
