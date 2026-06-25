@@ -31,13 +31,12 @@ BRIEFING_HOUR = 8
 BRIEFING_MINUTE = 0
 ALERT_INTERVAL_MINUTES = 30
 
-BVC_URL = "https://www.bvc.ma/bourse/cours.html"
+BVC_API_URL = "https://api.casablanca-bourse.com/fr/api/bourse_data/market_watch"
 
 RSS_FEEDS = [
-    {"name": "Reuters Business", "url": "https://feeds.reuters.com/reuters/businessNews"},
+    {"name": "Google News Maroc", "url": "https://news.google.com/rss/search?q=bourse+maroc&hl=fr&gl=MA&ceid=MA:fr"},
     {"name": "Al Jazeera", "url": "https://www.aljazeera.com/xml/rss/all.xml"},
     {"name": "Medias24", "url": "https://medias24.com/feed"},
-    {"name": "Le Matin", "url": "https://www.lematin.ma/rss/news.xml"},
     {"name": "MAP", "url": "https://www.mapnews.ma/en/rss.xml"},
 ]
 
@@ -49,14 +48,13 @@ COMMODITY_TICKERS = {
     "copper": "HG=F",
     "wheat": "ZW=F",
     "corn": "ZC=F",
-    "phosphate_proxy": "MOS",  # Mosaic Co — largest public phosphate producer; proxy for OCP's commodity
+    "phosphate_proxy": "MOS",
 }
 
 GLOBAL_INDEX_TICKERS = {
     "sp500": "^GSPC",
     "cac40": "^FCHI",
     "msci_em": "EEM",
-    "msci_frontier": "FM",
     "vix": "^VIX",
     "us_10y": "^TNX",
 }

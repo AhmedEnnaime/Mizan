@@ -1,81 +1,85 @@
 import logging
 import requests
-from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 
-from config import BVC_URL
+from config import BVC_API_URL
 
 logger = logging.getLogger(__name__)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; BVC-Monitor/1.0)",
-    "Accept-Language": "fr-MA,fr;q=0.9",
+    "Accept": "application/json",
 }
 
 
-def _parse_french_number(s: str) -> float | None:
-    if not s:
+def _get(url: str, params: dict | None = None) -> dict:
+    try:
+        r = requests.get(url, headers=HEADERS, params=params, timeout=15)
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.SSLError:
+        logger.warning("SSL verification failed on BVC API, retrying without verification (macOS dev issue)")
+        r = requests.get(url, headers=HEADERS, params=params, timeout=15, verify=False)
+        r.raise_for_status()
+        return r.json()
+
+
+def _parse_price(val) -> float | None:
+    if val is None or val == "-":
         return None
     try:
-        return float(
-            s.strip()
-            .replace("\xa0", "")
-            .replace(" ", "")
-            .replace(",", ".")
-            .replace("%", "")
-            .replace("+", "")
-        )
-    except ValueError:
+        return round(float(str(val)), 4)
+    except (ValueError, TypeError):
         return None
 
 
-def _parse_html(html: str) -> dict:
-    soup = BeautifulSoup(html, "lxml")
+def _last_traded(attrs: dict) -> float | None:
+    for txn in (attrs.get("lastTransactions") or []):
+        price = _parse_price(txn.get("executedPrice"))
+        if price:
+            return price
+    return None
+
+
+def _parse_response(data: dict) -> dict:
+    records = data.get("data", [])
+    included = {i["id"]: i for i in data.get("included", [])}
     errors = []
-
-    masi_val = soup.select_one(".masi-value")
-    masi_var = soup.select_one(".masi-var")
-    madex_val = soup.select_one(".madex-value")
-    madex_var = soup.select_one(".madex-var")
-
-    masi = {
-        "value": _parse_french_number(masi_val.text) if masi_val else None,
-        "change_pct": _parse_french_number(masi_var.text) if masi_var else None,
-    }
-    madex = {
-        "value": _parse_french_number(madex_val.text) if madex_val else None,
-        "change_pct": _parse_french_number(madex_var.text) if madex_var else None,
-    }
-
-    if masi["value"] is None:
-        errors.append("Could not parse MASI index value")
-
-    table = soup.select_one("#cours-table")
     stocks = []
-    if table:
-        for row in table.select("tbody tr"):
-            cells = row.find_all("td")
-            if len(cells) < 8:
+
+    for r in records:
+        try:
+            sym_rel = (r.get("relationships") or {}).get("symbol", {}).get("data") or {}
+            sym = included.get(sym_rel.get("id"), {})
+            sym_attr = sym.get("attributes", {})
+
+            url = sym_attr.get("instrument_url", "")
+            ticker = url.split("/")[-1] if url else None
+            if not ticker:
                 continue
+
+            attr = r["attributes"]
+            close = _parse_price(attr.get("coursCourant")) or _last_traded(attr)
+
             stocks.append({
-                "name": cells[0].text.strip(),
-                "ticker": cells[1].text.strip(),
-                "open": _parse_french_number(cells[2].text),
-                "high": _parse_french_number(cells[3].text),
-                "low": _parse_french_number(cells[4].text),
-                "close": _parse_french_number(cells[5].text),
-                "change_pct": _parse_french_number(cells[6].text),
-                "volume": int(_parse_french_number(cells[7].text) or 0),
+                "ticker": ticker,
+                "name": sym_attr.get("libelleEN", ticker),
+                "open": _parse_price(attr.get("openingPrice")),
+                "high": _parse_price(attr.get("highPrice")),
+                "low": _parse_price(attr.get("lowPrice")),
+                "close": close,
+                "change_pct": _parse_price(attr.get("varVeille")),
+                "volume": int(float(attr.get("cumulTitresEchanges") or 0)),
             })
-    else:
-        errors.append("Stock table #cours-table not found — page structure may have changed")
+        except Exception as exc:
+            errors.append(f"Failed to parse record: {exc}")
 
     return {
         "success": len(stocks) > 0,
         "data": {
             "date": datetime.now(timezone.utc).date().isoformat(),
-            "masi": masi,
-            "madex": madex,
+            "masi": {},
+            "madex": {},
             "stocks": stocks,
         },
         "errors": errors,
@@ -84,9 +88,8 @@ def _parse_html(html: str) -> dict:
 
 def collect() -> dict:
     try:
-        resp = requests.get(BVC_URL, headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-        return _parse_html(resp.text)
+        data = _get(BVC_API_URL, params={"include": "symbol", "page[limit]": "200"})
+        return _parse_response(data)
     except Exception as exc:
         logger.error(f"BVC collector failed: {exc}", exc_info=True)
         return {

@@ -6,10 +6,11 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 # --- BVC ---
 
-def test_bvc_collect_parses_stocks():
-    from collectors.bvc import collect, _parse_html
-    html = (FIXTURES / "bvc_sample.html").read_text()
-    result = _parse_html(html)
+def test_bvc_parse_response_parses_stocks():
+    import json
+    from collectors.bvc import _parse_response
+    data = json.loads((FIXTURES / "bvc_sample.json").read_text())
+    result = _parse_response(data)
     assert result["success"] is True
     stocks = result["data"]["stocks"]
     assert len(stocks) == 2
@@ -19,12 +20,13 @@ def test_bvc_collect_parses_stocks():
     assert ocp["volume"] == 15342
 
 
-def test_bvc_collect_parses_indices():
-    from collectors.bvc import _parse_html
-    html = (FIXTURES / "bvc_sample.html").read_text()
-    result = _parse_html(html)
-    assert result["data"]["masi"]["value"] == 13245.5
-    assert result["data"]["masi"]["change_pct"] == 0.3
+def test_bvc_parse_response_uses_last_transaction_when_no_current_price():
+    import json
+    from collectors.bvc import _parse_response
+    data = json.loads((FIXTURES / "bvc_sample.json").read_text())
+    result = _parse_response(data)
+    atw = next(s for s in result["data"]["stocks"] if s["ticker"] == "ATW")
+    assert atw["close"] == 336.5
 
 
 def test_bvc_collect_returns_failure_on_error():

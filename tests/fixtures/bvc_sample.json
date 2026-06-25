@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "type": "market_watch",
+      "id": "aaa-111",
+      "attributes": {
+        "coursCourant": "261.5000000000",
+        "openingPrice": "260.0000000000",
+        "highPrice": "262.0000000000",
+        "lowPrice": "259.5000000000",
+        "varVeille": "0.1900000000",
+        "cumulTitresEchanges": "15342.0000000000",
+        "lastTransactions": []
+      },
+      "relationships": {
+        "symbol": {"data": {"id": "sym-ocp", "type": "instrument"}}
+      }
+    },
+    {
+      "type": "market_watch",
+      "id": "bbb-222",
+      "attributes": {
+        "coursCourant": null,
+        "openingPrice": null,
+        "highPrice": null,
+        "lowPrice": null,
+        "varVeille": "-1.2000000000",
+        "cumulTitresEchanges": null,
+        "lastTransactions": [
+          {"executedPrice": "336.5000000000", "executedSize": "50.0000000000"}
+        ]
+      },
+      "relationships": {
+        "symbol": {"data": {"id": "sym-atw", "type": "instrument"}}
+      }
+    }
+  ],
+  "included": [
+    {
+      "type": "instrument",
+      "id": "sym-ocp",
+      "attributes": {
+        "libelleEN": "OCP GROUP",
+        "instrument_url": "/fr/live-market/instruments/OCP"
+      }
+    },
+    {
+      "type": "instrument",
+      "id": "sym-atw",
+      "attributes": {
+        "libelleEN": "ATTIJARIWAFA BANK",
+        "instrument_url": "/fr/live-market/instruments/ATW"
+      }
+    }
+  ]
+}
