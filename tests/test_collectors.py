@@ -33,3 +33,52 @@ def test_bvc_collect_returns_failure_on_error():
         result = collect()
     assert result["success"] is False
     assert len(result["errors"]) > 0
+
+
+# --- Commodities ---
+
+def test_commodities_collect_returns_all_keys():
+    from collectors.commodities import collect
+    mock_ticker = MagicMock()
+    mock_hist = MagicMock()
+    mock_hist.empty = False
+    mock_hist.__len__ = MagicMock(return_value=2)
+    mock_hist.iloc = MagicMock()
+    mock_hist.iloc.__getitem__ = MagicMock(side_effect=lambda i: MagicMock(**{"__getitem__": lambda self, k: 100.0}))
+
+    import pandas as pd
+    hist_df = pd.DataFrame({"Close": [98.0, 100.0]})
+    mock_ticker.history.return_value = hist_df
+
+    with patch("collectors.commodities.yf.Ticker", return_value=mock_ticker):
+        result = collect()
+
+    assert result["success"] is True
+    assert "gold" in result["data"]
+    assert "brent_crude" in result["data"]
+    assert "phosphate_proxy" in result["data"]
+    assert result["data"]["gold"]["price"] == 100.0
+    assert abs(result["data"]["gold"]["change_pct"] - 2.04) < 0.1
+
+
+def test_commodities_collect_handles_single_ticker_failure():
+    from collectors.commodities import collect
+    import pandas as pd
+
+    good_df = pd.DataFrame({"Close": [98.0, 100.0]})
+    call_count = {"n": 0}
+
+    def side_effect(ticker):
+        m = MagicMock()
+        call_count["n"] += 1
+        if call_count["n"] == 1:
+            m.history.side_effect = Exception("timeout")
+        else:
+            m.history.return_value = good_df
+        return m
+
+    with patch("collectors.commodities.yf.Ticker", side_effect=side_effect):
+        result = collect()
+
+    assert result["success"] is True
+    assert len(result["errors"]) >= 1
