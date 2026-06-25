@@ -66,7 +66,6 @@ def collect() -> dict:
         usd_mad = rates.get("MAD")
         eur_rate = rates.get("EUR")
         eur_mad = round(usd_mad / eur_rate, 4) if usd_mad and eur_rate else None
-        # Try to get USD/MAD and EUR/MAD day-over-day change via yfinance
         try:
             usd_mad_yf = _fetch_yf("USDMAD=X")
             if usd_mad_yf.get("price"):

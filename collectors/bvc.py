@@ -33,7 +33,6 @@ def _parse_html(html: str) -> dict:
     soup = BeautifulSoup(html, "lxml")
     errors = []
 
-    # Parse indices
     masi_val = soup.select_one(".masi-value")
     masi_var = soup.select_one(".masi-var")
     madex_val = soup.select_one(".madex-value")
@@ -51,7 +50,6 @@ def _parse_html(html: str) -> dict:
     if masi["value"] is None:
         errors.append("Could not parse MASI index value")
 
-    # Parse stocks table
     table = soup.select_one("#cours-table")
     stocks = []
     if table:

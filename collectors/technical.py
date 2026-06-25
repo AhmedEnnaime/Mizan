@@ -60,7 +60,6 @@ def _analyze_ticker(ticker: str) -> dict:
         val = series.iloc[idx]
         return round(float(val), 4) if pd.notna(val) else None
 
-    # Resolve bollinger band column names (pandas-ta version differences)
     bbu = bbm = bbl = None
     if bb is not None:
         for col in bb.columns:
@@ -71,7 +70,6 @@ def _analyze_ticker(ticker: str) -> dict:
             elif col.startswith("BBL"):
                 bbl = bb[col]
 
-    # Resolve MACD column names
     macd_val = macd_sig = macd_hist = None
     if macd_df is not None:
         for col in macd_df.columns:

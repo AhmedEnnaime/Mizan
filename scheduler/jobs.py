@@ -54,11 +54,9 @@ def collect_and_persist() -> dict:
                 })
         tickers = [s["ticker"] for s in bvc["data"].get("stocks", []) if s.get("ticker")]
     else:
-        # BVC failed: load yesterday's tickers from DB and reconstruct a minimal stock list
         logger.warning("BVC collect failed — loading yesterday's tickers from DB as fallback")
         yesterday = (datetime.now(MOROCCO_TZ).date() - timedelta(days=1)).isoformat()
         cached_stocks = []
-        # Retrieve known tickers from watchlist as a starting set, then pull their last price
         watchlist = _load_watchlist()
         known_tickers = [w["ticker"] for w in watchlist if w.get("ticker")]
         for ticker in known_tickers:
@@ -111,7 +109,6 @@ def run_morning_briefing(dry_run: bool = False) -> None:
     analysis = run_morning_analysis(context)
 
     if "error" in analysis:
-        # AI unavailable — send simplified briefing with raw data only (spec requirement)
         logger.warning("AI analysis unavailable; sending fallback briefing with raw data")
         raw_bvc = context.get("bvc", {}).get("data", {})
         raw_json = json.dumps(raw_bvc, indent=2, default=str)[:3000]
@@ -145,7 +142,6 @@ def run_morning_briefing(dry_run: bool = False) -> None:
         print(html[:2000])
         print("..." if len(html) > 2000 else "")
     else:
-        # 2-attempt retry for email delivery
         last_exc = None
         for attempt in range(2):
             try:
@@ -192,7 +188,6 @@ def run_alert_check(dry_run: bool = False) -> None:
         logger.warning("BVC data unavailable for alert check")
         return
 
-    # --- Price-move alerts for BVC stocks ---
     for stock in bvc["data"].get("stocks", []):
         ticker = stock.get("ticker")
         change_pct = stock.get("change_pct") or 0.0
@@ -231,7 +226,6 @@ def run_alert_check(dry_run: bool = False) -> None:
                     except Exception as exc:
                         logger.error(f"Watchlist alert failed for {ticker}: {exc}")
 
-    # --- Commodity shock alerts ---
     COMMODITY_SHOCK_NAMES = ("brent_crude", "gold", "phosphate_proxy")
     commodities = collect_commodities()
     for name in COMMODITY_SHOCK_NAMES:
@@ -258,7 +252,6 @@ def run_alert_check(dry_run: bool = False) -> None:
                 except Exception as exc:
                     logger.error(f"Commodity shock alert failed for {name}: {exc}")
 
-    # --- Breaking news alerts ---
     articles = news["data"].get("articles", [])
     for article in articles[:20]:
         title = article.get("title", "").lower()
