@@ -27,6 +27,15 @@ test-coverage:
 dry-run:
 	$(PYTHON) main.py --dry-run
 
+send-briefing:
+	$(PYTHON) -c "from scheduler.jobs import run_morning_briefing; run_morning_briefing(dry_run=False)"
+
+alert-check-dry:
+	$(PYTHON) -c "from scheduler.jobs import run_alert_check; run_alert_check(dry_run=True)"
+
+send-alert-check:
+	$(PYTHON) -c "from scheduler.jobs import run_alert_check; run_alert_check(dry_run=False)"
+
 run:
 	$(PYTHON) main.py
 
@@ -61,6 +70,6 @@ clean:
 	find . -name "*.pyc" | grep -v .venv | xargs rm -f
 	rm -rf .pytest_cache
 
-.PHONY: install test test-coverage dry-run run \
+.PHONY: install test test-coverage dry-run send-briefing alert-check-dry send-alert-check run \
         docker-build docker-up docker-logs docker-down \
         docker-dry-run docker-restart clean
