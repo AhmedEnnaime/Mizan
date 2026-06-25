@@ -1,0 +1,902 @@
+[
+  {
+    "ticker": "OCP",
+    "date": "2026-03-01",
+    "open": 259.58,
+    "high": 259.97,
+    "low": 259.45,
+    "close": 259.71,
+    "volume": 14012
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-02",
+    "open": 259.34,
+    "high": 260.57,
+    "low": 258.93,
+    "close": 259.75,
+    "volume": 8358
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-03",
+    "open": 256.45,
+    "high": 260.71,
+    "low": 255.03,
+    "close": 257.87,
+    "volume": 7848
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-04",
+    "open": 257.34,
+    "high": 257.65,
+    "low": 257.24,
+    "close": 257.44,
+    "volume": 8070
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-05",
+    "open": 257.03,
+    "high": 259.65,
+    "low": 256.16,
+    "close": 257.91,
+    "volume": 5869
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-06",
+    "open": 254.52,
+    "high": 255.86,
+    "low": 254.07,
+    "close": 254.97,
+    "volume": 27981
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-07",
+    "open": 253.46,
+    "high": 253.91,
+    "low": 253.32,
+    "close": 253.61,
+    "volume": 24309
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-08",
+    "open": 251.41,
+    "high": 255.88,
+    "low": 249.92,
+    "close": 252.9,
+    "volume": 29864
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-09",
+    "open": 252.87,
+    "high": 256.14,
+    "low": 251.78,
+    "close": 253.96,
+    "volume": 16149
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-10",
+    "open": 253.21,
+    "high": 254.75,
+    "low": 252.69,
+    "close": 253.72,
+    "volume": 16029
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-11",
+    "open": 254.85,
+    "high": 256.16,
+    "low": 254.41,
+    "close": 255.29,
+    "volume": 16763
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-12",
+    "open": 256.02,
+    "high": 258.52,
+    "low": 255.18,
+    "close": 256.85,
+    "volume": 6423
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-13",
+    "open": 255.61,
+    "high": 258.38,
+    "low": 254.69,
+    "close": 256.54,
+    "volume": 17403
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-14",
+    "open": 257.7,
+    "high": 258.6,
+    "low": 257.41,
+    "close": 258.0,
+    "volume": 25599
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-15",
+    "open": 254.07,
+    "high": 257.1,
+    "low": 253.05,
+    "close": 255.08,
+    "volume": 23918
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-16",
+    "open": 255.08,
+    "high": 255.88,
+    "low": 254.81,
+    "close": 255.35,
+    "volume": 26668
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-17",
+    "open": 254.96,
+    "high": 256.8,
+    "low": 254.35,
+    "close": 255.57,
+    "volume": 7614
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-18",
+    "open": 256.85,
+    "high": 260.42,
+    "low": 255.67,
+    "close": 258.04,
+    "volume": 17455
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-19",
+    "open": 256.49,
+    "high": 259.64,
+    "low": 255.45,
+    "close": 257.54,
+    "volume": 16954
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-20",
+    "open": 257.92,
+    "high": 259.72,
+    "low": 257.32,
+    "close": 258.52,
+    "volume": 26960
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-21",
+    "open": 256.27,
+    "high": 261.52,
+    "low": 254.52,
+    "close": 258.02,
+    "volume": 26234
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-22",
+    "open": 260.12,
+    "high": 261.5,
+    "low": 259.66,
+    "close": 260.58,
+    "volume": 22502
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-23",
+    "open": 259.98,
+    "high": 261.31,
+    "low": 259.54,
+    "close": 260.42,
+    "volume": 17433
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-24",
+    "open": 258.16,
+    "high": 263.24,
+    "low": 256.46,
+    "close": 259.85,
+    "volume": 27549
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-25",
+    "open": 256.61,
+    "high": 257.81,
+    "low": 256.21,
+    "close": 257.01,
+    "volume": 6832
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-26",
+    "open": 256.89,
+    "high": 257.45,
+    "low": 256.7,
+    "close": 257.08,
+    "volume": 15336
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-27",
+    "open": 256.31,
+    "high": 256.8,
+    "low": 256.15,
+    "close": 256.47,
+    "volume": 23585
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-28",
+    "open": 257.26,
+    "high": 258.63,
+    "low": 256.8,
+    "close": 257.71,
+    "volume": 26477
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-01",
+    "open": 253.55,
+    "high": 253.57,
+    "low": 253.54,
+    "close": 253.56,
+    "volume": 26064
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-02",
+    "open": 251.89,
+    "high": 252.34,
+    "low": 251.74,
+    "close": 252.04,
+    "volume": 13081
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-03-03",
+    "open": 251.03,
+    "high": 253.83,
+    "low": 250.1,
+    "close": 251.96,
+    "volume": 29478
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-04",
+    "open": 247.47,
+    "high": 249.9,
+    "low": 246.65,
+    "close": 248.28,
+    "volume": 18087
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-05",
+    "open": 241.86,
+    "high": 247.76,
+    "low": 239.89,
+    "close": 243.82,
+    "volume": 9532
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-06",
+    "open": 242.93,
+    "high": 242.99,
+    "low": 242.91,
+    "close": 242.95,
+    "volume": 6543
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-07",
+    "open": 243.36,
+    "high": 244.35,
+    "low": 243.03,
+    "close": 243.69,
+    "volume": 10242
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-08",
+    "open": 243.48,
+    "high": 245.76,
+    "low": 242.72,
+    "close": 244.24,
+    "volume": 7081
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-09",
+    "open": 241.55,
+    "high": 243.56,
+    "low": 240.89,
+    "close": 242.22,
+    "volume": 20337
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-10",
+    "open": 236.62,
+    "high": 237.71,
+    "low": 236.26,
+    "close": 236.99,
+    "volume": 5376
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-11",
+    "open": 236.23,
+    "high": 237.24,
+    "low": 235.9,
+    "close": 236.57,
+    "volume": 22595
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-12",
+    "open": 235.31,
+    "high": 239.15,
+    "low": 234.02,
+    "close": 236.59,
+    "volume": 16146
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-13",
+    "open": 237.7,
+    "high": 239.25,
+    "low": 237.19,
+    "close": 238.22,
+    "volume": 19867
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-14",
+    "open": 241.4,
+    "high": 241.47,
+    "low": 241.37,
+    "close": 241.42,
+    "volume": 28582
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-15",
+    "open": 240.34,
+    "high": 242.98,
+    "low": 239.46,
+    "close": 241.22,
+    "volume": 10854
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-16",
+    "open": 240.26,
+    "high": 240.31,
+    "low": 240.24,
+    "close": 240.28,
+    "volume": 25489
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-17",
+    "open": 238.4,
+    "high": 241.46,
+    "low": 237.38,
+    "close": 239.42,
+    "volume": 24954
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-18",
+    "open": 239.34,
+    "high": 241.41,
+    "low": 238.65,
+    "close": 240.03,
+    "volume": 10293
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-19",
+    "open": 236.34,
+    "high": 237.3,
+    "low": 236.02,
+    "close": 236.66,
+    "volume": 22378
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-20",
+    "open": 238.52,
+    "high": 240.01,
+    "low": 238.03,
+    "close": 239.02,
+    "volume": 21010
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-21",
+    "open": 243.38,
+    "high": 244.01,
+    "low": 243.17,
+    "close": 243.59,
+    "volume": 15076
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-22",
+    "open": 243.13,
+    "high": 244.8,
+    "low": 242.57,
+    "close": 243.68,
+    "volume": 23591
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-23",
+    "open": 244.38,
+    "high": 244.69,
+    "low": 244.28,
+    "close": 244.48,
+    "volume": 20924
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-24",
+    "open": 244.82,
+    "high": 250.5,
+    "low": 242.92,
+    "close": 246.71,
+    "volume": 22455
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-25",
+    "open": 246.42,
+    "high": 247.6,
+    "low": 246.03,
+    "close": 246.82,
+    "volume": 20574
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-26",
+    "open": 247.8,
+    "high": 248.25,
+    "low": 247.66,
+    "close": 247.95,
+    "volume": 22290
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-27",
+    "open": 248.85,
+    "high": 250.54,
+    "low": 248.28,
+    "close": 249.41,
+    "volume": 11940
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-28",
+    "open": 251.89,
+    "high": 253.52,
+    "low": 251.35,
+    "close": 252.44,
+    "volume": 27605
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-01",
+    "open": 252.34,
+    "high": 254.19,
+    "low": 251.72,
+    "close": 252.96,
+    "volume": 27009
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-02",
+    "open": 251.04,
+    "high": 253.0,
+    "low": 250.39,
+    "close": 251.7,
+    "volume": 21959
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-03",
+    "open": 250.09,
+    "high": 250.6,
+    "low": 249.92,
+    "close": 250.26,
+    "volume": 7098
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-04",
+    "open": 248.0,
+    "high": 250.55,
+    "low": 247.15,
+    "close": 248.85,
+    "volume": 12540
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-05",
+    "open": 248.6,
+    "high": 248.75,
+    "low": 248.56,
+    "close": 248.65,
+    "volume": 28194
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-04-06",
+    "open": 247.27,
+    "high": 248.46,
+    "low": 246.88,
+    "close": 247.67,
+    "volume": 6029
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-07",
+    "open": 247.94,
+    "high": 248.6,
+    "low": 247.71,
+    "close": 248.16,
+    "volume": 12798
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-08",
+    "open": 246.9,
+    "high": 249.45,
+    "low": 246.05,
+    "close": 247.75,
+    "volume": 22669
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-09",
+    "open": 249.61,
+    "high": 253.5,
+    "low": 248.31,
+    "close": 250.9,
+    "volume": 23711
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-10",
+    "open": 249.32,
+    "high": 250.09,
+    "low": 249.06,
+    "close": 249.58,
+    "volume": 20498
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-11",
+    "open": 249.58,
+    "high": 250.95,
+    "low": 249.13,
+    "close": 250.04,
+    "volume": 8176
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-12",
+    "open": 248.44,
+    "high": 250.21,
+    "low": 247.85,
+    "close": 249.03,
+    "volume": 18470
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-13",
+    "open": 245.61,
+    "high": 246.36,
+    "low": 245.36,
+    "close": 245.86,
+    "volume": 27064
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-14",
+    "open": 243.33,
+    "high": 246.0,
+    "low": 242.44,
+    "close": 244.22,
+    "volume": 6986
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-15",
+    "open": 242.34,
+    "high": 243.51,
+    "low": 241.94,
+    "close": 242.73,
+    "volume": 8580
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-16",
+    "open": 242.25,
+    "high": 243.71,
+    "low": 241.77,
+    "close": 242.74,
+    "volume": 19700
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-17",
+    "open": 243.18,
+    "high": 244.29,
+    "low": 242.81,
+    "close": 243.55,
+    "volume": 20159
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-18",
+    "open": 241.86,
+    "high": 246.96,
+    "low": 240.16,
+    "close": 243.56,
+    "volume": 19520
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-19",
+    "open": 243.58,
+    "high": 247.72,
+    "low": 242.2,
+    "close": 244.96,
+    "volume": 8208
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-20",
+    "open": 251.3,
+    "high": 253.97,
+    "low": 250.41,
+    "close": 252.19,
+    "volume": 5483
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-21",
+    "open": 256.34,
+    "high": 257.33,
+    "low": 256.01,
+    "close": 256.67,
+    "volume": 12745
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-22",
+    "open": 257.08,
+    "high": 259.32,
+    "low": 256.33,
+    "close": 257.83,
+    "volume": 12004
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-23",
+    "open": 259.46,
+    "high": 263.11,
+    "low": 258.24,
+    "close": 260.67,
+    "volume": 10394
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-24",
+    "open": 254.96,
+    "high": 259.47,
+    "low": 253.46,
+    "close": 256.46,
+    "volume": 13690
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-25",
+    "open": 259.02,
+    "high": 260.78,
+    "low": 258.43,
+    "close": 259.6,
+    "volume": 14347
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-26",
+    "open": 254.28,
+    "high": 256.91,
+    "low": 253.41,
+    "close": 255.16,
+    "volume": 23211
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-27",
+    "open": 253.21,
+    "high": 255.42,
+    "low": 252.47,
+    "close": 253.94,
+    "volume": 11222
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-28",
+    "open": 250.53,
+    "high": 256.2,
+    "low": 248.64,
+    "close": 252.42,
+    "volume": 23978
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-01",
+    "open": 252.09,
+    "high": 252.89,
+    "low": 251.83,
+    "close": 252.36,
+    "volume": 15276
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-02",
+    "open": 254.49,
+    "high": 255.54,
+    "low": 254.14,
+    "close": 254.84,
+    "volume": 21477
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-03",
+    "open": 256.54,
+    "high": 257.89,
+    "low": 256.09,
+    "close": 256.99,
+    "volume": 6863
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-04",
+    "open": 257.71,
+    "high": 257.93,
+    "low": 257.63,
+    "close": 257.78,
+    "volume": 11089
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-05",
+    "open": 258.35,
+    "high": 258.7,
+    "low": 258.23,
+    "close": 258.46,
+    "volume": 12707
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-06",
+    "open": 253.53,
+    "high": 256.58,
+    "low": 252.51,
+    "close": 254.54,
+    "volume": 23667
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-07",
+    "open": 253.6,
+    "high": 256.62,
+    "low": 252.59,
+    "close": 254.61,
+    "volume": 25295
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-08",
+    "open": 256.61,
+    "high": 258.24,
+    "low": 256.07,
+    "close": 257.15,
+    "volume": 23521
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-05-09",
+    "open": 252.28,
+    "high": 253.03,
+    "low": 252.03,
+    "close": 252.53,
+    "volume": 11693
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-06-10",
+    "open": 251.12,
+    "high": 252.83,
+    "low": 250.55,
+    "close": 251.69,
+    "volume": 13703
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-06-11",
+    "open": 248.64,
+    "high": 250.69,
+    "low": 247.96,
+    "close": 249.32,
+    "volume": 14830
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-06-12",
+    "open": 244.43,
+    "high": 245.8,
+    "low": 243.97,
+    "close": 244.89,
+    "volume": 7377
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-06-13",
+    "open": 247.61,
+    "high": 247.79,
+    "low": 247.55,
+    "close": 247.67,
+    "volume": 23448
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-06-14",
+    "open": 248.44,
+    "high": 248.46,
+    "low": 248.43,
+    "close": 248.45,
+    "volume": 11984
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-06-15",
+    "open": 247.37,
+    "high": 247.41,
+    "low": 247.35,
+    "close": 247.38,
+    "volume": 16436
+  },
+  {
+    "ticker": "OCP",
+    "date": "2026-06-16",
+    "open": 249.35,
+    "high": 252.5,
+    "low": 248.3,
+    "close": 250.4,
+    "volume": 17108
+  }
+]

@@ -146,3 +146,43 @@ def test_news_collect_skips_failed_feeds():
     assert result["success"] is True
     assert len(result["data"]["articles"]) == 2
     assert len(result["errors"]) == 1
+
+
+# --- Technical Analysis ---
+
+def test_technical_collect_computes_rsi_and_macd(test_db, monkeypatch):
+    import storage.db as db_module
+    import json
+    from pathlib import Path
+
+    monkeypatch.setattr(db_module, "DB_PATH", test_db)
+    prices = json.loads((FIXTURES / "prices_sample.json").read_text())
+    for p in prices:
+        db_module.upsert_price(p["ticker"], p["date"],
+            {"open": p["open"], "high": p["high"], "low": p["low"],
+             "close": p["close"], "volume": p["volume"]})
+
+    from collectors.technical import collect
+    result = collect(["OCP"])
+
+    assert result["success"] is True
+    ocp = result["data"]["OCP"]
+    assert ocp["rsi"] is not None
+    assert 0 < ocp["rsi"] < 100
+    assert ocp["macd"]["macd"] is not None
+    assert ocp["sma20"] is not None
+    assert ocp["volume_trend"] in ("increasing", "decreasing", "stable")
+    assert ocp["support"] < ocp["resistance"]
+    assert "0.5" in ocp["fibonacci"]
+
+
+def test_technical_collect_skips_ticker_with_no_history(test_db, monkeypatch):
+    import storage.db as db_module
+    monkeypatch.setattr(db_module, "DB_PATH", test_db)
+
+    from collectors.technical import collect
+    result = collect(["NOTEXIST"])
+
+    assert result["success"] is True
+    assert len(result["errors"]) == 1
+    assert "NOTEXIST" in result["errors"][0]
