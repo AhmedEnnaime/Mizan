@@ -229,3 +229,73 @@ def test_main_is_idempotent(test_db, monkeypatch):
 
     rows = db_module.get_price_history("OCP", days=10)
     assert len(rows) == 2
+
+
+# ---------------------------------------------------------------------------
+# _seed_masi_history — new tests
+# ---------------------------------------------------------------------------
+
+def test_seed_masi_history_calls_insert_masi_daily():
+    """_seed_masi_history() parses MASI records and calls insert_masi_daily for each."""
+    from scripts.seed_history import _seed_masi_history
+
+    masi_response = {
+        "data": [
+            {
+                "attributes": {
+                    "sessionDate": "2026-01-10",
+                    "indexValue": 17900.5,
+                    "changePercent": -0.28,
+                }
+            },
+            {
+                "attributes": {
+                    "sessionDate": "2026-01-11",
+                    "indexValue": 17950.0,
+                    "changePercent": 0.28,
+                }
+            },
+        ]
+    }
+
+    mock_resp = MagicMock()
+    mock_resp.json.return_value = masi_response
+
+    with patch("scripts.seed_history.requests.get", return_value=mock_resp), \
+         patch("scripts.seed_history.insert_masi_daily") as mock_insert:
+        _seed_masi_history(days=365)
+
+    assert mock_insert.call_count == 2
+    mock_insert.assert_any_call("2026-01-10", 17900.5, -0.28)
+    mock_insert.assert_any_call("2026-01-11", 17950.0, 0.28)
+
+
+def test_seed_masi_history_handles_http_error(caplog):
+    """_seed_masi_history() logs an error and does not raise on HTTP failure."""
+    import logging
+    from scripts.seed_history import _seed_masi_history
+
+    with patch("scripts.seed_history.requests.get", side_effect=Exception("connection refused")), \
+         patch("scripts.seed_history.insert_masi_daily") as mock_insert, \
+         caplog.at_level(logging.ERROR, logger="scripts.seed_history"):
+        _seed_masi_history()  # must not raise
+
+    mock_insert.assert_not_called()
+    assert any("MASI history seeding failed" in r.message for r in caplog.records)
+
+
+# ---------------------------------------------------------------------------
+# _get_all_tickers — HTTP error handling test
+# ---------------------------------------------------------------------------
+
+def test_get_all_tickers_returns_empty_list_on_http_error(caplog):
+    """_get_all_tickers() returns [] and logs an error when the API call fails."""
+    import logging
+    from scripts.seed_history import _get_all_tickers
+
+    with patch("scripts.seed_history.requests.get", side_effect=Exception("timeout")), \
+         caplog.at_level(logging.ERROR, logger="scripts.seed_history"):
+        tickers = _get_all_tickers()
+
+    assert tickers == []
+    assert any("Failed to fetch ticker list" in r.message for r in caplog.records)

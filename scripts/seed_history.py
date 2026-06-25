@@ -28,24 +28,28 @@ except ImportError:
 def _get_all_tickers() -> list[str]:
     """Fetch all BVC tickers from the market_watch API."""
     from config import BVC_API_URL
-    r = requests.get(
-        BVC_API_URL,
-        headers=HEADERS,
-        params={"include": "symbol", "page[limit]": "200"},
-        timeout=30,
-    )
-    r.raise_for_status()
-    data = r.json()
-    tickers = []
-    included = {i["id"]: i for i in data.get("included", [])}
-    for record in data.get("data", []):
-        sym_rel = (record.get("relationships") or {}).get("symbol", {}).get("data") or {}
-        sym = included.get(sym_rel.get("id"), {})
-        url = sym.get("attributes", {}).get("instrument_url", "")
-        ticker = url.split("/")[-1] if url else None
-        if ticker:
-            tickers.append(ticker)
-    return tickers
+    try:
+        r = requests.get(
+            BVC_API_URL,
+            headers=HEADERS,
+            params={"include": "symbol", "page[limit]": "200"},
+            timeout=30,
+        )
+        r.raise_for_status()
+        data = r.json()
+        tickers = []
+        included = {i["id"]: i for i in data.get("included", [])}
+        for record in data.get("data", []):
+            sym_rel = (record.get("relationships") or {}).get("symbol", {}).get("data") or {}
+            sym = included.get(sym_rel.get("id"), {})
+            url = sym.get("attributes", {}).get("instrument_url", "")
+            ticker = url.split("/")[-1] if url else None
+            if ticker:
+                tickers.append(ticker)
+        return tickers
+    except Exception as exc:
+        logger.error(f"Failed to fetch ticker list: {exc}")
+        return []
 
 
 def _fetch_ticker_history(ticker: str, from_date: str, to_date: str) -> list[dict]:
@@ -88,6 +92,40 @@ def _fetch_ticker_history(ticker: str, from_date: str, to_date: str) -> list[dic
         return []
 
 
+MASI_HISTORY_URL = "https://api.casablanca-bourse.com/fr/api/bourse_data/historic_data"
+
+
+def _seed_masi_history(days: int = 365) -> None:
+    """Fetch and insert MASI index daily history for the past `days` days."""
+    today = datetime.now(timezone.utc).date()
+    from_date = (today - timedelta(days=days)).isoformat()
+    to_date = today.isoformat()
+    try:
+        r = requests.get(
+            MASI_HISTORY_URL,
+            headers=HEADERS,
+            params={"ticker": "MASI", "from": from_date, "to": to_date},
+            timeout=30,
+        )
+        r.raise_for_status()
+        data = r.json()
+        inserted = 0
+        for record in data.get("data", []):
+            attr = record.get("attributes", {})
+            date = attr.get("sessionDate") or attr.get("date") or attr.get("transactTime", "")[:10]
+            if not date:
+                continue
+            value = attr.get("indexValue") or attr.get("coursCourant") or attr.get("lastPrice")
+            if value is None:
+                continue
+            change_pct = attr.get("changePercent") or attr.get("variationPercent") or attr.get("change_pct")
+            insert_masi_daily(date, float(value), float(change_pct) if change_pct is not None else None)
+            inserted += 1
+        logger.info(f"MASI: inserted {inserted} rows")
+    except Exception as exc:
+        logger.error(f"MASI history seeding failed: {exc}")
+
+
 def main():
     init_db()
     today = datetime.now(timezone.utc).date()
@@ -97,28 +135,33 @@ def main():
     logger.info(f"Seeding BVC price history from {from_date} to {to_date}")
 
     tickers = _get_all_tickers()
-    logger.info(f"Found {len(tickers)} tickers")
+    if not tickers:
+        logger.error("No tickers fetched — aborting price seeding.")
+    else:
+        logger.info(f"Found {len(tickers)} tickers")
 
-    seeded = 0
-    for ticker in tickers:
-        existing = get_price_history(ticker, days=200)
-        if len(existing) >= 100:
-            logger.info(f"  [{ticker}] already has {len(existing)} rows — skipping")
-            continue
+        seeded = 0
+        for ticker in tickers:
+            existing = get_price_history(ticker, days=200)
+            if len(existing) >= 100:
+                logger.info(f"  [{ticker}] already has {len(existing)} rows — skipping")
+                continue
 
-        rows = _fetch_ticker_history(ticker, from_date, to_date)
-        if not rows:
-            logger.warning(f"  [{ticker}] no history returned")
-            continue
+            rows = _fetch_ticker_history(ticker, from_date, to_date)
+            if not rows:
+                logger.warning(f"  [{ticker}] no history returned")
+                continue
 
-        for row in rows:
-            upsert_price(ticker, row["date"], row)
+            for row in rows:
+                upsert_price(ticker, row["date"], row)
 
-        logger.info(f"  [{ticker}] seeded {len(rows)} rows")
-        seeded += 1
+            logger.info(f"  [{ticker}] seeded {len(rows)} rows")
+            seeded += 1
 
-    logger.info(f"Done. Seeded history for {seeded} tickers.")
-    logger.info("MASI history is populated automatically as the daily scheduler runs.")
+        logger.info(f"Done. Seeded history for {seeded} tickers.")
+
+    logger.info("Seeding MASI daily history…")
+    _seed_masi_history()
     logger.info("Run 'make dry-run' to verify technical indicators now compute.")
 
 
