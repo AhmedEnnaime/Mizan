@@ -1,0 +1,14 @@
+services:
+  bvc-agent:
+    build: .
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
