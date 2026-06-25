@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Test News Feed</title>
+    <item>
+      <title>Morocco raises interest rate to 3%</title>
+      <description>Bank Al-Maghrib announced a rate hike amid inflation pressures.</description>
+      <pubDate>Tue, 24 Jun 2026 08:00:00 +0000</pubDate>
+      <link>https://example.com/article1</link>
+    </item>
+    <item>
+      <title>OCP Group signs new export deal</title>
+      <description>Morocco's OCP Group secured a multi-year phosphate contract.</description>
+      <pubDate>Tue, 24 Jun 2026 07:30:00 +0000</pubDate>
+      <link>https://example.com/article2</link>
+    </item>
+  </channel>
+</rss>

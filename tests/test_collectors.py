@@ -121,3 +121,28 @@ def test_macro_collect_survives_exchange_rate_api_failure():
     assert result["success"] is True
     assert "usd_mad" in result["data"]["forex"]
     assert result["data"]["forex"]["usd_mad"]["price"] is None
+
+
+# --- News ---
+
+def test_news_collect_parses_rss_articles():
+    from collectors.news import collect, _fetch_feed
+    fixture_path = FIXTURES / "news_sample.xml"
+    result = _fetch_feed(str(fixture_path), "Test Feed")
+    assert len(result) == 2
+    assert result[0]["title"] == "Morocco raises interest rate to 3%"
+    assert result[0]["source"] == "Test Feed"
+    assert "Bank Al-Maghrib" in result[0]["summary"]
+
+
+def test_news_collect_skips_failed_feeds():
+    from collectors.news import collect
+    feeds = [
+        {"name": "Bad Feed", "url": "https://nonexistent.invalid/rss"},
+        {"name": "Good Feed", "url": str(FIXTURES / "news_sample.xml")},
+    ]
+    with patch("collectors.news.RSS_FEEDS", feeds):
+        result = collect()
+    assert result["success"] is True
+    assert len(result["data"]["articles"]) == 2
+    assert len(result["errors"]) == 1

@@ -20,6 +20,9 @@ build/
 .coverage
 htmlcov/
 *.xml
+!tests/fixtures/*.xml
+!tests/fixtures/*.html
+!tests/fixtures/*.json
 
 # Database — contains personal investment data
 storage/stocks.db
