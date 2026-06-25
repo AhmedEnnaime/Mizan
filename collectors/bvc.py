@@ -1,3 +1,4 @@
+import json
 import logging
 import requests
 from datetime import datetime, timezone
@@ -8,7 +9,7 @@ try:
 except ImportError:
     pass
 
-from config import BVC_API_URL
+from config import BVC_API_URL, BVC_OVERVIEW_URL
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +17,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; BVC-Monitor/1.0)",
     "Accept": "application/json",
 }
+HTML_HEADERS = {**HEADERS, "Accept": "text/html,application/xhtml+xml"}
 
 
 def _get(url: str, params: dict | None = None) -> dict:
@@ -39,6 +41,32 @@ def _last_traded(attrs: dict) -> float | None:
         if price:
             return price
     return None
+
+
+def _fetch_masi() -> dict:
+    try:
+        html = requests.get(BVC_OVERVIEW_URL, headers=HTML_HEADERS, timeout=20).text
+        tag_start = html.find('<script id="__NEXT_DATA__"')
+        tag_end = html.find("</script>", tag_start)
+        build_id = json.loads(html[tag_start:tag_end][html[tag_start:tag_end].find(">") + 1:])["buildId"]
+
+        data_url = f"https://www.casablanca-bourse.com/_next/data/{build_id}/fr/live-market/overview.json"
+        page = requests.get(data_url, headers=HTML_HEADERS, timeout=20).json()
+
+        paragraphs = page.get("pageProps", {}).get("node", {}).get("field_vactory_paragraphs", [])
+        for p in paragraphs:
+            wid = p.get("field_vactory_component", {}).get("widget_id", "")
+            if "overview" in wid:
+                wd = json.loads(p["field_vactory_component"]["widget_data"])
+                records = wd.get("components", [{}])[0].get("collection", {}).get("data", {}).get("data", [])
+                if records:
+                    sorted_records = sorted(records, key=lambda r: r["attributes"]["transactTime"], reverse=True)
+                    latest = _parse_price(sorted_records[0]["attributes"].get("indexValue"))
+                    if latest:
+                        return {"value": latest, "change_pct": None}
+    except Exception as exc:
+        logger.warning(f"MASI fetch failed: {exc}")
+    return {}
 
 
 def _parse_response(data: dict) -> dict:
@@ -89,7 +117,9 @@ def _parse_response(data: dict) -> dict:
 def collect() -> dict:
     try:
         data = _get(BVC_API_URL, params={"include": "symbol", "page[limit]": "200"})
-        return _parse_response(data)
+        result = _parse_response(data)
+        result["data"]["masi"] = _fetch_masi()
+        return result
     except Exception as exc:
         logger.error(f"BVC collector failed: {exc}", exc_info=True)
         return {

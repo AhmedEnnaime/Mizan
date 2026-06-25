@@ -32,6 +32,7 @@ BRIEFING_MINUTE = 0
 ALERT_INTERVAL_MINUTES = 30
 
 BVC_API_URL = "https://api.casablanca-bourse.com/fr/api/bourse_data/market_watch"
+BVC_OVERVIEW_URL = "https://www.casablanca-bourse.com/fr/live-market/overview"
 
 RSS_FEEDS = [
     {"name": "Google News Maroc", "url": "https://news.google.com/rss/search?q=bourse+maroc&hl=fr&gl=MA&ceid=MA:fr"},
