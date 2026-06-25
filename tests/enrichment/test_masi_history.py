@@ -29,6 +29,18 @@ def test_computes_30d_trend_correctly():
     result = mh.enrich(context)
     masi = result["bvc"]["data"]["masi"]
     assert "change_30d_pct" in masi
+    # week52 keys require >= 200 rows; with only 35 rows they must not be injected
+    assert "week52_high" not in masi
+    assert "week52_low" not in masi
+
+
+def test_week52_injected_only_with_200_or_more_rows():
+    # Insert 200 rows to cross the gate threshold
+    for i in range(200):
+        db_module.insert_masi_daily(f"2025-{(i // 30) + 1:02d}-{(i % 30) + 1:02d}", 17000.0 + i * 5, None)
+    context = _make_context(18000.0)
+    result = mh.enrich(context)
+    masi = result["bvc"]["data"]["masi"]
     assert "week52_high" in masi
     assert "week52_low" in masi
     assert masi["week52_high"] >= masi["week52_low"]

@@ -35,11 +35,13 @@ def enrich(context: dict) -> dict:
             trend = "declining"
 
     masi = context["bvc"]["data"]["masi"]
-    masi.update({
+    update = {
         "change_30d_pct": change_30d,
         "change_90d_pct": change_90d,
-        "week52_high": max(values),
-        "week52_low": min(values),
         "trend": trend,
-    })
+    }
+    if len(values) >= 200:
+        update["week52_high"] = max(values)
+        update["week52_low"] = min(values)
+    masi.update(update)
     return context

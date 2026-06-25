@@ -1,6 +1,21 @@
 import json
 
 
+_ENRICHMENT_KEYS = {"sector_map", "past_performance", "reddit_discussions"}
+
+
+def _prune_context_for_dump(context: dict) -> dict:
+    pruned = {k: v for k, v in context.items() if k not in _ENRICHMENT_KEYS}
+    # Also strip per-stock profile keys
+    if "bvc" in pruned and "stocks" in pruned.get("bvc", {}).get("data", {}):
+        stocks = [
+            {k: v for k, v in s.items() if k != "profile"}
+            for s in pruned["bvc"]["data"]["stocks"]
+        ]
+        pruned = {**pruned, "bvc": {**pruned["bvc"], "data": {**pruned["bvc"]["data"], "stocks": stocks}}}
+    return pruned
+
+
 MORNING_BRIEFING_SYSTEM = """You are an AI investment assistant specializing in the Casablanca Stock Exchange (BVC).
 Your user is a beginner investor in Morocco learning as they invest. Explain reasoning in clear, educational terms — never use jargon without defining it.
 You have access to structured company profiles describing each BVC stock's business model, key revenue drivers, and macro sensitivities. Use these when explaining why a macro event (e.g. rising oil, weak dirham) affects a specific company.
@@ -94,7 +109,7 @@ def build_morning_briefing_prompt(context: dict) -> str:
     return f"""Analyze today's BVC market data and produce a morning briefing.
 
 {enrichment_section + chr(10) + chr(10) if enrichment_section else ""}MARKET DATA:
-{json.dumps(context, indent=2, ensure_ascii=False, default=str)}
+{json.dumps(_prune_context_for_dump(context), indent=2, ensure_ascii=False, default=str)}
 
 Return a JSON object with this EXACT structure (no extra fields):
 {{
