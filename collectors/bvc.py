@@ -2,6 +2,12 @@ import logging
 import requests
 from datetime import datetime, timezone
 
+try:
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    pass
+
 from config import BVC_API_URL
 
 logger = logging.getLogger(__name__)
@@ -13,15 +19,9 @@ HEADERS = {
 
 
 def _get(url: str, params: dict | None = None) -> dict:
-    try:
-        r = requests.get(url, headers=HEADERS, params=params, timeout=15)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.SSLError:
-        logger.warning("SSL verification failed on BVC API, retrying without verification (macOS dev issue)")
-        r = requests.get(url, headers=HEADERS, params=params, timeout=15, verify=False)
-        r.raise_for_status()
-        return r.json()
+    r = requests.get(url, headers=HEADERS, params=params, timeout=30)
+    r.raise_for_status()
+    return r.json()
 
 
 def _parse_price(val) -> float | None:
