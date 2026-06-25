@@ -58,7 +58,7 @@ def init_db() -> None:
                 ticker TEXT NOT NULL,
                 pick TEXT NOT NULL,
                 price_at_pick REAL,
-                reasoning TEXT
+                reasoning TEXT NOT NULL
             );
             CREATE TABLE IF NOT EXISTS masi_daily (
                 date TEXT PRIMARY KEY,
