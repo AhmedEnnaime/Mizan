@@ -52,6 +52,13 @@ def collect_and_persist() -> dict:
                     "close": stock.get("close"),
                     "volume": stock.get("volume"),
                 })
+        masi = bvc["data"].get("masi", {})
+        if masi.get("value"):
+            try:
+                from storage.db import insert_masi_daily
+                insert_masi_daily(today, masi["value"], masi.get("change_pct"))
+            except Exception as exc:
+                logger.warning(f"Failed to write MASI daily: {exc}")
         tickers = [s["ticker"] for s in bvc["data"].get("stocks", []) if s.get("ticker")]
     else:
         logger.warning("BVC collect failed — loading yesterday's tickers from DB as fallback")
@@ -102,10 +109,16 @@ def run_morning_briefing(dry_run: bool = False) -> None:
     from agent.formatter import format_morning_briefing
     from delivery.email import send_morning_briefing
     from storage.db import save_briefing
+    from enrichment import enrich
+    from enrichment.outcome_tracker import record_picks
 
     logger.info("Running morning briefing")
     context = collect_and_persist()
     date_str = context["date"]
+    try:
+        context = enrich(context)
+    except Exception as exc:
+        logger.warning(f"Enrichment pipeline failed: {exc}")
     analysis = run_morning_analysis(context)
 
     if "error" in analysis:
@@ -134,6 +147,11 @@ def run_morning_briefing(dry_run: bool = False) -> None:
 
     html = format_morning_briefing(analysis, date_str)
     save_briefing(date_str, html, context)
+
+    try:
+        record_picks(analysis, context)
+    except Exception as exc:
+        logger.warning(f"Failed to record picks: {exc}")
 
     if dry_run:
         print("\n" + "=" * 60)
