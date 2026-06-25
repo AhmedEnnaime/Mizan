@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BVC Morning Briefing — {{ date }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 680px; margin: 0 auto; padding: 20px; color: #222; background: #f5f5f5; }
+    .card { background: white; border-radius: 8px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .header { background: #1a5f3f; color: white; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
+    .header h1 { margin: 0 0 4px; font-size: 22px; }
+    .header p { margin: 0; opacity: .8; font-size: 14px; }
+    .pulse-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .pulse-card { border: 1px solid #e8e8e8; border-radius: 6px; padding: 12px; text-align: center; }
+    .pulse-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .5px; }
+    .pulse-value { font-size: 18px; font-weight: bold; margin: 4px 0; }
+    .pulse-comment { font-size: 11px; color: #555; margin-top: 4px; }
+    .up { color: #1a8c4e; }
+    .down { color: #c0392b; }
+    .section-title { font-size: 16px; font-weight: bold; color: #1a5f3f; border-bottom: 2px solid #1a5f3f; padding-bottom: 6px; margin-bottom: 16px; }
+    .pick { border-left: 4px solid #1a5f3f; padding: 12px 16px; margin-bottom: 12px; background: #f8f9fa; border-radius: 0 6px 6px 0; }
+    .pick-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .pick-name { font-weight: bold; font-size: 15px; }
+    .label { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+    .label-buy { background: #1a8c4e; color: white; }
+    .label-watch { background: #e67e22; color: white; }
+    .label-avoid { background: #c0392b; color: white; }
+    .strategy { font-style: italic; color: #444; margin-bottom: 6px; font-size: 14px; }
+    .explanation { font-size: 14px; color: #333; }
+    .week-list { padding-left: 20px; }
+    .week-list li { margin-bottom: 6px; font-size: 14px; }
+    .footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>BVC Morning Briefing</h1>
+    <p>{{ date }}</p>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Market Pulse</div>
+    <div class="pulse-grid">
+      {% for key, item in market_pulse.items() %}
+      <div class="pulse-card">
+        <div class="pulse-label">{{ key | replace("_", " ") }}</div>
+        <div class="pulse-value">{{ item.value if item.value is not none else "N/A" }}</div>
+        {% if item.change_pct is not none %}
+        <div class="{{ 'up' if item.change_pct >= 0 else 'down' }}">
+          {{ '+' if item.change_pct >= 0 else '' }}{{ item.change_pct }}%
+        </div>
+        {% endif %}
+        <div class="pulse-comment">{{ item.comment }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">What's Happening</div>
+    <p>{{ whats_happening }}</p>
+  </div>
+
+  <div class="card">
+    <div class="section-title">AI Picks</div>
+    {% for pick in ai_picks %}
+    <div class="pick">
+      <div class="pick-header">
+        <span class="pick-name">{{ pick.name }} ({{ pick.ticker }})</span>
+        <span class="label label-{{ pick.label | lower }}">{{ pick.label }}</span>
+      </div>
+      <div class="strategy">{{ pick.strategy }}</div>
+      <div class="explanation">{{ pick.explanation }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <div class="section-title">This Week</div>
+    <ul class="week-list">
+      {% for event in this_week %}
+      <li>{{ event }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="footer">
+    Mizan BVC AI Assistant &mdash; for educational purposes only, not financial advice
+  </div>
+</body>
+</html>
