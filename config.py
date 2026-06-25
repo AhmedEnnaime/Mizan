@@ -45,9 +45,13 @@ BVC_OVERVIEW_URL = "https://www.casablanca-bourse.com/fr/live-market/overview"
 
 RSS_FEEDS = [
     {"name": "Google News Maroc", "url": "https://news.google.com/rss/search?q=bourse+maroc&hl=fr&gl=MA&ceid=MA:fr"},
+    {"name": "Google News OCP", "url": "https://news.google.com/rss/search?q=OCP+Maroc&hl=fr&gl=MA&ceid=MA:fr"},
     {"name": "Al Jazeera", "url": "https://www.aljazeera.com/xml/rss/all.xml"},
     {"name": "Medias24", "url": "https://medias24.com/feed"},
     {"name": "MAP", "url": "https://www.mapnews.ma/en/rss.xml"},
+    {"name": "L'Économiste", "url": "https://www.leconomiste.com/rss.xml"},
+    {"name": "TelQuel", "url": "https://telquel.ma/feed"},
+    {"name": "Hespress Économie", "url": "https://fr.hespress.com/category/economie/feed"},
 ]
 
 COMMODITY_TICKERS = {

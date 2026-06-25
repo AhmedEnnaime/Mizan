@@ -1,5 +1,7 @@
 import logging
+import requests
 import feedparser
+from bs4 import BeautifulSoup
 
 from config import RSS_FEEDS
 
@@ -24,6 +26,60 @@ def _fetch_feed(url: str, name: str) -> list[dict]:
     return articles
 
 
+def _scrape_ammc() -> list[dict]:
+    try:
+        url = "https://www.ammc.ma/fr/actualites/communiques-de-presse"
+        resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "lxml")
+        articles = []
+        for item in soup.select(".views-row")[:5]:
+            title_el = item.select_one("h3 a, h2 a, a")
+            date_el = item.select_one(".date, time, .field-date, span")
+            if not title_el:
+                continue
+            href = title_el.get("href", "")
+            link = ("https://www.ammc.ma" + href) if href.startswith("/") else href
+            articles.append({
+                "title": title_el.get_text(strip=True),
+                "summary": "",
+                "published": date_el.get_text(strip=True) if date_el else "",
+                "link": link,
+                "source": "AMMC",
+            })
+        return articles
+    except Exception as exc:
+        logger.warning(f"AMMC scraper failed: {exc}")
+        return []
+
+
+def _scrape_bam() -> list[dict]:
+    try:
+        url = "https://www.bkam.ma/Politique-monetaire/Decisions-du-conseil/Communiques"
+        resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "lxml")
+        articles = []
+        for item in (soup.select(".views-row") or soup.select("article"))[:5]:
+            title_el = item.select_one("h3 a, h2 a, a")
+            date_el = item.select_one(".date, time, .field-date, span")
+            if not title_el:
+                continue
+            href = title_el.get("href", "")
+            link = ("https://www.bkam.ma" + href) if href.startswith("/") else href
+            articles.append({
+                "title": title_el.get_text(strip=True),
+                "summary": "",
+                "published": date_el.get_text(strip=True) if date_el else "",
+                "link": link,
+                "source": "Bank Al-Maghrib",
+            })
+        return articles
+    except Exception as exc:
+        logger.warning(f"Bank Al-Maghrib scraper failed: {exc}")
+        return []
+
+
 def collect() -> dict:
     all_articles = []
     errors = []
@@ -36,8 +92,18 @@ def collect() -> dict:
             logger.error(f"News: failed to fetch {feed_cfg['name']}: {exc}")
             errors.append(f"{feed_cfg['name']}: {exc}")
 
+    try:
+        all_articles.extend(_scrape_ammc())
+    except Exception as exc:
+        logger.error(f"News: AMMC scraper raised unexpectedly: {exc}")
+
+    try:
+        all_articles.extend(_scrape_bam())
+    except Exception as exc:
+        logger.error(f"News: BAM scraper raised unexpectedly: {exc}")
+
     return {
-        "success": len(all_articles) > 0 or len(RSS_FEEDS) == 0,
+        "success": len(all_articles) > 0,
         "data": {"articles": all_articles},
         "errors": errors,
     }
