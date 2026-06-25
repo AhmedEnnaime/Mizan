@@ -65,6 +65,9 @@ docker-restart:
 #  Cleanup
 # ──────────────────────────────────────────────
 
+seed-history:
+	$(PYTHON) scripts/seed_history.py
+
 clean:
 	find . -type d -name __pycache__ | grep -v .venv | xargs rm -rf
 	find . -name "*.pyc" | grep -v .venv | xargs rm -f
@@ -72,4 +75,4 @@ clean:
 
 .PHONY: install test test-coverage dry-run send-briefing alert-check-dry send-alert-check run \
         docker-build docker-up docker-logs docker-down \
-        docker-dry-run docker-restart clean
+        docker-dry-run docker-restart seed-history clean
