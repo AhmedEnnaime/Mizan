@@ -87,3 +87,97 @@ def test_run_alert_analysis_returns_parsed_dict():
         result = run_alert_analysis("price_move", {"stock": {"ticker": "OCP"}})
     assert result["ticker"] == "OCP"
     assert result["alert_type"] == "price_move"
+
+
+def test_prompt_includes_company_profiles_when_present():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {
+            "data": {
+                "stocks": [
+                    {
+                        "ticker": "OCP",
+                        "close": 261.5,
+                        "profile": {
+                            "sector": "Mining / Fertilizers",
+                            "description": "Phosphate exporter.",
+                            "key_drivers": ["phosphate price"],
+                            "macro_sensitivity": {"dirham_weakness": "positive"}
+                        }
+                    }
+                ],
+                "masi": {"value": 17984.0}
+            }
+        }
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "COMPANY PROFILES" in prompt
+    assert "OCP" in prompt
+    assert "Phosphate exporter" in prompt
+
+
+def test_prompt_includes_sector_map_when_present():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {"data": {"stocks": [], "masi": {}}},
+        "sector_map": {"Banking": {"rate_hike_impact": "negative"}}
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "SECTOR MAP" in prompt
+    assert "Banking" in prompt
+
+
+def test_prompt_skips_past_performance_when_null():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {"data": {"stocks": [], "masi": {}}},
+        "past_performance": None
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "PAST PERFORMANCE" not in prompt
+
+
+def test_prompt_includes_past_performance_when_present():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {"data": {"stocks": [], "masi": {}}},
+        "past_performance": {
+            "window_days": 30,
+            "picks": [{"ticker": "OCP", "pick": "BUY", "change_pct": 3.2, "outcome": "correct"}],
+            "accuracy_summary": "BUY: 1 correct / 0 incorrect. AVOID: 0 correct / 0 incorrect."
+        }
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "PAST PERFORMANCE" in prompt
+    assert "BUY: 1 correct" in prompt
+
+
+def test_prompt_skips_reddit_when_empty():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {"data": {"stocks": [], "masi": {}}},
+        "reddit_discussions": []
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "REDDIT SENTIMENT" not in prompt
+
+
+def test_prompt_includes_reddit_when_present():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {"data": {"stocks": [], "masi": {}}},
+        "reddit_discussions": [
+            {
+                "subreddit": "Maroc",
+                "title": "OCP résultats positifs",
+                "score": 142,
+                "url": "https://reddit.com/test",
+                "top_comments": [
+                    {"text": "Bonne nouvelle", "score": 45, "notable_replies": []}
+                ]
+            }
+        ]
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "REDDIT SENTIMENT" in prompt
+    assert "OCP résultats positifs" in prompt
