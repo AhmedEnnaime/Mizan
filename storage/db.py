@@ -2,7 +2,7 @@ import sqlite3
 import json
 import logging
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from config import DB_PATH
 
@@ -51,6 +51,19 @@ def init_db() -> None:
                 trigger_reason TEXT NOT NULL,
                 content TEXT NOT NULL,
                 sent_at TEXT NOT NULL
+            );
+            CREATE TABLE IF NOT EXISTS ai_picks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                date TEXT NOT NULL,
+                ticker TEXT NOT NULL,
+                pick TEXT NOT NULL,
+                price_at_pick REAL,
+                reasoning TEXT
+            );
+            CREATE TABLE IF NOT EXISTS masi_daily (
+                date TEXT PRIMARY KEY,
+                value REAL NOT NULL,
+                change_pct REAL
             );
         """)
 
@@ -103,3 +116,38 @@ def log_alert(ticker: str | None, trigger_reason: str, content: str) -> None:
             INSERT INTO alerts (ticker, trigger_reason, content, sent_at)
             VALUES (?, ?, ?, ?)
         """, (ticker, trigger_reason, content, datetime.now(timezone.utc).isoformat()))
+
+
+def insert_masi_daily(date: str, value: float, change_pct: float | None = None) -> None:
+    with get_connection() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO masi_daily (date, value, change_pct) VALUES (?, ?, ?)",
+            (date, value, change_pct),
+        )
+
+
+def get_masi_history(days: int = 252) -> list[dict]:
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT date, value, change_pct FROM masi_daily ORDER BY date DESC LIMIT ?",
+            (days,),
+        ).fetchall()
+    return [dict(r) for r in reversed(rows)]
+
+
+def insert_ai_pick(date: str, ticker: str, pick: str, price_at_pick: float | None, reasoning: str) -> None:
+    with get_connection() as conn:
+        conn.execute(
+            "INSERT INTO ai_picks (date, ticker, pick, price_at_pick, reasoning) VALUES (?, ?, ?, ?, ?)",
+            (date, ticker, pick, price_at_pick, reasoning),
+        )
+
+
+def get_recent_ai_picks(days: int = 30) -> list[dict]:
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).date().isoformat()
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT date, ticker, pick, price_at_pick, reasoning FROM ai_picks WHERE date >= ? ORDER BY date DESC",
+            (cutoff,),
+        ).fetchall()
+    return [dict(r) for r in rows]
