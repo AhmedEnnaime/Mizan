@@ -82,3 +82,42 @@ def test_commodities_collect_handles_single_ticker_failure():
 
     assert result["success"] is True
     assert len(result["errors"]) >= 1
+
+
+# --- Macro ---
+
+def test_macro_collect_returns_indices_and_forex():
+    from collectors.macro import collect
+    import pandas as pd
+
+    good_df = pd.DataFrame({"Close": [98.0, 100.0]})
+    mock_ticker = MagicMock()
+    mock_ticker.history.return_value = good_df
+
+    mock_rates = {"MAD": 9.95, "EUR": 0.92}
+
+    with patch("collectors.macro.yf.Ticker", return_value=mock_ticker), \
+         patch("collectors.macro._fetch_mad_rates", return_value=mock_rates):
+        result = collect()
+
+    assert result["success"] is True
+    assert "sp500" in result["data"]["indices"]
+    assert "usd_mad" in result["data"]["forex"]
+    assert result["data"]["forex"]["usd_mad"]["price"] == 9.95
+
+
+def test_macro_collect_survives_exchange_rate_api_failure():
+    from collectors.macro import collect
+    import pandas as pd
+
+    good_df = pd.DataFrame({"Close": [98.0, 100.0]})
+    mock_ticker = MagicMock()
+    mock_ticker.history.return_value = good_df
+
+    with patch("collectors.macro.yf.Ticker", return_value=mock_ticker), \
+         patch("collectors.macro._fetch_mad_rates", side_effect=Exception("api down")):
+        result = collect()
+
+    assert result["success"] is True
+    assert "usd_mad" in result["data"]["forex"]
+    assert result["data"]["forex"]["usd_mad"]["price"] is None
