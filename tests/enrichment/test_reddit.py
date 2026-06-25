@@ -40,12 +40,12 @@ def test_filters_replies_below_score_threshold():
         result = reddit_mod.enrich({})
 
     assert "reddit_discussions" in result
-    if result["reddit_discussions"]:
-        post = result["reddit_discussions"][0]
-        comment_data = post["top_comments"][0]
-        for reply in comment_data["notable_replies"]:
-            assert reply["score"] >= 3
-            assert len(reply["text"]) >= 40
+    assert result["reddit_discussions"], "Expected at least one matching post"
+    post = result["reddit_discussions"][0]
+    comment_data = post["top_comments"][0]
+    for reply in comment_data["notable_replies"]:
+        assert reply["score"] >= 3
+        assert len(reply["text"]) >= 40
 
 
 def test_caps_at_max_posts():
@@ -67,7 +67,7 @@ def test_caps_at_max_posts():
     with patch("enrichment.reddit.praw.Reddit", return_value=mock_reddit):
         result = reddit_mod.enrich({})
 
-    assert len(result.get("reddit_discussions", [])) <= 8
+    assert len(result.get("reddit_discussions", [])) == 8
 
 
 def test_single_subreddit_failure_does_not_break_others():
