@@ -104,16 +104,6 @@ class TestCollectAndPersistMasi:
 # ---------------------------------------------------------------------------
 
 class TestRunMorningBriefingEnrichment:
-    def _patch_briefing(self, context, analysis):
-        """Return a context manager dict for patching all briefing deps."""
-        return {
-            "scheduler.jobs.collect_and_persist": MagicMock(return_value=context),
-            "agent.analyst.run_morning_analysis": MagicMock(return_value=analysis),
-            "agent.formatter.format_morning_briefing": MagicMock(return_value="<html/>"),
-            "delivery.email.send_morning_briefing": MagicMock(),
-            "storage.db.save_briefing": MagicMock(),
-        }
-
     def test_enrich_called_after_collect(self):
         """enrich() is called with the context returned by collect_and_persist()."""
         ctx = _make_context()
