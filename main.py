@@ -18,15 +18,33 @@ MOROCCO_TZ = pytz.timezone("Africa/Casablanca")
 
 
 def setup_logging() -> None:
-    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-        handlers=[
-            logging.FileHandler(LOG_PATH),
-            logging.StreamHandler(sys.stdout),
-        ],
+    from logging.handlers import RotatingFileHandler
+    from observability.run_context import RunIdFilter
+
+    log_dir = LOG_PATH.parent
+    log_dir.mkdir(parents=True, exist_ok=True)
+
+    fmt = logging.Formatter(
+        "%(asctime)s [%(levelname)-8s] [%(run_id)-10s] %(name)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
+    run_filter = RunIdFilter()
+
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    mizan_handler = RotatingFileHandler(
+        log_dir / "mizan.log", maxBytes=5_242_880, backupCount=7, encoding="utf-8"
+    )
+    errors_handler = RotatingFileHandler(
+        log_dir / "errors.log", maxBytes=2_097_152, backupCount=10, encoding="utf-8"
+    )
+    errors_handler.setLevel(logging.WARNING)
+
+    root = logging.getLogger()
+    root.setLevel(logging.INFO)
+    for h in [stdout_handler, mizan_handler, errors_handler]:
+        h.setFormatter(fmt)
+        h.addFilter(run_filter)
+        root.addHandler(h)
 
 
 def run_dry_run() -> None:
