@@ -8,7 +8,7 @@ def _noop_enrich(context):
 
 
 def test_enrich_calls_all_enrichers():
-    """All 5 sub-enrichers are invoked and enrich() returns a dict without raising."""
+    """All 5 sub-enrichers are invoked; enrich() returns (dict, stats) without raising."""
     no_op = MagicMock(side_effect=_noop_enrich)
 
     with (
@@ -18,9 +18,10 @@ def test_enrich_calls_all_enrichers():
         patch("enrichment.masi_history.enrich", no_op),
         patch("enrichment.reddit.enrich", no_op),
     ):
-        result = enrichment.enrich({})
+        context, stats = enrichment.enrich({})
 
-    assert isinstance(result, dict)
+    assert isinstance(context, dict)
+    assert stats == {"ok": 5, "total": 5, "failed": []}
     assert no_op.call_count == 5
 
 
@@ -37,8 +38,11 @@ def test_failing_enricher_does_not_abort_others():
         patch("enrichment.masi_history.enrich", succeeding),
         patch("enrichment.reddit.enrich", succeeding),
     ):
-        result = enrichment.enrich({})
+        context, stats = enrichment.enrich({})
 
-    assert isinstance(result, dict)
+    assert isinstance(context, dict)
+    assert stats["ok"] == 4
+    assert stats["total"] == 5
+    assert "company_profiles" in stats["failed"]
     assert failing.call_count == 1
     assert succeeding.call_count == 4
