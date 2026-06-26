@@ -26,7 +26,9 @@ def send_email(subject: str, html_body: str) -> None:
     logger.info(f"Email sent: {subject}")
 
 
-def send_morning_briefing(html_body: str) -> None:
+def send_morning_briefing(html_body: str, health_html: str | None = None) -> None:
+    if health_html:
+        html_body = html_body.replace("</body>", f"{health_html}</body>")
     date_str = datetime.now().strftime("%A, %B %d, %Y")
     send_email(f"BVC Morning Briefing — {date_str}", html_body)
 

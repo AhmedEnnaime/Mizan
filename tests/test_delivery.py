@@ -49,3 +49,38 @@ def test_send_alert_includes_ticker_in_subject():
     msg = _create_message("⚡ BVC Alert [OCP]: price_move", "<html>alert</html>")
     assert "OCP" in msg["Subject"]
     assert "price_move" in msg["Subject"]
+
+
+def test_send_morning_briefing_appends_health_footer():
+    """health_html is inserted just before </body> when provided."""
+    from delivery.email import send_morning_briefing
+    from unittest.mock import patch, MagicMock
+
+    captured = {}
+
+    def fake_send_email(subject, html_body):
+        captured["body"] = html_body
+
+    with patch("delivery.email.send_email", side_effect=fake_send_email):
+        send_morning_briefing(
+            "<html><body><p>Content</p></body></html>",
+            health_html="<div>HEALTH</div>",
+        )
+
+    assert "<div>HEALTH</div></body>" in captured["body"]
+
+
+def test_send_morning_briefing_without_health_footer():
+    """html_body is unchanged when health_html is None."""
+    from delivery.email import send_morning_briefing
+    from unittest.mock import patch
+
+    captured = {}
+
+    def fake_send_email(subject, html_body):
+        captured["body"] = html_body
+
+    with patch("delivery.email.send_email", side_effect=fake_send_email):
+        send_morning_briefing("<html><body><p>Content</p></body></html>")
+
+    assert captured["body"] == "<html><body><p>Content</p></body></html>"
