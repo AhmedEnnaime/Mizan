@@ -1,6 +1,7 @@
 import json
 import logging
-from datetime import datetime, timedelta
+import traceback
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytz
@@ -27,6 +28,59 @@ def _load_watchlist() -> list[dict]:
     if WATCHLIST_PATH.exists():
         return json.loads(WATCHLIST_PATH.read_text())
     return []
+
+
+def _write_debug_snapshot(
+    run_id: str,
+    date: str,
+    failed_at: str,
+    exc: Exception,
+    context: dict,
+    health: "RunHealthCollector",
+) -> None:
+    debug_dir = LOG_PATH.parent / "debug"
+    try:
+        debug_dir.mkdir(parents=True, exist_ok=True)
+        snapshot_path = debug_dir / f"{date}-{run_id}.json"
+
+        _PRUNE = {"sector_map", "past_performance", "reddit_discussions"}
+        pruned = {k: v for k, v in context.items() if k not in _PRUNE}
+        if "bvc" in pruned:
+            stocks = pruned["bvc"].get("data", {}).get("stocks", [])
+            clean_stocks = [{k: v for k, v in s.items() if k != "profile"} for s in stocks]
+            pruned = {
+                **pruned,
+                "bvc": {
+                    **pruned["bvc"],
+                    "data": {**pruned["bvc"].get("data", {}), "stocks": clean_stocks},
+                },
+            }
+
+        snapshot = {
+            "run_id": run_id,
+            "date": date,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "failed_at": failed_at,
+            "exception": str(exc),
+            "traceback": traceback.format_exc(),
+            "health": {
+                "stocks_collected": health.stocks_collected,
+                "bvc_cached": health.bvc_cached,
+                "news_articles": health.news_articles,
+                "enrichers_ok": health.enrichers_ok,
+                "enrichers_total": health.enrichers_total,
+                "ai_ok": health.ai_ok,
+                "email_sent": health.email_sent,
+                "warnings": health.warnings,
+            },
+            "context_snapshot": pruned,
+        }
+
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(snapshot, f, indent=2, default=str)
+        logger.info(f"Debug snapshot written: {snapshot_path}")
+    except Exception as snap_exc:
+        logger.warning(f"Failed to write debug snapshot: {snap_exc}")
 
 
 def collect_and_persist() -> dict:
@@ -108,18 +162,39 @@ def run_morning_briefing(dry_run: bool = False) -> None:
     from agent.analyst import run_morning_analysis
     from agent.formatter import format_morning_briefing
     from delivery.email import send_morning_briefing
-    from storage.db import save_briefing
+    from storage.db import save_briefing, get_masi_history
     from enrichment import enrich
     from enrichment.outcome_tracker import record_picks
+    from observability.run_context import new_run_id, set_run_id
+    from observability.health import RunHealthCollector
 
+    rid = new_run_id()
+    set_run_id(rid)
+    date_str = datetime.now(MOROCCO_TZ).date().isoformat()
+    health = RunHealthCollector(run_id=rid, date=date_str)
     logger.info("Running morning briefing")
+
     context = collect_and_persist()
-    date_str = context["date"]
+    stocks = context["bvc"]["data"].get("stocks", [])
+    health.stocks_collected = len(stocks)
+    health.stocks_total = len(stocks)
+    health.bvc_cached = any(s.get("_cached") for s in stocks)
+    health.news_articles = len(context["news"]["data"].get("articles", []))
+
     try:
-        context = enrich(context)
+        context, enrich_stats = enrich(context)
+        health.enrichers_ok = enrich_stats["ok"]
+        health.enrichers_total = enrich_stats["total"]
+        health.reddit_ok = bool(context.get("reddit_discussions"))
+        health.masi_rows = len(get_masi_history(days=252))
+        for name in enrich_stats.get("failed", []):
+            health.add_warning(f"{name} enricher failed")
     except Exception as exc:
         logger.warning(f"Enrichment pipeline failed: {exc}")
+        health.add_warning(f"enrichment pipeline: {exc}")
+
     analysis = run_morning_analysis(context)
+    health.ai_ok = "error" not in analysis
 
     if "error" in analysis:
         logger.warning("AI analysis unavailable; sending fallback briefing with raw data")
@@ -133,6 +208,9 @@ def run_morning_briefing(dry_run: bool = False) -> None:
             f"</body></html>"
         )
         save_briefing(date_str, html, context)
+        _write_debug_snapshot(
+            rid, date_str, "ai_analysis", Exception(analysis["error"]), context, health
+        )
         if dry_run:
             print("\n" + "=" * 60)
             print("FALLBACK BRIEFING (AI unavailable — DRY RUN)")
@@ -142,7 +220,10 @@ def run_morning_briefing(dry_run: bool = False) -> None:
             try:
                 send_morning_briefing(html)
             except Exception as exc:
-                logger.error(f"Fallback briefing email delivery failed: {exc}", exc_info=True)
+                logger.error(
+                    f"Fallback briefing email delivery failed: {exc}", exc_info=True
+                )
+        logger.info(health.to_log_line())
         return
 
     html = format_morning_briefing(analysis, date_str)
@@ -152,6 +233,7 @@ def run_morning_briefing(dry_run: bool = False) -> None:
         record_picks(analysis, context)
     except Exception as exc:
         logger.warning(f"Failed to record picks: {exc}")
+        health.add_warning(f"record_picks: {exc}")
 
     if dry_run:
         print("\n" + "=" * 60)
@@ -159,11 +241,13 @@ def run_morning_briefing(dry_run: bool = False) -> None:
         print("=" * 60)
         print(html[:2000])
         print("..." if len(html) > 2000 else "")
+        print("\n" + health.to_log_line())
     else:
         last_exc = None
         for attempt in range(2):
             try:
-                send_morning_briefing(html)
+                send_morning_briefing(html, health_html=health.to_html_footer())
+                health.email_sent = True
                 last_exc = None
                 break
             except Exception as exc:
@@ -172,10 +256,15 @@ def run_morning_briefing(dry_run: bool = False) -> None:
                     f"Morning briefing email attempt {attempt + 1} failed: {exc}"
                 )
         if last_exc is not None:
+            _write_debug_snapshot(
+                rid, date_str, "email_delivery", last_exc, context, health
+            )
             logger.error(
                 f"Morning briefing email delivery failed after 2 attempts: {last_exc}",
                 exc_info=True,
             )
+
+    logger.info(health.to_log_line())
 
 
 def run_alert_check(dry_run: bool = False) -> None:

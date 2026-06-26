@@ -110,11 +110,12 @@ class TestRunMorningBriefingEnrichment:
         analysis = {"headline": "ok", "ai_picks": []}
 
         with patch("scheduler.jobs.collect_and_persist", return_value=ctx), \
-             patch("enrichment.enrich", return_value=ctx) as mock_enrich, \
+             patch("enrichment.enrich", return_value=(ctx, {"ok": 5, "total": 5, "failed": []})) as mock_enrich, \
              patch("enrichment.outcome_tracker.record_picks"), \
              patch("agent.analyst.run_morning_analysis", return_value=analysis), \
              patch("agent.formatter.format_morning_briefing", return_value="<html/>"), \
              patch("storage.db.save_briefing"), \
+             patch("storage.db.get_masi_history", return_value=[]), \
              patch("delivery.email.send_morning_briefing"):
             from scheduler import jobs
             jobs.run_morning_briefing(dry_run=True)
@@ -128,11 +129,12 @@ class TestRunMorningBriefingEnrichment:
         analysis = {"headline": "ok", "ai_picks": [{"ticker": "OCP", "label": "BUY", "explanation": "test"}]}
 
         with patch("scheduler.jobs.collect_and_persist", return_value=ctx), \
-             patch("enrichment.enrich", return_value=enriched), \
+             patch("enrichment.enrich", return_value=(enriched, {"ok": 5, "total": 5, "failed": []})), \
              patch("enrichment.outcome_tracker.record_picks") as mock_record, \
              patch("agent.analyst.run_morning_analysis", return_value=analysis), \
              patch("agent.formatter.format_morning_briefing", return_value="<html/>"), \
              patch("storage.db.save_briefing"), \
+             patch("storage.db.get_masi_history", return_value=[]), \
              patch("delivery.email.send_morning_briefing"):
             from scheduler import jobs
             jobs.run_morning_briefing(dry_run=True)
@@ -162,11 +164,12 @@ class TestRunMorningBriefingEnrichment:
         analysis = {"headline": "ok", "ai_picks": []}
 
         with patch("scheduler.jobs.collect_and_persist", return_value=ctx), \
-             patch("enrichment.enrich", return_value=ctx), \
+             patch("enrichment.enrich", return_value=(ctx, {"ok": 5, "total": 5, "failed": []})), \
              patch("enrichment.outcome_tracker.record_picks", side_effect=Exception("db gone")), \
              patch("agent.analyst.run_morning_analysis", return_value=analysis), \
              patch("agent.formatter.format_morning_briefing", return_value="<html/>") as mock_fmt, \
              patch("storage.db.save_briefing"), \
+             patch("storage.db.get_masi_history", return_value=[]), \
              patch("delivery.email.send_morning_briefing"):
             from scheduler import jobs
             jobs.run_morning_briefing(dry_run=True)  # must not raise
@@ -178,12 +181,89 @@ class TestRunMorningBriefingEnrichment:
         ctx = _make_context()
 
         with patch("scheduler.jobs.collect_and_persist", return_value=ctx), \
-             patch("enrichment.enrich", return_value=ctx), \
+             patch("enrichment.enrich", return_value=(ctx, {"ok": 5, "total": 5, "failed": []})), \
              patch("enrichment.outcome_tracker.record_picks") as mock_record, \
              patch("agent.analyst.run_morning_analysis", return_value={"error": "timeout"}), \
              patch("storage.db.save_briefing"), \
+             patch("storage.db.get_masi_history", return_value=[]), \
              patch("delivery.email.send_morning_briefing"):
             from scheduler import jobs
             jobs.run_morning_briefing(dry_run=True)
 
         mock_record.assert_not_called()
+
+
+# ---------------------------------------------------------------------------
+# _write_debug_snapshot
+# ---------------------------------------------------------------------------
+
+class TestWriteDebugSnapshot:
+    def test_creates_file_with_correct_structure(self, tmp_path, monkeypatch):
+        """Snapshot JSON is written to logs/debug/ with expected top-level keys."""
+        import json
+        from observability.health import RunHealthCollector
+
+        monkeypatch.setattr("scheduler.jobs.LOG_PATH", tmp_path / "logs" / "mizan.log")
+
+        from scheduler.jobs import _write_debug_snapshot
+
+        health = RunHealthCollector(run_id="run-0830", date="2026-06-26")
+        health.stocks_collected = 5
+        health.ai_ok = True
+
+        context = {
+            "bvc": {"data": {"stocks": [{"ticker": "OCP", "close": 262.0}]}},
+            "news": {"data": {"articles": []}},
+            "sector_map": {"Banking": {}},
+        }
+
+        _write_debug_snapshot(
+            run_id="run-0830",
+            date="2026-06-26",
+            failed_at="email_delivery",
+            exc=Exception("SMTP auth failed"),
+            context=context,
+            health=health,
+        )
+
+        debug_dir = tmp_path / "logs" / "debug"
+        snapshots = list(debug_dir.glob("*.json"))
+        assert len(snapshots) == 1
+
+        data = json.loads(snapshots[0].read_text())
+        assert data["run_id"] == "run-0830"
+        assert data["failed_at"] == "email_delivery"
+        assert "SMTP auth failed" in data["exception"]
+        assert "traceback" in data
+        assert "health" in data
+        assert "context_snapshot" in data
+        # sector_map must be stripped from snapshot
+        assert "sector_map" not in data["context_snapshot"]
+
+    def test_silent_fail_on_permission_error(self, tmp_path, monkeypatch, caplog):
+        """If the debug dir cannot be written, a warning is logged and no exception propagates."""
+        import logging
+        from observability.health import RunHealthCollector
+
+        # Point LOG_PATH to a path that cannot be created (file exists at parent location)
+        bad_parent = tmp_path / "not_a_dir.txt"
+        bad_parent.write_text("block")
+        monkeypatch.setattr(
+            "scheduler.jobs.LOG_PATH", bad_parent / "logs" / "mizan.log"
+        )
+
+        from scheduler.jobs import _write_debug_snapshot
+
+        health = RunHealthCollector(run_id="run-0830", date="2026-06-26")
+
+        with caplog.at_level(logging.WARNING, logger="scheduler.jobs"):
+            _write_debug_snapshot(
+                run_id="run-0830",
+                date="2026-06-26",
+                failed_at="ai_analysis",
+                exc=Exception("oops"),
+                context={},
+                health=health,
+            )
+
+        assert any("debug snapshot" in r.message.lower() for r in caplog.records)
