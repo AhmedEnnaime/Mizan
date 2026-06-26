@@ -1,90 +1,120 @@
 {
   "Banking": {
     "stocks": ["ATW", "BCP", "BOA", "CIH", "CDM", "BMCI"],
-    "sensitive_to": ["Bank Al-Maghrib policy rate", "credit growth", "EUR/MAD rate", "sovereign credit rating", "NPL ratio"],
+    "sensitive_to": ["Bank Al-Maghrib policy rate", "credit growth", "EUR/MAD rate", "sovereign credit rating", "NPL ratio", "sub-Saharan Africa growth (ATW/BOA pan-African exposure)", "CFA franc stability", "Morocco remittances from diaspora"],
     "rate_hike_impact": "negative short-term — cost of funds rises, margins compress on variable-rate loans",
     "rate_cut_impact": "positive — stimulates credit demand, improves loan affordability",
     "dirham_weakness_impact": "mixed — pan-African banks (ATW, BOA) lose on currency translation; domestic-only banks neutral",
-    "gdp_growth_impact": "positive — economic expansion drives loan demand and reduces defaults"
+    "gdp_growth_impact": "positive — economic expansion drives loan demand and reduces defaults",
+    "africa_instability_impact": "negative for ATW/BOA — political crises in Côte d'Ivoire, Senegal, or Cameroon directly hit their African subsidiary earnings",
+    "remittance_impact": "positive — Moroccan diaspora remittances (~$10bn/yr) support household loan repayment and deposit base"
   },
   "Mining / Fertilizers": {
     "stocks": ["OCP", "MNG"],
-    "sensitive_to": ["phosphate price", "copper price", "gold price", "cobalt price", "USD/MAD rate", "energy cost"],
+    "sensitive_to": ["phosphate/DAP/MAP price", "silver price (MNG)", "copper price (MNG)", "gold price (MNG)", "cobalt price (MNG)", "USD/MAD rate", "energy cost", "global food security", "China industrial demand", "Brazil/India fertilizer import policy"],
     "commodity_rise_impact": "strongly positive — direct revenue uplift for respective metals",
     "oil_rise_impact": "negative — energy-intensive operations across all mines",
     "dirham_weakness_impact": "positive — revenues are USD-denominated exports",
-    "global_recession_impact": "negative — industrial and agricultural commodity demand falls"
+    "global_recession_impact": "negative — industrial and agricultural commodity demand falls",
+    "war_conflict_impact": "positive for OCP — conflicts in grain-producing regions (Ukraine, Middle East) raise food insecurity, driving fertilizer demand as importing nations rush to secure harvests; also raises phosphate spot prices",
+    "silver_note": "MNG (Managem) is Morocco's largest silver producer via the Imiter mine — silver price moves directly impact MNG revenue even when gold is flat",
+    "china_demand_note": "MNG's cobalt and copper are sold largely to Chinese EV battery and electronics manufacturers; a Chinese industrial slowdown or EV subsidy cut directly hits MNG volumes",
+    "dap_map_note": "OCP's key products are DAP and MAP fertilizers, not raw phosphate rock — track DAP spot price (CFR Brazil/India) as the most direct revenue signal, not generic 'phosphate price'",
+    "food_security_note": "OCP benefits when global grain stocks fall or drought hits major producing nations — farmers increase fertilizer application to maximize yield per acre"
   },
   "Telecommunications": {
     "stocks": ["IAM"],
-    "sensitive_to": ["regulatory tariff decisions", "mobile subscriber growth", "ARPU", "dividend policy"],
+    "sensitive_to": ["regulatory tariff decisions", "mobile subscriber growth", "ARPU", "dividend policy", "5G spectrum allocation", "Africa expansion (IAM subsidiary Moov Africa)"],
     "rate_hike_impact": "low — telecom is defensive with stable cash flows",
     "gdp_growth_impact": "low — defensive stock, not strongly correlated to economic cycle",
+    "africa_expansion_note": "IAM's subsidiary Moov Africa operates in 12 sub-Saharan countries — subscriber growth there is a separate earnings driver from Moroccan operations",
     "note": "Most defensive sector on the BVC; moves primarily on company-specific news and dividends"
   },
   "Cement": {
     "stocks": ["LHM", "CIMAR"],
-    "sensitive_to": ["construction activity", "government infrastructure spending", "energy cost", "cement price"],
+    "sensitive_to": ["construction activity", "government infrastructure spending", "energy cost", "cement price", "petcoke price", "Morocco World Cup 2030 infrastructure pipeline", "post-earthquake reconstruction (Al Hoceima / High Atlas)"],
     "rate_hike_impact": "negative — slows mortgage origination and housing starts",
-    "oil_rise_impact": "negative — kiln fuel costs rise directly",
+    "oil_rise_impact": "negative — kiln fuel costs (petcoke and fuel oil) rise directly",
     "gdp_growth_impact": "positive — construction closely tracks economic growth",
-    "government_spend_impact": "strongly positive — infrastructure contracts are bulk cement demand"
+    "government_spend_impact": "strongly positive — infrastructure contracts are bulk cement demand",
+    "world_cup_note": "Morocco co-hosting the 2030 World Cup (with Spain/Portugal) requires ~$3-4bn of stadium, road, rail, and airport construction — multi-year cement demand tailwind through 2029",
+    "strait_hormuz_note": "A Strait of Hormuz closure raises petcoke and fuel oil import costs for kilns, squeezing cement margins — especially for LHM which is more energy-intensive"
   },
   "Energy / Fuel Distribution": {
     "stocks": ["TQM"],
-    "sensitive_to": ["crude oil price", "USD/MAD rate", "domestic fuel consumption", "government price caps"],
+    "sensitive_to": ["crude oil price", "USD/MAD rate", "domestic fuel consumption", "government price caps", "OPEC+ production decisions", "Strait of Hormuz status", "Middle East conflict escalation"],
     "oil_rise_impact": "mixed — higher pump prices raise revenue but compress margins if caps prevent full pass-through",
-    "dirham_weakness_impact": "negative — imported refined products cost more in MAD"
+    "dirham_weakness_impact": "negative — imported refined products cost more in MAD",
+    "strait_hormuz_note": "Morocco imports ~90% of its refined fuel needs via sea. A Strait of Hormuz closure or Red Sea disruption causes supply tightness and price spikes. TQM's margin depends on how fast the government adjusts or lifts price caps in response",
+    "opec_cut_impact": "negative — supply cuts raise crude benchmark, increasing TQM's input costs before any retail price adjustment",
+    "geopolitical_note": "Middle East wars that threaten Gulf oil supply routes are the single biggest tail risk for TQM — monitor Iran/Gulf tensions and Houthi Red Sea attacks as leading indicators"
   },
   "Real Estate": {
     "stocks": ["ADH", "ADI"],
-    "sensitive_to": ["Bank Al-Maghrib rate", "mortgage availability", "government housing programs", "construction material costs"],
+    "sensitive_to": ["Bank Al-Maghrib rate", "mortgage availability", "government housing programs", "construction material costs", "Moroccan diaspora remittances", "urbanization rate"],
     "rate_hike_impact": "strongly negative — mortgage affordability falls, buyer demand collapses",
     "rate_cut_impact": "strongly positive — unlocks latent housing demand",
-    "steel_rise_impact": "negative — construction input costs rise"
+    "steel_rise_impact": "negative — construction input costs rise",
+    "remittance_impact": "positive — diaspora buyers (France, Spain, Italy, Gulf) represent a significant share of ADH/ADI VEFA pre-sales; EUR and Gulf currency strength vs MAD boosts their purchasing power",
+    "government_program_note": "ADH is heavily exposed to social housing quotas and state subsidies — watch for budget law changes that affect housing subsidy envelopes"
   },
   "Retail / Consumer": {
     "stocks": ["LBV"],
-    "sensitive_to": ["consumer spending", "food price inflation", "purchasing power"],
+    "sensitive_to": ["consumer spending", "food price inflation", "purchasing power", "tourism seasonality (Marrakech/coastal stores)", "informal economy competition"],
     "inflation_impact": "mixed — boosts headline revenue but squeezes margins on non-food items",
     "gdp_growth_impact": "positive — higher incomes drive discretionary spending",
-    "dirham_weakness_impact": "negative — imported goods cost more"
+    "dirham_weakness_impact": "negative — imported goods cost more",
+    "war_supply_chain_note": "Wars disrupting global shipping (Red Sea, Black Sea) raise import costs for consumer goods — LBV sources significant inventory internationally"
   },
   "Insurance": {
     "stocks": ["WAA", "ATL"],
-    "sensitive_to": ["bond yields (investment portfolio)", "premium growth", "claims ratio"],
-    "rate_rise_impact": "positive — higher bond yields boost investment income",
+    "sensitive_to": ["bond yields (investment portfolio)", "premium growth", "claims ratio", "Bank Al-Maghrib rate", "natural catastrophe exposure (Morocco earthquakes, floods)"],
+    "rate_rise_impact": "positive — higher bond yields boost investment income on the float",
     "market_crash_impact": "negative — equity portfolio losses",
-    "gdp_growth_impact": "positive — higher incomes drive insurance adoption"
+    "gdp_growth_impact": "positive — higher incomes drive insurance adoption",
+    "catastrophe_note": "The 2023 Al Hoceima earthquake was a reminder of Morocco's seismic risk — a major event raises claims sharply. Also monitor flood seasons in the Souss-Massa region"
   },
   "Ports / Logistics": {
     "stocks": ["MSA"],
-    "sensitive_to": ["trade volumes", "OCP phosphate export volumes", "Tanger Med competition"],
+    "sensitive_to": ["trade volumes", "OCP phosphate export volumes", "global container shipping rates", "Red Sea / Suez Canal disruptions", "Tanger Med competition", "Morocco-Africa trade growth"],
     "global_trade_growth_impact": "positive — higher throughput volumes",
-    "dirham_weakness_impact": "positive — some fees are USD/EUR denominated"
+    "dirham_weakness_impact": "positive — some fees are USD/EUR denominated",
+    "red_sea_note": "Red Sea / Houthi attack disruptions reroute container ships around the Cape of Good Hope, bypassing Mediterranean ports — this reduces MSA's transit volumes but may boost Atlantic-route calls at Casablanca port",
+    "ocp_link_note": "MSA's Jorf Lasfar terminal handles a large share of OCP's phosphate and fertilizer exports — OCP production growth directly drives MSA throughput growth",
+    "world_cup_note": "World Cup 2030 logistics and construction material imports will temporarily spike port volumes through Morocco's terminals"
   },
   "Hospitality": {
     "stocks": ["RISMA"],
-    "sensitive_to": ["tourist arrivals", "EUR/MAD rate", "oil price (affects European airfares)", "global travel demand"],
+    "sensitive_to": ["tourist arrivals", "EUR/MAD rate", "oil price (affects European airfares)", "global travel demand", "MENA geopolitical stability", "Morocco World Cup 2030", "European recession risk"],
     "eur_mad_rise_impact": "positive — European tourists spend more in MAD terms",
-    "global_recession_impact": "negative — discretionary travel is first cut"
+    "global_recession_impact": "negative — discretionary travel is first cut",
+    "world_cup_note": "RISMA (Accor-branded hotels: Novotel, Mercure, Sofitel) is the primary listed beneficiary of World Cup 2030. Hotel occupancy and ADR (average daily rate) in Casablanca, Rabat, and Marrakech will surge during the tournament and benefit from infrastructure spending in the years prior",
+    "mena_stability_note": "Regional conflicts (Libya, Sahel, Israel-Gaza) affect European travel confidence to North Africa broadly — even if Morocco is stable, perception risk reduces bookings",
+    "airfare_note": "High oil prices raise European airfares, reducing tourist budget and arrivals — especially from low-cost carrier (Ryanair, easyJet) routes that are price-sensitive"
   },
   "Fintech / Payments": {
     "stocks": ["HPS"],
-    "sensitive_to": ["software contract wins", "digital payment adoption", "USD/EUR revenue (international clients)"],
-    "dirham_weakness_impact": "positive — significant international revenues",
+    "sensitive_to": ["software contract wins", "digital payment adoption globally", "USD/EUR revenue (international clients)", "Middle East and Africa fintech growth"],
+    "dirham_weakness_impact": "positive — significant international revenues in USD/EUR",
+    "geopolitical_note": "HPS sells payment software to banks and processors in the Gulf, Africa, and Europe — Gulf bank technology spending is influenced by oil revenues; a sustained low oil price can delay Gulf client contract renewals",
     "note": "Low-liquidity stock; large price moves on thin volume are common"
   },
   "Food / Agribusiness": {
     "stocks": ["CSUMAR"],
-    "sensitive_to": ["global sugar price", "government subsidy policy", "harvest quality"],
-    "sugar_price_rise_impact": "negative — raises input costs if government caps prevent price pass-through"
+    "sensitive_to": ["global sugar price", "government subsidy policy", "Morocco beet harvest quality", "Brazil sugar cane production", "El Niño / La Niña cycle", "EU sugar policy"],
+    "sugar_price_rise_impact": "negative — raises input costs if government caps prevent price pass-through",
+    "el_nino_note": "El Niño typically reduces Brazil sugar cane yields (world's largest producer), pushing global sugar prices higher — negative for CSUMAR as an importer/refiner under state price controls",
+    "drought_note": "Poor beet harvests in the Doukkala region (CSUMAR's domestic sugar beet zone) force higher imports at world prices — margin squeeze if retail prices are capped",
+    "war_supply_note": "Black Sea conflicts (Ukraine war) disrupted global sugar supply chains and raised freight costs — any re-escalation would lift CSUMAR's import costs"
   },
   "Steel": {
     "stocks": ["SON"],
-    "sensitive_to": ["global steel price", "scrap metal price", "electricity cost", "construction activity"],
+    "sensitive_to": ["global steel price", "scrap metal price", "electricity cost", "construction activity", "China steel export dumping", "EU carbon border adjustment (CBAM)", "North Africa rebar demand", "war reconstruction cycles"],
     "steel_price_rise_impact": "positive — direct revenue uplift",
-    "scrap_price_rise_impact": "negative — main raw material input",
-    "electricity_cost_impact": "high — electric arc furnace production"
+    "scrap_price_rise_impact": "negative — main raw material for Sonasid's electric arc furnace",
+    "electricity_cost_impact": "high — electric arc furnace is extremely electricity-intensive; ONE (Office National de l'Electricité) tariff decisions directly set Sonasid's cost structure",
+    "china_dumping_note": "Chinese steel overcapacity leads to subsidized exports at below-market prices — when China floods global markets with cheap steel, it undercuts Sonasid's pricing in the Moroccan and regional market",
+    "war_note": "Conflicts that destroy infrastructure create post-war reconstruction demand for rebar — historically positive for regional steel producers once the acute phase ends; ongoing wars raise scrap supply from destroyed equipment",
+    "cbam_note": "EU carbon border adjustment could eventually raise costs for Moroccan steel exports to Europe if Morocco's carbon pricing does not align with EU standards"
   }
 }
