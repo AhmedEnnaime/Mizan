@@ -100,12 +100,72 @@
     "note": "Low-liquidity stock; large price moves on thin volume are common"
   },
   "Food / Agribusiness": {
-    "stocks": ["CSUMAR"],
+    "stocks": ["CSUMAR", "DARI"],
     "sensitive_to": ["global sugar price", "government subsidy policy", "Morocco beet harvest quality", "Brazil sugar cane production", "El Niño / La Niña cycle", "EU sugar policy"],
     "sugar_price_rise_impact": "negative — raises input costs if government caps prevent price pass-through",
     "el_nino_note": "El Niño typically reduces Brazil sugar cane yields (world's largest producer), pushing global sugar prices higher — negative for CSUMAR as an importer/refiner under state price controls",
     "drought_note": "Poor beet harvests in the Doukkala region (CSUMAR's domestic sugar beet zone) force higher imports at world prices — margin squeeze if retail prices are capped",
     "war_supply_note": "Black Sea conflicts (Ukraine war) disrupted global sugar supply chains and raised freight costs — any re-escalation would lift CSUMAR's import costs"
+  },
+  "Healthcare": {
+    "stocks": ["AKDITAL"],
+    "sensitive_to": ["Morocco AMO universal health coverage rollout", "CNSS/CNOPS reimbursement tariffs", "specialist doctor availability", "medical equipment import cost", "Bank Al-Maghrib rate (capex financing)"],
+    "amo_expansion_impact": "strongly positive — mandatory health insurance channels millions of patients to private clinics and creates predictable reimbursement revenue",
+    "rate_hike_impact": "negative — Akdital's aggressive expansion is debt-financed; higher rates raise capex cost and slow clinic openings",
+    "dirham_weakness_impact": "negative — medical imaging, surgical equipment, and pharmaceuticals are imported in EUR/USD",
+    "gdp_growth_impact": "positive — higher incomes shift patients from public to private healthcare",
+    "note": "Primary catalyst to monitor: pace of AMO enrollment at CNSS/CNOPS and any changes to reimbursement rate schedules"
+  },
+  "Power Generation / Utilities": {
+    "stocks": ["TAQA"],
+    "sensitive_to": ["coal price", "USD/MAD rate (coal purchased in USD)", "ONEE payment reliability", "energy transition regulation", "plant availability / capacity factor"],
+    "coal_rise_impact": "negative — Jorf Lasfar plant's main fuel cost rises; PPA cost-pass-through mechanism partially offsets but with lags",
+    "dirham_weakness_impact": "negative — coal imports are USD-denominated, raising MAD-equivalent fuel costs",
+    "onee_stress_impact": "high risk — ONEE is the sole power buyer under the PPA; ONEE financial difficulties or delayed payments directly threaten revenue",
+    "energy_transition_impact": "long-term negative — regulatory coal phaseout targets pressure this asset; green energy mandates could alter PPA terms",
+    "note": "Very defensive stock — long-term PPA with ONEE gives revenue visibility; main risks are coal price spikes and counterparty credit of ONEE"
+  },
+  "Automobile Distribution": {
+    "stocks": ["AUTO"],
+    "sensitive_to": ["Morocco new vehicle registration volumes", "Bank Al-Maghrib rate (auto loan rates)", "EUR/MAD and USD/MAD (imported vehicle cost)", "consumer confidence", "fuel price (shifts demand mix)"],
+    "rate_hike_impact": "negative — auto loans become expensive, discretionary vehicle purchases deferred",
+    "gdp_growth_impact": "strongly positive — vehicle sales are highly income-elastic",
+    "oil_rise_impact": "mixed — higher fuel costs may shift demand to smaller cars, but fleet sales (trucks, Iveco commercial vehicles) are less price-sensitive",
+    "dirham_weakness_impact": "negative — vehicle prices in MAD rise when EUR/USD strengthens",
+    "world_cup_2030_impact": "positive — tourism and logistics fleet renewals ahead of 2030 tournament"
+  },
+  "Consumer Goods / FMCG": {
+    "stocks": ["MUT"],
+    "sensitive_to": ["consumer purchasing power", "input costs (packaging resins, raw materials)", "oil price (transport + plastic packaging)", "sub-Saharan Africa export demand", "competition from private label brands"],
+    "inflation_impact": "mixed — raises input costs but staple products retain pricing power",
+    "oil_rise_impact": "negative — petrochemical-derived packaging and transport costs rise",
+    "gdp_growth_impact": "positive — higher incomes increase FMCG volumes and premiumization",
+    "africa_growth_impact": "positive — West African middle-class growth drives export revenues for cleaning and food products"
+  },
+  "Real Estate / REIT": {
+    "stocks": ["ARAD"],
+    "sensitive_to": ["Bank Al-Maghrib rate (cap rate / discount rate)", "retail tenant health", "commercial occupancy rates", "e-commerce penetration", "Label'Vie/Carrefour anchor lease terms"],
+    "rate_hike_impact": "negative — higher discount rates compress REIT NAV; also raises refinancing costs",
+    "rate_cut_impact": "positive — REIT valuations re-rate upward as cap rates compress",
+    "gdp_growth_impact": "positive — rising consumer spending improves tenant sales, reducing vacancy risk",
+    "e_commerce_impact": "negative long-term — online retail growth reduces foot traffic at physical shopping centers",
+    "note": "Yield stock — dividend yield relative to government bond yield is the main valuation metric. Watch 10-year Morocco bond yield as direct competitor for income-seeking investors"
+  },
+  "Pharmaceuticals": {
+    "stocks": ["SOT"],
+    "sensitive_to": ["Morocco AMO coverage rollout", "government drug price regulations", "API (active pharmaceutical ingredient) supply chain", "CNOPS/CNSS reimbursement list updates", "export approval in African markets"],
+    "amo_expansion_impact": "positive — more insured patients means higher reimbursed prescription volumes",
+    "dirham_weakness_impact": "negative — APIs sourced from China and India are priced in USD/EUR",
+    "api_disruption_impact": "high risk — supply chain shocks (as seen during COVID-19) raise input costs sharply or halt production",
+    "drug_price_regulation_impact": "constraining — government caps on medicine prices limit pricing power even when input costs rise"
+  },
+  "Construction Materials": {
+    "stocks": ["COL"],
+    "sensitive_to": ["construction and renovation activity", "titanium dioxide price", "petrochemical derivative prices (resins, solvents)", "government housing and infrastructure programs", "oil price"],
+    "gdp_growth_impact": "positive — more construction means more paint demand",
+    "oil_rise_impact": "negative — most paint raw materials are petrochemical derivatives (resins, solvents, pigment dispersants)",
+    "government_spend_impact": "positive — public infrastructure, school, hospital renovation programs are large Colorado customers",
+    "rate_hike_impact": "negative — slows housing starts and private renovation projects"
   },
   "Steel": {
     "stocks": ["SON"],

@@ -245,5 +245,105 @@
       "electricity_cost": "high sensitivity — electric arc furnace is energy-intensive",
       "construction_slowdown": "negative — primary domestic market"
     }
+  },
+  "AKDITAL": {
+    "sector": "Healthcare",
+    "description": "Akdital Holding — Morocco's largest private hospital network, IPO'd on the BVC in 2022. Operates clinics and specialized hospitals across Morocco, with an aggressive expansion plan targeting 50+ facilities.",
+    "key_drivers": ["patient volumes", "Morocco's AMO universal health coverage rollout (driving private clinic demand)", "CNSS/CNOPS reimbursement tariffs", "expansion capex and new clinic openings", "specialist doctor recruitment"],
+    "risks": ["regulatory tariff caps on medical acts", "high capex burden from rapid expansion", "CNSS/CNOPS reimbursement delays", "competition from public hospital investment", "execution risk on expansion pipeline"],
+    "macro_sensitivity": {
+      "amo_expansion": "strongly positive — generalization of Morocco's mandatory health insurance (AMO) channels millions of previously uninsured patients to private clinics",
+      "gdp_growth": "positive — higher incomes drive demand for private healthcare over public system",
+      "rate_hike": "negative — high capex expansion financed partly with debt; rising cost of capital slows new clinic openings",
+      "dirham_weakness": "negative — medical equipment is imported, costs rise in MAD"
+    }
+  },
+  "TAQA": {
+    "sector": "Power Generation / Utilities",
+    "description": "Taqa Morocco — largest private power producer in Morocco. Operates the Jorf Lasfar coal-fired power complex (2,056 MW capacity) under a long-term Power Purchase Agreement (PPA) with ONEE (Office National de l'Electricité). Majority owned by Abu Dhabi's TAQA group.",
+    "key_drivers": ["coal price (main fuel cost)", "PPA tariff with ONEE", "plant availability / capacity factor", "USD/MAD rate (coal purchased in USD)", "TAQA group parent strategy"],
+    "risks": ["coal price spikes raise production costs above PPA compensation mechanism", "ONEE payment delays or credit risk", "energy transition pressure (coal phaseout policy)", "regulatory renegotiation of PPA terms"],
+    "macro_sensitivity": {
+      "coal_price_rise": "negative — fuel cost rises; PPA partially compensates but with lags",
+      "dirham_weakness": "negative — coal imports are USD-denominated, raising MAD costs",
+      "oil_rise": "indirect negative — higher energy costs broadly",
+      "onee_credit_risk": "high — ONEE is the sole off-taker; ONEE financial stress directly threatens revenue",
+      "energy_transition": "long-term negative — regulatory pressure to exit coal by 2030-2035"
+    }
+  },
+  "AUTO": {
+    "sector": "Automobile Distribution",
+    "description": "Auto Hall — Morocco's largest automobile distributor, listed on BVC. Distributes Ford passenger cars, Iveco commercial vehicles, Mitsubishi Fuso trucks, and Manitou material handling equipment.",
+    "key_drivers": ["Morocco new vehicle sales volumes", "credit availability for auto loans (Bank Al-Maghrib rate)", "EUR/MAD and USD/MAD rate (imported vehicles)", "fuel prices (affects consumer vehicle preference)", "GDP and consumer confidence"],
+    "risks": ["economic downturn shrinks vehicle purchases", "interest rate hikes reduce auto loan affordability", "EV transition disrupting traditional distribution model", "supply chain disruptions affecting vehicle availability"],
+    "macro_sensitivity": {
+      "rate_hike": "negative — auto loans become more expensive, dampening sales",
+      "gdp_growth": "strongly positive — vehicle sales are highly correlated to consumer confidence and income",
+      "oil_rise": "mixed — raises fuel costs for customers, may shift demand toward smaller/more efficient vehicles",
+      "dirham_weakness": "negative — imported vehicles priced in EUR/USD become more expensive in MAD",
+      "world_cup_2030": "positive — large vehicle fleet purchases for transport logistics and tourism"
+    }
+  },
+  "MUT": {
+    "sector": "Consumer Goods / FMCG",
+    "description": "Mutandis — Moroccan diversified consumer goods group. Portfolio includes cleaning and hygiene products, mineral water (Sotherma brand), canned fish and seafood, and personal care products sold across Morocco and exported to Africa.",
+    "key_drivers": ["domestic consumer spending", "product pricing power vs. commodity input costs", "export growth to sub-Saharan Africa", "private label competition from distributors"],
+    "risks": ["input cost inflation (packaging, raw materials)", "consumer downtrading to cheaper alternatives", "distribution network competition", "commodity cost pass-through limits"],
+    "macro_sensitivity": {
+      "inflation": "mixed — raises input costs but also justifies price increases on staple products",
+      "gdp_growth": "positive — higher incomes lift FMCG consumption",
+      "oil_rise": "negative — raises packaging (plastic resin) and transport costs",
+      "dirham_weakness": "mixed — some imported inputs cost more, but export revenues worth more in MAD",
+      "africa_growth": "positive — expanding middle class in West Africa drives export demand"
+    }
+  },
+  "ARAD": {
+    "sector": "Real Estate / REIT",
+    "description": "Aradei Capital — Morocco's first listed REIT (Real Estate Investment Trust), focused on commercial real estate. Portfolio of shopping centers and retail parks anchored by Carrefour/Label'Vie hypermarkets. Backed by Ynna Holding. Yield-oriented stock paying regular dividends.",
+    "key_drivers": ["rental income from commercial tenants", "occupancy rate across portfolio", "Label'Vie/Carrefour anchor lease renewals", "commercial real estate cap rates", "portfolio expansion via acquisitions"],
+    "risks": ["anchor tenant concentration risk (Label'Vie)", "e-commerce threat to retail traffic", "cap rate expansion compressing asset values", "vacancy risk in secondary cities"],
+    "macro_sensitivity": {
+      "rate_hike": "negative — raises cap rates, compresses REIT asset valuations; also raises cost of acquisition debt",
+      "gdp_growth": "positive — higher consumer spending drives retail tenant revenues and lease renewals",
+      "inflation": "mixed — CPI-linked rent escalation clauses are positive; input cost inflation raises maintenance costs",
+      "e_commerce_growth": "negative long-term — reduces brick-and-mortar retail traffic"
+    }
+  },
+  "SOT": {
+    "sector": "Pharmaceuticals",
+    "description": "Sothema — leading Moroccan pharmaceutical manufacturer producing generic and branded drugs, oncology treatments, and hospital medicines. Supplies domestic market and exports to Africa and francophone markets.",
+    "key_drivers": ["CNSS/CNOPS reimbursement list inclusions", "Morocco's AMO universal health coverage rollout", "R&D pipeline and new product launches", "export growth to African markets", "API (active pharmaceutical ingredient) input costs"],
+    "risks": ["drug price regulatory caps (government sets pharmaceutical prices)", "API supply chain disruption (mostly China/India sourced)", "competition from imported generics", "CNOPS reimbursement delays"],
+    "macro_sensitivity": {
+      "amo_expansion": "positive — more insured patients means higher reimbursed drug volumes",
+      "dirham_weakness": "negative — APIs imported in EUR/USD become more expensive",
+      "china_india_supply": "high risk — API supply disruption (as seen in COVID-19) raises input costs sharply",
+      "gdp_growth": "moderate positive — higher incomes drive OTC drug spending"
+    }
+  },
+  "COL": {
+    "sector": "Construction Materials",
+    "description": "Colorado — Morocco's leading paint and coatings manufacturer. Products sold under the Colorado brand for interior/exterior decoration, industrial coatings, and waterproofing. Revenue closely tied to construction and renovation activity.",
+    "key_drivers": ["construction and renovation activity in Morocco", "raw material costs (titanium dioxide, resins, solvents)", "distribution network strength", "government infrastructure and housing programs"],
+    "risks": ["input cost inflation (titanium dioxide, petrochemical derivatives)", "construction market slowdown", "competition from imported paints", "price war with regional competitors"],
+    "macro_sensitivity": {
+      "gdp_growth": "positive — construction activity drives paint demand",
+      "oil_rise": "negative — most paint raw materials are petrochemical derivatives",
+      "government_spend": "positive — public infrastructure projects and school/hospital renovations drive large orders",
+      "rate_hike": "negative — slows housing starts and renovation activity"
+    }
+  },
+  "DARI": {
+    "sector": "Food / Agribusiness",
+    "description": "Dari Couspate — Morocco's leading pasta and couscous manufacturer. Products include couscous, pasta (vermicelli, spaghetti), and flour-based staples. Sold domestically and exported to Europe and Africa.",
+    "key_drivers": ["durum wheat price (main input)", "domestic staple food demand", "export volumes to diaspora and African markets", "packaging cost (energy-linked)"],
+    "risks": ["durum wheat price spikes (drought in producer regions)", "government price regulation on staple foods", "competition from imported pasta", "energy cost for drying/milling"],
+    "macro_sensitivity": {
+      "durum_wheat_rise": "negative — raises input costs; government caps may prevent full pass-through to consumers",
+      "drought_north_africa": "negative — reduces domestic wheat supply, raises import cost",
+      "war_ukraine": "negative — Ukraine is a major durum wheat exporter; Black Sea conflict drives prices up",
+      "gdp_growth": "low — pasta/couscous are staple foods, demand is inelastic",
+      "diaspora_demand": "positive — Moroccan diaspora in Europe (France, Spain, Italy) drives steady export volumes"
+    }
   }
 }
