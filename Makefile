@@ -79,6 +79,21 @@ print(); \
 print('=== Recent AI picks ==='); \
 [print(p) for p in picks]"
 
+# ──────────────────────────────────────────────
+#  Observability
+# ──────────────────────────────────────────────
+
+logs:
+	tail -f logs/mizan.log
+
+errors:
+	cat logs/errors.log
+
+debug-last:
+	@latest=$$(ls -t logs/debug/*.json 2>/dev/null | head -1); \
+	if [ -z "$$latest" ]; then echo "No debug snapshots found."; \
+	else echo "=== $$latest ===" && $(PYTHON) -m json.tool "$$latest"; fi
+
 clean:
 	find . -type d -name __pycache__ | grep -v .venv | xargs rm -rf
 	find . -name "*.pyc" | grep -v .venv | xargs rm -f
@@ -86,4 +101,5 @@ clean:
 
 .PHONY: install test test-coverage dry-run send-briefing alert-check-dry send-alert-check run \
         docker-build docker-up docker-logs docker-down \
-        docker-dry-run docker-restart seed-history check-enrichment clean
+        docker-dry-run docker-restart seed-history check-enrichment \
+        logs errors debug-last clean
