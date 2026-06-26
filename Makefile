@@ -68,6 +68,17 @@ docker-restart:
 seed-history:
 	$(PYTHON) scripts/seed_history.py
 
+check-enrichment:
+	$(PYTHON) -c "\
+import storage.db as db; \
+masi = db.get_masi_history(days=5); \
+picks = db.get_recent_ai_picks(days=7); \
+print('=== MASI last 5 days ==='); \
+[print(r) for r in masi]; \
+print(); \
+print('=== Recent AI picks ==='); \
+[print(p) for p in picks]"
+
 clean:
 	find . -type d -name __pycache__ | grep -v .venv | xargs rm -rf
 	find . -name "*.pyc" | grep -v .venv | xargs rm -f
@@ -75,4 +86,4 @@ clean:
 
 .PHONY: install test test-coverage dry-run send-briefing alert-check-dry send-alert-check run \
         docker-build docker-up docker-logs docker-down \
-        docker-dry-run docker-restart seed-history clean
+        docker-dry-run docker-restart seed-history check-enrichment clean
