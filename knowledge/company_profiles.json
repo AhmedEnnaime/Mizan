@@ -2,21 +2,29 @@
   "OCP": {
     "sector": "Mining / Fertilizers",
     "description": "World's largest phosphate exporter, state-controlled. Produces phosphate rock, phosphoric acid, and DAP/MAP fertilizers sold globally.",
-    "key_drivers": ["phosphate rock spot price", "DAP/MAP fertilizer demand", "USD/MAD exchange rate", "global agricultural output"],
-    "risks": ["commodity price cycles", "global food demand slowdowns", "energy cost spikes (energy-intensive production)", "geopolitical supply chain disruptions"],
+    "key_drivers": [
+      "phosphate rock spot price",
+      "DAP/MAP fertilizer demand",
+      "USD/MAD exchange rate",
+      "global agricultural output"
+    ],
     "macro_sensitivity": {
       "dirham_weakness": "positive — export revenues are USD-denominated, convert to more MAD",
       "oil_rise": "negative — energy-intensive production raises operating costs",
       "global_recession": "negative — fertilizer demand falls with reduced agricultural investment",
       "phosphate_price_rise": "strongly positive — direct revenue uplift",
-      "eur_mad_weakness": "neutral — most OCP exports priced in USD not EUR"
+      "eur_mad_move": "neutral — most OCP exports priced in USD not EUR"
     }
   },
   "ATW": {
     "sector": "Banking",
     "description": "Attijariwafa Bank — largest bank in Morocco and one of the largest in Africa. Operations in 25+ African countries. Retail, corporate, and investment banking.",
-    "key_drivers": ["Bank Al-Maghrib policy rate", "credit growth in Morocco", "Pan-African subsidiary performance", "sovereign credit rating"],
-    "risks": ["rate hike compression of margins", "NPL rise in economic downturns", "currency risk from African subsidiaries", "regulatory capital requirements"],
+    "key_drivers": [
+      "Bank Al-Maghrib policy rate",
+      "credit growth in Morocco",
+      "Pan-African subsidiary performance",
+      "sovereign credit rating"
+    ],
     "macro_sensitivity": {
       "rate_hike": "negative short-term (cost of funds rises, existing loan margins compress)",
       "rate_cut": "positive — stimulates credit demand",
@@ -28,8 +36,12 @@
   "BCP": {
     "sector": "Banking",
     "description": "Banque Centrale Populaire — second-largest banking group in Morocco. Strong retail banking network, significant government ties, large SME lending book.",
-    "key_drivers": ["Bank Al-Maghrib rate", "retail credit growth", "SME loan performance", "government-linked deposits"],
-    "risks": ["NPL exposure from SME sector", "rate sensitivity on variable-rate loans", "competition from ATW and BOA"],
+    "key_drivers": [
+      "Bank Al-Maghrib rate",
+      "retail credit growth",
+      "SME loan performance",
+      "government-linked deposits"
+    ],
     "macro_sensitivity": {
       "rate_hike": "negative — raises funding costs, compresses retail loan margins",
       "gdp_growth": "positive — SME activity drives loan demand",
@@ -39,19 +51,28 @@
   "BOA": {
     "sector": "Banking",
     "description": "Bank of Africa (formerly BMCE Bank) — major Moroccan bank with pan-African presence across 20+ countries. Strong in trade finance and correspondent banking.",
-    "key_drivers": ["Bank Al-Maghrib rate", "African trade finance volumes", "EUR/MAD rate (European correspondent banking)", "commodity trade flows"],
-    "risks": ["African political risk in operating markets", "currency translation losses", "trade finance exposure to commodity exporters"],
+    "key_drivers": [
+      "Bank Al-Maghrib rate",
+      "African trade finance volumes",
+      "EUR/MAD rate (European correspondent banking)",
+      "commodity trade flows"
+    ],
     "macro_sensitivity": {
       "rate_hike": "negative — cost of funds rises",
-      "eur_mad_weakness": "mixed — affects European correspondent revenues",
+      "eur_mad_move": "mixed — affects European correspondent revenues",
       "commodity_boom": "positive — drives trade finance volumes for African commodity exporters"
     }
   },
   "IAM": {
     "sector": "Telecommunications",
     "description": "Maroc Telecom (Itissalat Al-Maghrib) — dominant telecom operator in Morocco, majority owned by UAE's e& (formerly Etisalat). Fixed, mobile, internet, and African subsidiaries.",
-    "key_drivers": ["mobile subscriber growth", "ARPU trends", "regulatory tariff decisions", "African subsidiary performance", "dividend policy"],
-    "risks": ["market saturation in Morocco", "regulatory price caps", "e& strategic decisions affecting dividends", "competition from Orange Maroc and InwiMaroc"],
+    "key_drivers": [
+      "mobile subscriber growth",
+      "ARPU trends",
+      "regulatory tariff decisions",
+      "African subsidiary performance",
+      "dividend policy"
+    ],
     "macro_sensitivity": {
       "dirham_weakness": "low — mostly domestic MAD revenues",
       "rate_hike": "low — telecom is defensive, low debt sensitivity",
@@ -60,10 +81,15 @@
     }
   },
   "MNG": {
-    "sector": "Mining",
+    "sector": "Mining / Fertilizers",
     "description": "Managem — Moroccan mining conglomerate producing copper, gold, cobalt, silver, and zinc across Africa. Majority owned by SNI (ONA group).",
-    "key_drivers": ["copper spot price", "gold spot price", "cobalt demand (EV batteries)", "silver price", "production volumes per mine"],
-    "risks": ["commodity price cycles", "mine operational disruptions", "African political risk", "energy cost (mining is energy-intensive)"],
+    "key_drivers": [
+      "copper spot price",
+      "gold spot price",
+      "cobalt demand (EV batteries)",
+      "silver price",
+      "production volumes per mine"
+    ],
     "macro_sensitivity": {
       "copper_rise": "strongly positive — copper is the largest revenue contributor",
       "gold_rise": "positive — safe-haven demand boosts revenues",
@@ -75,8 +101,13 @@
   "LHM": {
     "sector": "Cement",
     "description": "LafargeHolcim Maroc — largest cement producer in Morocco, part of the global Holcim group. Serves construction, infrastructure, and housing sectors.",
-    "key_drivers": ["construction activity in Morocco", "government infrastructure spending", "housing starts", "energy cost (clinker production)", "cement price"],
-    "risks": ["construction market slowdown", "energy cost spikes", "competition from Ciments du Maroc", "import competition"],
+    "key_drivers": [
+      "construction activity in Morocco",
+      "government infrastructure spending",
+      "housing starts",
+      "energy cost (clinker production)",
+      "cement price"
+    ],
     "macro_sensitivity": {
       "gdp_growth": "positive — construction tracks economic growth",
       "rate_hike": "negative — raises mortgage costs, slows housing",
@@ -87,8 +118,12 @@
   "CIMAR": {
     "sector": "Cement",
     "description": "Ciments du Maroc — second-largest cement producer in Morocco, part of the HeidelbergMaterials group. Strong in southern Morocco and export markets.",
-    "key_drivers": ["construction activity", "export volumes to sub-Saharan Africa", "energy cost", "domestic cement price"],
-    "risks": ["competition from LHM", "energy cost volatility", "construction market slowdown"],
+    "key_drivers": [
+      "construction activity",
+      "export volumes to sub-Saharan Africa",
+      "energy cost",
+      "domestic cement price"
+    ],
     "macro_sensitivity": {
       "gdp_growth": "positive — construction tracks GDP",
       "oil_rise": "negative — production energy costs",
@@ -98,8 +133,12 @@
   "CSUMAR": {
     "sector": "Food / Agribusiness",
     "description": "Cosumar — Morocco's monopoly sugar refiner and distributor. Refines imported raw sugar and processes domestic sugar beet and cane. Government-regulated consumer prices.",
-    "key_drivers": ["global raw sugar price", "government sugar subsidy policy", "domestic consumption volumes", "beet/cane harvest quality"],
-    "risks": ["subsidy reform risk (government price controls)", "global raw sugar price spikes raise input costs", "agricultural yield variability"],
+    "key_drivers": [
+      "global raw sugar price",
+      "government sugar subsidy policy",
+      "domestic consumption volumes",
+      "beet/cane harvest quality"
+    ],
     "macro_sensitivity": {
       "sugar_price_rise": "negative — raises input costs if not passed to consumers via regulated prices",
       "subsidy_reform": "negative — government reducing sugar subsidies compresses margins",
@@ -109,8 +148,12 @@
   "TQM": {
     "sector": "Energy / Fuel Distribution",
     "description": "TotalEnergies Marketing Maroc — fuel distribution and petroleum product marketing across Morocco. Petrol stations, lubricants, aviation fuel, and LPG.",
-    "key_drivers": ["crude oil / refined product prices", "EUR/MAD and USD/MAD rate (products priced in USD)", "domestic fuel consumption", "refining margin"],
-    "risks": ["oil price volatility", "dirham weakness raises product costs", "government fuel price cap changes", "competition from Vivo Energy / Shell Maroc"],
+    "key_drivers": [
+      "crude oil / refined product prices",
+      "EUR/MAD and USD/MAD rate (products priced in USD)",
+      "domestic fuel consumption",
+      "refining margin"
+    ],
     "macro_sensitivity": {
       "oil_rise": "mixed — higher prices raise costs but also inventory gains",
       "dirham_weakness": "negative — imported products cost more in MAD",
@@ -120,20 +163,29 @@
   "ADH": {
     "sector": "Real Estate",
     "description": "Addoha — one of Morocco's largest residential real estate developers. Focus on affordable and mid-range housing. Operations across Morocco and some African markets.",
-    "key_drivers": ["mortgage interest rates", "government affordable housing program (VEFA)", "urbanization rate", "construction material costs", "Bank Al-Maghrib rate"],
-    "risks": ["rate hike kills housing affordability", "government program discontinuation", "high debt leverage", "unsold inventory buildup"],
+    "key_drivers": [
+      "mortgage interest rates",
+      "government affordable housing program (VEFA)",
+      "urbanization rate",
+      "construction material costs",
+      "Bank Al-Maghrib rate"
+    ],
     "macro_sensitivity": {
       "rate_hike": "strongly negative — mortgage affordability falls sharply",
       "rate_cut": "strongly positive — unlocks latent housing demand",
-      "steel_rise": "negative — construction material costs rise",
+      "steel_price_rise": "negative — construction material costs rise",
       "government_housing_policy": "high impact — subsidized housing programs are core revenue"
     }
   },
   "ADI": {
     "sector": "Real Estate",
     "description": "Alliances Développement Immobilier — real estate developer focused on mid-to-high-end residential, tourism real estate, and social housing contracts.",
-    "key_drivers": ["interest rates", "tourism real estate demand", "government contracts", "construction costs"],
-    "risks": ["rate sensitivity", "high leverage", "project delivery delays", "tourism market volatility"],
+    "key_drivers": [
+      "interest rates",
+      "tourism real estate demand",
+      "government contracts",
+      "construction costs"
+    ],
     "macro_sensitivity": {
       "rate_hike": "negative — reduces buyer affordability",
       "tourism_recovery": "positive — drives resort and second-home demand"
@@ -142,8 +194,13 @@
   "LBV": {
     "sector": "Retail / Consumer",
     "description": "Label'Vie — largest supermarket and hypermarket operator in Morocco. Carrefour franchisee. Consumer staples and non-food retail across Morocco.",
-    "key_drivers": ["consumer spending", "food price inflation", "store expansion", "private label margins", "Carrefour franchise terms"],
-    "risks": ["food inflation margin squeeze", "competition from traditional trade and e-commerce", "consumer purchasing power erosion"],
+    "key_drivers": [
+      "consumer spending",
+      "food price inflation",
+      "store expansion",
+      "private label margins",
+      "Carrefour franchise terms"
+    ],
     "macro_sensitivity": {
       "inflation": "mixed — higher food prices boost revenue but squeeze margins on non-food",
       "gdp_growth": "positive — consumer spending rises with income",
@@ -153,8 +210,12 @@
   "WAA": {
     "sector": "Insurance",
     "description": "Wafa Assurance — leading Moroccan insurer (part of Attijariwafa group). Life insurance, property and casualty, and health insurance.",
-    "key_drivers": ["premium growth", "investment portfolio yield (government bond rates)", "claims ratio", "life insurance penetration in Morocco"],
-    "risks": ["low insurance penetration limiting growth", "investment portfolio sensitivity to bond yields", "catastrophic event claims"],
+    "key_drivers": [
+      "premium growth",
+      "investment portfolio yield (government bond rates)",
+      "claims ratio",
+      "life insurance penetration in Morocco"
+    ],
     "macro_sensitivity": {
       "rate_rise": "positive — higher bond yields boost investment portfolio income",
       "gdp_growth": "positive — higher incomes drive insurance adoption",
@@ -164,8 +225,12 @@
   "ATL": {
     "sector": "Insurance",
     "description": "Atlanta — mid-sized Moroccan insurance company offering property, casualty, life, and transport insurance.",
-    "key_drivers": ["premium volume growth", "claims ratio", "bond portfolio yield", "market competition"],
-    "risks": ["large claims events", "investment portfolio duration risk", "competition from larger players"],
+    "key_drivers": [
+      "premium volume growth",
+      "claims ratio",
+      "bond portfolio yield",
+      "market competition"
+    ],
     "macro_sensitivity": {
       "rate_rise": "positive — bond portfolio income rises",
       "gdp_growth": "positive — drives commercial insurance demand"
@@ -174,8 +239,13 @@
   "MSA": {
     "sector": "Ports / Logistics",
     "description": "Marsa Maroc — state-controlled port operator managing container terminals and bulk cargo facilities at Morocco's major ports (Casablanca, Agadir, Nador, Tanger).",
-    "key_drivers": ["container throughput volumes", "phosphate export volumes (OCP)", "import trade volumes", "port tariff levels", "Tanger Med competition"],
-    "risks": ["trade volume slowdowns", "competition from Tanger Med", "vessel size evolution requiring capex", "regulatory tariff controls"],
+    "key_drivers": [
+      "container throughput volumes",
+      "phosphate export volumes (OCP)",
+      "import trade volumes",
+      "port tariff levels",
+      "Tanger Med competition"
+    ],
     "macro_sensitivity": {
       "global_trade_growth": "positive — higher trade flows increase throughput",
       "oil_price": "indirect positive — Morocco's phosphate exports are energy-linked",
@@ -185,10 +255,15 @@
   "RISMA": {
     "sector": "Hospitality",
     "description": "Risma — Morocco's largest hotel operator, managing Accor-branded hotels (Ibis, Novotel, Mercure, Sofitel) across Morocco.",
-    "key_drivers": ["Morocco tourist arrivals", "international travel demand", "Accor brand strength", "RevPAR (revenue per available room)", "EUR/MAD rate (European tourists)"],
-    "risks": ["global travel disruptions (pandemics, geopolitics)", "terrorism perception", "competition from independent hotels and Airbnb", "seasonal demand concentration"],
+    "key_drivers": [
+      "Morocco tourist arrivals",
+      "international travel demand",
+      "Accor brand strength",
+      "RevPAR (revenue per available room)",
+      "EUR/MAD rate (European tourists)"
+    ],
     "macro_sensitivity": {
-      "eur_mad_rise": "positive — European tourists spend more in MAD terms",
+      "eur_mad_move": "positive — European tourists spend more in MAD terms",
       "global_recession": "negative — discretionary travel falls",
       "oil_rise": "negative — raises European airfare, reduces tourist arrivals"
     }
@@ -196,8 +271,12 @@
   "HPS": {
     "sector": "Fintech / Payments",
     "description": "HPS (Hightech Payment Systems) — Moroccan fintech providing payment processing software and services to banks and financial institutions globally. Niche B2B player.",
-    "key_drivers": ["software license and SaaS revenue growth", "new bank client wins globally", "payment card transaction volumes", "R&D investment cycle"],
-    "risks": ["concentrated client base", "competition from global payment vendors", "technology obsolescence risk", "small float — illiquid stock"],
+    "key_drivers": [
+      "software license and SaaS revenue growth",
+      "new bank client wins globally",
+      "payment card transaction volumes",
+      "R&D investment cycle"
+    ],
     "macro_sensitivity": {
       "gdp_growth": "low direct sensitivity — B2B software revenues are contractual",
       "dirham_weakness": "positive — significant USD/EUR revenue from international clients",
@@ -207,8 +286,12 @@
   "CIH": {
     "sector": "Banking",
     "description": "CIH Bank (Crédit Immobilier et Hôtelier) — specialised Moroccan bank historically focused on real estate and hospitality financing, now a broader retail bank.",
-    "key_drivers": ["mortgage loan book performance", "real estate market health", "Bank Al-Maghrib rate", "retail deposit growth"],
-    "risks": ["real estate concentration risk", "rate hike impact on mortgage book", "NPL exposure in hospitality sector"],
+    "key_drivers": [
+      "mortgage loan book performance",
+      "real estate market health",
+      "Bank Al-Maghrib rate",
+      "retail deposit growth"
+    ],
     "macro_sensitivity": {
       "rate_hike": "negative — mortgage affordability falls, new lending slows",
       "real_estate_downturn": "negative — core loan book impaired"
@@ -217,8 +300,12 @@
   "CDM": {
     "sector": "Banking",
     "description": "Crédit du Maroc — subsidiary of Crédit Agricole (France). Retail and corporate banking in Morocco with strong agricultural lending heritage.",
-    "key_drivers": ["agricultural sector performance", "retail credit growth", "Crédit Agricole group strategy", "Bank Al-Maghrib rate"],
-    "risks": ["agricultural yield variability", "rate sensitivity", "parent group strategy changes"],
+    "key_drivers": [
+      "agricultural sector performance",
+      "retail credit growth",
+      "Crédit Agricole group strategy",
+      "Bank Al-Maghrib rate"
+    ],
     "macro_sensitivity": {
       "rainfall_harvest": "positive — good harvest years boost agricultural loan repayment",
       "rate_hike": "negative — cost of funds rises"
@@ -227,8 +314,12 @@
   "BMCI": {
     "sector": "Banking",
     "description": "BMCI — BNP Paribas subsidiary in Morocco. Corporate and retail banking with strong ties to French corporate clients operating in Morocco.",
-    "key_drivers": ["BNP Paribas group strategy", "corporate banking volumes", "Bank Al-Maghrib rate", "French investment in Morocco"],
-    "risks": ["parent group strategic decisions", "corporate concentration risk", "rate sensitivity"],
+    "key_drivers": [
+      "BNP Paribas group strategy",
+      "corporate banking volumes",
+      "Bank Al-Maghrib rate",
+      "French investment in Morocco"
+    ],
     "macro_sensitivity": {
       "france_morocco_trade": "positive — French corporate activity in Morocco drives revenues",
       "rate_hike": "negative — cost of funds rises"
@@ -237,8 +328,13 @@
   "SON": {
     "sector": "Steel",
     "description": "Sonasid — Morocco's leading flat steel producer (part of ArcelorMittal group). Supplies construction and industrial sectors with rebar, wire rod, and billets.",
-    "key_drivers": ["global steel price", "scrap metal cost (input)", "Moroccan construction activity", "electricity cost", "ArcelorMittal group decisions"],
-    "risks": ["steel price cycle volatility", "scrap metal price spikes", "energy cost", "import competition from cheap Chinese steel"],
+    "key_drivers": [
+      "global steel price",
+      "scrap metal cost (input)",
+      "Moroccan construction activity",
+      "electricity cost",
+      "ArcelorMittal group decisions"
+    ],
     "macro_sensitivity": {
       "steel_price_rise": "positive — direct revenue uplift",
       "scrap_price_rise": "negative — main raw material cost",
@@ -249,8 +345,13 @@
   "AKDITAL": {
     "sector": "Healthcare",
     "description": "Akdital Holding — Morocco's largest private hospital network, IPO'd on the BVC in 2022. Operates clinics and specialized hospitals across Morocco, with an aggressive expansion plan targeting 50+ facilities.",
-    "key_drivers": ["patient volumes", "Morocco's AMO universal health coverage rollout (driving private clinic demand)", "CNSS/CNOPS reimbursement tariffs", "expansion capex and new clinic openings", "specialist doctor recruitment"],
-    "risks": ["regulatory tariff caps on medical acts", "high capex burden from rapid expansion", "CNSS/CNOPS reimbursement delays", "competition from public hospital investment", "execution risk on expansion pipeline"],
+    "key_drivers": [
+      "patient volumes",
+      "Morocco's AMO universal health coverage rollout (driving private clinic demand)",
+      "CNSS/CNOPS reimbursement tariffs",
+      "expansion capex and new clinic openings",
+      "specialist doctor recruitment"
+    ],
     "macro_sensitivity": {
       "amo_expansion": "strongly positive — generalization of Morocco's mandatory health insurance (AMO) channels millions of previously uninsured patients to private clinics",
       "gdp_growth": "positive — higher incomes drive demand for private healthcare over public system",
@@ -261,8 +362,13 @@
   "TAQA": {
     "sector": "Power Generation / Utilities",
     "description": "Taqa Morocco — largest private power producer in Morocco. Operates the Jorf Lasfar coal-fired power complex (2,056 MW capacity) under a long-term Power Purchase Agreement (PPA) with ONEE (Office National de l'Electricité). Majority owned by Abu Dhabi's TAQA group.",
-    "key_drivers": ["coal price (main fuel cost)", "PPA tariff with ONEE", "plant availability / capacity factor", "USD/MAD rate (coal purchased in USD)", "TAQA group parent strategy"],
-    "risks": ["coal price spikes raise production costs above PPA compensation mechanism", "ONEE payment delays or credit risk", "energy transition pressure (coal phaseout policy)", "regulatory renegotiation of PPA terms"],
+    "key_drivers": [
+      "coal price (main fuel cost)",
+      "PPA tariff with ONEE",
+      "plant availability / capacity factor",
+      "USD/MAD rate (coal purchased in USD)",
+      "TAQA group parent strategy"
+    ],
     "macro_sensitivity": {
       "coal_price_rise": "negative — fuel cost rises; PPA partially compensates but with lags",
       "dirham_weakness": "negative — coal imports are USD-denominated, raising MAD costs",
@@ -274,8 +380,13 @@
   "AUTO": {
     "sector": "Automobile Distribution",
     "description": "Auto Hall — Morocco's largest automobile distributor, listed on BVC. Distributes Ford passenger cars, Iveco commercial vehicles, Mitsubishi Fuso trucks, and Manitou material handling equipment.",
-    "key_drivers": ["Morocco new vehicle sales volumes", "credit availability for auto loans (Bank Al-Maghrib rate)", "EUR/MAD and USD/MAD rate (imported vehicles)", "fuel prices (affects consumer vehicle preference)", "GDP and consumer confidence"],
-    "risks": ["economic downturn shrinks vehicle purchases", "interest rate hikes reduce auto loan affordability", "EV transition disrupting traditional distribution model", "supply chain disruptions affecting vehicle availability"],
+    "key_drivers": [
+      "Morocco new vehicle sales volumes",
+      "credit availability for auto loans (Bank Al-Maghrib rate)",
+      "EUR/MAD and USD/MAD rate (imported vehicles)",
+      "fuel prices (affects consumer vehicle preference)",
+      "GDP and consumer confidence"
+    ],
     "macro_sensitivity": {
       "rate_hike": "negative — auto loans become more expensive, dampening sales",
       "gdp_growth": "strongly positive — vehicle sales are highly correlated to consumer confidence and income",
@@ -287,8 +398,12 @@
   "MUT": {
     "sector": "Consumer Goods / FMCG",
     "description": "Mutandis — Moroccan diversified consumer goods group. Portfolio includes cleaning and hygiene products, mineral water (Sotherma brand), canned fish and seafood, and personal care products sold across Morocco and exported to Africa.",
-    "key_drivers": ["domestic consumer spending", "product pricing power vs. commodity input costs", "export growth to sub-Saharan Africa", "private label competition from distributors"],
-    "risks": ["input cost inflation (packaging, raw materials)", "consumer downtrading to cheaper alternatives", "distribution network competition", "commodity cost pass-through limits"],
+    "key_drivers": [
+      "domestic consumer spending",
+      "product pricing power vs. commodity input costs",
+      "export growth to sub-Saharan Africa",
+      "private label competition from distributors"
+    ],
     "macro_sensitivity": {
       "inflation": "mixed — raises input costs but also justifies price increases on staple products",
       "gdp_growth": "positive — higher incomes lift FMCG consumption",
@@ -300,8 +415,13 @@
   "ARAD": {
     "sector": "Real Estate / REIT",
     "description": "Aradei Capital — Morocco's first listed REIT (Real Estate Investment Trust), focused on commercial real estate. Portfolio of shopping centers and retail parks anchored by Carrefour/Label'Vie hypermarkets. Backed by Ynna Holding. Yield-oriented stock paying regular dividends.",
-    "key_drivers": ["rental income from commercial tenants", "occupancy rate across portfolio", "Label'Vie/Carrefour anchor lease renewals", "commercial real estate cap rates", "portfolio expansion via acquisitions"],
-    "risks": ["anchor tenant concentration risk (Label'Vie)", "e-commerce threat to retail traffic", "cap rate expansion compressing asset values", "vacancy risk in secondary cities"],
+    "key_drivers": [
+      "rental income from commercial tenants",
+      "occupancy rate across portfolio",
+      "Label'Vie/Carrefour anchor lease renewals",
+      "commercial real estate cap rates",
+      "portfolio expansion via acquisitions"
+    ],
     "macro_sensitivity": {
       "rate_hike": "negative — raises cap rates, compresses REIT asset valuations; also raises cost of acquisition debt",
       "gdp_growth": "positive — higher consumer spending drives retail tenant revenues and lease renewals",
@@ -312,8 +432,13 @@
   "SOT": {
     "sector": "Pharmaceuticals",
     "description": "Sothema — leading Moroccan pharmaceutical manufacturer producing generic and branded drugs, oncology treatments, and hospital medicines. Supplies domestic market and exports to Africa and francophone markets.",
-    "key_drivers": ["CNSS/CNOPS reimbursement list inclusions", "Morocco's AMO universal health coverage rollout", "R&D pipeline and new product launches", "export growth to African markets", "API (active pharmaceutical ingredient) input costs"],
-    "risks": ["drug price regulatory caps (government sets pharmaceutical prices)", "API supply chain disruption (mostly China/India sourced)", "competition from imported generics", "CNOPS reimbursement delays"],
+    "key_drivers": [
+      "CNSS/CNOPS reimbursement list inclusions",
+      "Morocco's AMO universal health coverage rollout",
+      "R&D pipeline and new product launches",
+      "export growth to African markets",
+      "API (active pharmaceutical ingredient) input costs"
+    ],
     "macro_sensitivity": {
       "amo_expansion": "positive — more insured patients means higher reimbursed drug volumes",
       "dirham_weakness": "negative — APIs imported in EUR/USD become more expensive",
@@ -324,8 +449,12 @@
   "COL": {
     "sector": "Construction Materials",
     "description": "Colorado — Morocco's leading paint and coatings manufacturer. Products sold under the Colorado brand for interior/exterior decoration, industrial coatings, and waterproofing. Revenue closely tied to construction and renovation activity.",
-    "key_drivers": ["construction and renovation activity in Morocco", "raw material costs (titanium dioxide, resins, solvents)", "distribution network strength", "government infrastructure and housing programs"],
-    "risks": ["input cost inflation (titanium dioxide, petrochemical derivatives)", "construction market slowdown", "competition from imported paints", "price war with regional competitors"],
+    "key_drivers": [
+      "construction and renovation activity in Morocco",
+      "raw material costs (titanium dioxide, resins, solvents)",
+      "distribution network strength",
+      "government infrastructure and housing programs"
+    ],
     "macro_sensitivity": {
       "gdp_growth": "positive — construction activity drives paint demand",
       "oil_rise": "negative — most paint raw materials are petrochemical derivatives",
@@ -336,11 +465,15 @@
   "DARI": {
     "sector": "Food / Agribusiness",
     "description": "Dari Couspate — Morocco's leading pasta and couscous manufacturer. Products include couscous, pasta (vermicelli, spaghetti), and flour-based staples. Sold domestically and exported to Europe and Africa.",
-    "key_drivers": ["durum wheat price (main input)", "domestic staple food demand", "export volumes to diaspora and African markets", "packaging cost (energy-linked)"],
-    "risks": ["durum wheat price spikes (drought in producer regions)", "government price regulation on staple foods", "competition from imported pasta", "energy cost for drying/milling"],
+    "key_drivers": [
+      "durum wheat price (main input)",
+      "domestic staple food demand",
+      "export volumes to diaspora and African markets",
+      "packaging cost (energy-linked)"
+    ],
     "macro_sensitivity": {
       "durum_wheat_rise": "negative — raises input costs; government caps may prevent full pass-through to consumers",
-      "drought_north_africa": "negative — reduces domestic wheat supply, raises import cost",
+      "drought": "negative — reduces domestic wheat supply, raises import cost",
       "war_ukraine": "negative — Ukraine is a major durum wheat exporter; Black Sea conflict drives prices up",
       "gdp_growth": "low — pasta/couscous are staple foods, demand is inelastic",
       "diaspora_demand": "positive — Moroccan diaspora in Europe (France, Spain, Italy) drives steady export volumes"
@@ -349,21 +482,31 @@
   "BRM": {
     "sector": "Beverages",
     "description": "Brasseries du Maroc — Morocco's only beer producer and a Heineken affiliate. Brands include Casablanca, Flag, and licensed Heineken. Monopoly position in the domestic beer and soft drink market. Consistent dividend payer with stable cash flows.",
-    "key_drivers": ["domestic beer consumption volumes", "tourism season (summer and Ramadan patterns)", "barley and malt input costs", "Heineken group licensing terms", "government alcohol regulation"],
-    "risks": ["regulatory risk — government alcohol taxation or sale restrictions", "social/religious pressure on alcohol consumption", "barley price spikes (main input)", "limited growth ceiling in majority-Muslim market"],
+    "key_drivers": [
+      "domestic beer consumption volumes",
+      "tourism season (summer and Ramadan patterns)",
+      "barley and malt input costs",
+      "Heineken group licensing terms",
+      "government alcohol regulation"
+    ],
     "macro_sensitivity": {
       "tourism_rise": "positive — tourist arrivals and hotel/restaurant trade drive beer volumes",
       "gdp_growth": "mild positive — beer is affordable; not strongly correlated",
       "barley_price_rise": "negative — main brewing input; no domestic substitute",
       "regulation_tightening": "high risk — any change to alcohol licensing, taxation, or sale hours is a direct revenue impact",
-      "eur_mad": "low sensitivity — primarily domestic MAD revenues"
+      "eur_mad_move": "low sensitivity — primarily domestic MAD revenues"
     }
   },
   "LES": {
     "sector": "Consumer Goods / FMCG",
     "description": "Lesieur Cristal — Morocco's leading cooking oil and margarine manufacturer, majority owned by the French Avril group. Brands include Lesieur, Cristal, and Huilor. Dominant shelf presence in Moroccan supermarkets and traditional trade.",
-    "key_drivers": ["palm oil and sunflower oil world prices (main raw materials)", "domestic consumer staple demand", "Avril group strategy", "government subsidy on cooking oil (if applicable)", "export volumes to West Africa"],
-    "risks": ["palm oil price volatility — margins are highly sensitive to input costs", "government price caps on edible oils limiting pass-through", "currency risk on USD-denominated palm oil imports", "competition from imports"],
+    "key_drivers": [
+      "palm oil and sunflower oil world prices (main raw materials)",
+      "domestic consumer staple demand",
+      "Avril group strategy",
+      "government subsidy on cooking oil (if applicable)",
+      "export volumes to West Africa"
+    ],
     "macro_sensitivity": {
       "palm_oil_rise": "negative — main input cost; compresses margins sharply when world prices spike",
       "palm_oil_fall": "positive — margin expansion; historically the strongest profit driver",
@@ -375,8 +518,13 @@
   "CDN": {
     "sector": "Consumer Goods / FMCG",
     "description": "Centrale Danone — Danone's Moroccan subsidiary producing dairy products (milk, yogurt, fresh dairy). One of Morocco's most recognized food brands. Was severely impacted by a social media-driven consumer boycott in 2018 but has been recovering. Danone group holds majority stake.",
-    "key_drivers": ["domestic dairy consumption", "milk collection volumes from Moroccan farmers", "Danone group strategic decisions (divestiture risk)", "consumer sentiment recovery post-boycott", "raw milk price (input cost)"],
-    "risks": ["Danone group may sell or restructure Morocco subsidiary", "consumer boycott recurrence risk", "raw milk price volatility", "competition from Copag and private-label dairy"],
+    "key_drivers": [
+      "domestic dairy consumption",
+      "milk collection volumes from Moroccan farmers",
+      "Danone group strategic decisions (divestiture risk)",
+      "consumer sentiment recovery post-boycott",
+      "raw milk price (input cost)"
+    ],
     "macro_sensitivity": {
       "raw_milk_rise": "negative — raises production cost; hard to fully pass through to price-sensitive consumers",
       "gdp_growth": "positive — higher incomes shift consumption toward branded dairy",
@@ -387,8 +535,13 @@
   "NXM": {
     "sector": "Electrical Equipment / Cables",
     "description": "Nexans Maroc — Moroccan subsidiary of the French Nexans group, manufacturing electric cables and wires for energy, construction, and industrial applications. Positioned to benefit from Morocco's renewable energy buildout and World Cup 2030 infrastructure.",
-    "key_drivers": ["copper price (main raw material)", "Morocco renewable energy infrastructure capex (solar, wind farms)", "World Cup 2030 construction electrical works", "ONEE grid expansion projects", "automotive wire harness exports to Europe"],
-    "risks": ["copper price spikes raise input costs before customer price adjustments", "Nexans group strategic decisions", "project-based revenue can be lumpy", "competition from imported cables"],
+    "key_drivers": [
+      "copper price (main raw material)",
+      "Morocco renewable energy infrastructure capex (solar, wind farms)",
+      "World Cup 2030 construction electrical works",
+      "ONEE grid expansion projects",
+      "automotive wire harness exports to Europe"
+    ],
     "macro_sensitivity": {
       "copper_rise": "negative short-term — main raw material; margins compress before prices adjust",
       "copper_fall": "positive — cost relief improves margins",
@@ -400,8 +553,13 @@
   "DSW": {
     "sector": "IT Distribution",
     "description": "Disway — Morocco's leading IT products distributor, supplying HP, Lenovo, Dell, and other brands to retailers and corporate clients across Morocco and West Africa. Benefits from Morocco's digital transformation push and growing enterprise IT spending.",
-    "key_drivers": ["Morocco corporate IT spending", "World Cup 2030 infrastructure IT procurement", "government digital Morocco program", "EUR/MAD and USD/MAD (products priced in foreign currency)", "West Africa distribution expansion"],
-    "risks": ["margin compression from vendor direct sales", "currency exposure on imported products", "economic slowdown reducing discretionary IT investment", "product cycle dependency"],
+    "key_drivers": [
+      "Morocco corporate IT spending",
+      "World Cup 2030 infrastructure IT procurement",
+      "government digital Morocco program",
+      "EUR/MAD and USD/MAD (products priced in foreign currency)",
+      "West Africa distribution expansion"
+    ],
     "macro_sensitivity": {
       "gdp_growth": "positive — IT spending correlates with corporate investment confidence",
       "dirham_weakness": "negative — IT products priced in USD/EUR become more expensive in MAD, compressing margins",
@@ -412,8 +570,13 @@
   "ALM": {
     "sector": "Aluminium / Industrial Materials",
     "description": "Aluminium du Maroc — manufacturer of aluminum profiles and products for the construction, automotive, and industrial sectors. Positioned to benefit from Morocco's industrial growth as an automotive and aerospace manufacturing hub.",
-    "key_drivers": ["aluminum LME price (London Metal Exchange)", "construction activity in Morocco", "automotive sector growth (Renault, Stellantis Morocco plants)", "electricity cost (aluminum smelting is energy-intensive)", "export demand from Europe"],
-    "risks": ["aluminum price cycle volatility", "electricity cost (main operating cost)", "competition from cheap Chinese aluminum imports", "automotive sector slowdown affecting OEM demand"],
+    "key_drivers": [
+      "aluminum LME price (London Metal Exchange)",
+      "construction activity in Morocco",
+      "automotive sector growth (Renault, Stellantis Morocco plants)",
+      "electricity cost (aluminum smelting is energy-intensive)",
+      "export demand from Europe"
+    ],
     "macro_sensitivity": {
       "aluminum_rise": "positive — direct revenue uplift on product pricing",
       "electricity_cost": "high sensitivity — aluminum production is extremely energy-intensive",
@@ -424,8 +587,13 @@
   "CSA": {
     "sector": "Food / Agribusiness",
     "description": "Cartier Saada — Moroccan olive oil producer and agri-food company based in the Souss-Massa region, one of Morocco's most productive olive growing areas. Exports olive oil to the EU, USA, and Middle East. Positioned to capture market share as European olive oil production declines.",
-    "key_drivers": ["olive harvest quality in Morocco (rainfall dependent)", "global olive oil prices (driven by Spanish/Italian production)", "EU and US export demand", "USD/EUR/MAD rate on export revenues", "organic and premium olive oil premiums"],
-    "risks": ["harvest variability — drought or frost devastates olive yields", "global olive oil price cycles", "competition from Spanish and Greek producers when their harvests recover", "small float and illiquidity"],
+    "key_drivers": [
+      "olive harvest quality in Morocco (rainfall dependent)",
+      "global olive oil prices (driven by Spanish/Italian production)",
+      "EU and US export demand",
+      "USD/EUR/MAD rate on export revenues",
+      "organic and premium olive oil premiums"
+    ],
     "macro_sensitivity": {
       "europe_olive_oil_shortage": "strongly positive — when Spanish/Italian crops fail (drought, XYLELLA disease), global prices spike and Moroccan exporters gain market share",
       "morocco_drought": "negative — dry years in Souss-Massa reduce harvest volumes",
