@@ -345,5 +345,92 @@
       "gdp_growth": "low — pasta/couscous are staple foods, demand is inelastic",
       "diaspora_demand": "positive — Moroccan diaspora in Europe (France, Spain, Italy) drives steady export volumes"
     }
+  },
+  "BRM": {
+    "sector": "Beverages",
+    "description": "Brasseries du Maroc — Morocco's only beer producer and a Heineken affiliate. Brands include Casablanca, Flag, and licensed Heineken. Monopoly position in the domestic beer and soft drink market. Consistent dividend payer with stable cash flows.",
+    "key_drivers": ["domestic beer consumption volumes", "tourism season (summer and Ramadan patterns)", "barley and malt input costs", "Heineken group licensing terms", "government alcohol regulation"],
+    "risks": ["regulatory risk — government alcohol taxation or sale restrictions", "social/religious pressure on alcohol consumption", "barley price spikes (main input)", "limited growth ceiling in majority-Muslim market"],
+    "macro_sensitivity": {
+      "tourism_rise": "positive — tourist arrivals and hotel/restaurant trade drive beer volumes",
+      "gdp_growth": "mild positive — beer is affordable; not strongly correlated",
+      "barley_price_rise": "negative — main brewing input; no domestic substitute",
+      "regulation_tightening": "high risk — any change to alcohol licensing, taxation, or sale hours is a direct revenue impact",
+      "eur_mad": "low sensitivity — primarily domestic MAD revenues"
+    }
+  },
+  "LES": {
+    "sector": "Consumer Goods / FMCG",
+    "description": "Lesieur Cristal — Morocco's leading cooking oil and margarine manufacturer, majority owned by the French Avril group. Brands include Lesieur, Cristal, and Huilor. Dominant shelf presence in Moroccan supermarkets and traditional trade.",
+    "key_drivers": ["palm oil and sunflower oil world prices (main raw materials)", "domestic consumer staple demand", "Avril group strategy", "government subsidy on cooking oil (if applicable)", "export volumes to West Africa"],
+    "risks": ["palm oil price volatility — margins are highly sensitive to input costs", "government price caps on edible oils limiting pass-through", "currency risk on USD-denominated palm oil imports", "competition from imports"],
+    "macro_sensitivity": {
+      "palm_oil_rise": "negative — main input cost; compresses margins sharply when world prices spike",
+      "palm_oil_fall": "positive — margin expansion; historically the strongest profit driver",
+      "dirham_weakness": "negative — palm oil is priced in USD; weaker MAD raises import cost",
+      "gdp_growth": "low — cooking oil is a staple; inelastic demand",
+      "subsidy_removal": "mixed — removal raises consumer prices but may unlock better margins if previously capped"
+    }
+  },
+  "CDN": {
+    "sector": "Consumer Goods / FMCG",
+    "description": "Centrale Danone — Danone's Moroccan subsidiary producing dairy products (milk, yogurt, fresh dairy). One of Morocco's most recognized food brands. Was severely impacted by a social media-driven consumer boycott in 2018 but has been recovering. Danone group holds majority stake.",
+    "key_drivers": ["domestic dairy consumption", "milk collection volumes from Moroccan farmers", "Danone group strategic decisions (divestiture risk)", "consumer sentiment recovery post-boycott", "raw milk price (input cost)"],
+    "risks": ["Danone group may sell or restructure Morocco subsidiary", "consumer boycott recurrence risk", "raw milk price volatility", "competition from Copag and private-label dairy"],
+    "macro_sensitivity": {
+      "raw_milk_rise": "negative — raises production cost; hard to fully pass through to price-sensitive consumers",
+      "gdp_growth": "positive — higher incomes shift consumption toward branded dairy",
+      "danone_strategy": "high impact — any global Danone restructuring announcement directly affects CDN valuation",
+      "drought": "negative — reduces domestic milk collection, forcing costlier sourcing"
+    }
+  },
+  "NXM": {
+    "sector": "Electrical Equipment / Cables",
+    "description": "Nexans Maroc — Moroccan subsidiary of the French Nexans group, manufacturing electric cables and wires for energy, construction, and industrial applications. Positioned to benefit from Morocco's renewable energy buildout and World Cup 2030 infrastructure.",
+    "key_drivers": ["copper price (main raw material)", "Morocco renewable energy infrastructure capex (solar, wind farms)", "World Cup 2030 construction electrical works", "ONEE grid expansion projects", "automotive wire harness exports to Europe"],
+    "risks": ["copper price spikes raise input costs before customer price adjustments", "Nexans group strategic decisions", "project-based revenue can be lumpy", "competition from imported cables"],
+    "macro_sensitivity": {
+      "copper_rise": "negative short-term — main raw material; margins compress before prices adjust",
+      "copper_fall": "positive — cost relief improves margins",
+      "morocco_renewables_capex": "strongly positive — solar and wind projects require kilometers of high-voltage cable",
+      "world_cup_2030": "positive — stadium, rail, and hotel electrical infrastructure is a direct demand driver",
+      "automotive_exports": "positive — Morocco's growing auto manufacturing hub (Renault, Stellantis) drives wire harness demand"
+    }
+  },
+  "DSW": {
+    "sector": "IT Distribution",
+    "description": "Disway — Morocco's leading IT products distributor, supplying HP, Lenovo, Dell, and other brands to retailers and corporate clients across Morocco and West Africa. Benefits from Morocco's digital transformation push and growing enterprise IT spending.",
+    "key_drivers": ["Morocco corporate IT spending", "World Cup 2030 infrastructure IT procurement", "government digital Morocco program", "EUR/MAD and USD/MAD (products priced in foreign currency)", "West Africa distribution expansion"],
+    "risks": ["margin compression from vendor direct sales", "currency exposure on imported products", "economic slowdown reducing discretionary IT investment", "product cycle dependency"],
+    "macro_sensitivity": {
+      "gdp_growth": "positive — IT spending correlates with corporate investment confidence",
+      "dirham_weakness": "negative — IT products priced in USD/EUR become more expensive in MAD, compressing margins",
+      "government_digitalization": "positive — public sector IT procurement programs are a direct revenue driver",
+      "world_cup_2030": "positive — venue, hotel, and transport IT infrastructure procurement"
+    }
+  },
+  "ALM": {
+    "sector": "Aluminium / Industrial Materials",
+    "description": "Aluminium du Maroc — manufacturer of aluminum profiles and products for the construction, automotive, and industrial sectors. Positioned to benefit from Morocco's industrial growth as an automotive and aerospace manufacturing hub.",
+    "key_drivers": ["aluminum LME price (London Metal Exchange)", "construction activity in Morocco", "automotive sector growth (Renault, Stellantis Morocco plants)", "electricity cost (aluminum smelting is energy-intensive)", "export demand from Europe"],
+    "risks": ["aluminum price cycle volatility", "electricity cost (main operating cost)", "competition from cheap Chinese aluminum imports", "automotive sector slowdown affecting OEM demand"],
+    "macro_sensitivity": {
+      "aluminum_rise": "positive — direct revenue uplift on product pricing",
+      "electricity_cost": "high sensitivity — aluminum production is extremely energy-intensive",
+      "morocco_auto_hub": "positive — Renault and Stellantis Morocco production expansion drives local aluminum demand",
+      "china_dumping": "negative — Chinese overproduction depresses global aluminum prices"
+    }
+  },
+  "CSA": {
+    "sector": "Food / Agribusiness",
+    "description": "Cartier Saada — Moroccan olive oil producer and agri-food company based in the Souss-Massa region, one of Morocco's most productive olive growing areas. Exports olive oil to the EU, USA, and Middle East. Positioned to capture market share as European olive oil production declines.",
+    "key_drivers": ["olive harvest quality in Morocco (rainfall dependent)", "global olive oil prices (driven by Spanish/Italian production)", "EU and US export demand", "USD/EUR/MAD rate on export revenues", "organic and premium olive oil premiums"],
+    "risks": ["harvest variability — drought or frost devastates olive yields", "global olive oil price cycles", "competition from Spanish and Greek producers when their harvests recover", "small float and illiquidity"],
+    "macro_sensitivity": {
+      "europe_olive_oil_shortage": "strongly positive — when Spanish/Italian crops fail (drought, XYLELLA disease), global prices spike and Moroccan exporters gain market share",
+      "morocco_drought": "negative — dry years in Souss-Massa reduce harvest volumes",
+      "eur_usd_strength": "positive — export revenues in EUR/USD convert to more MAD",
+      "health_trend": "positive — global shift toward Mediterranean diet drives premium olive oil demand in Europe and North America"
+    }
   }
 }

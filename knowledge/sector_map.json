@@ -100,7 +100,7 @@
     "note": "Low-liquidity stock; large price moves on thin volume are common"
   },
   "Food / Agribusiness": {
-    "stocks": ["CSUMAR", "DARI"],
+    "stocks": ["CSUMAR", "DARI", "CSA"],
     "sensitive_to": ["global sugar price", "government subsidy policy", "Morocco beet harvest quality", "Brazil sugar cane production", "El Niño / La Niña cycle", "EU sugar policy"],
     "sugar_price_rise_impact": "negative — raises input costs if government caps prevent price pass-through",
     "el_nino_note": "El Niño typically reduces Brazil sugar cane yields (world's largest producer), pushing global sugar prices higher — negative for CSUMAR as an importer/refiner under state price controls",
@@ -135,7 +135,7 @@
     "world_cup_2030_impact": "positive — tourism and logistics fleet renewals ahead of 2030 tournament"
   },
   "Consumer Goods / FMCG": {
-    "stocks": ["MUT"],
+    "stocks": ["MUT", "LES", "CDN"],
     "sensitive_to": ["consumer purchasing power", "input costs (packaging resins, raw materials)", "oil price (transport + plastic packaging)", "sub-Saharan Africa export demand", "competition from private label brands"],
     "inflation_impact": "mixed — raises input costs but staple products retain pricing power",
     "oil_rise_impact": "negative — petrochemical-derived packaging and transport costs rise",
@@ -166,6 +166,38 @@
     "oil_rise_impact": "negative — most paint raw materials are petrochemical derivatives (resins, solvents, pigment dispersants)",
     "government_spend_impact": "positive — public infrastructure, school, hospital renovation programs are large Colorado customers",
     "rate_hike_impact": "negative — slows housing starts and private renovation projects"
+  },
+  "Beverages": {
+    "stocks": ["BRM"],
+    "sensitive_to": ["barley and malt prices", "tourism season and hotel trade volumes", "government alcohol regulation", "domestic consumer spending"],
+    "tourism_impact": "positive — hotel, restaurant, and bar trade drives beer volumes in summer and during events",
+    "regulation_impact": "high risk — any tightening of alcohol sale rules, licensing, or taxation is a direct revenue hit",
+    "barley_rise_impact": "negative — main brewing input cost rises",
+    "gdp_growth_impact": "mild positive — beer is affordable and not strongly income-elastic",
+    "note": "Monopoly position and Heineken affiliate make BRM a defensive yield stock; dividend policy is the primary valuation driver"
+  },
+  "Electrical Equipment / Cables": {
+    "stocks": ["NXM"],
+    "sensitive_to": ["copper LME price", "Morocco renewable energy capex", "World Cup 2030 infrastructure electrical works", "ONEE grid expansion", "automotive wire harness export demand"],
+    "copper_rise_impact": "negative short-term — main raw material; margins compress before contracts reprice",
+    "renewables_capex_impact": "strongly positive — solar farms, wind projects, and grid upgrades require large cable volumes",
+    "world_cup_2030_impact": "positive — stadium, rail, and hospitality electrical infrastructure",
+    "automotive_hub_impact": "positive — Renault and Stellantis Morocco plants drive local wire harness demand"
+  },
+  "IT Distribution": {
+    "stocks": ["DSW"],
+    "sensitive_to": ["Morocco corporate IT spending", "government digital transformation budgets", "EUR/USD/MAD rate", "World Cup 2030 IT procurement", "West Africa distribution growth"],
+    "gdp_growth_impact": "positive — corporate investment drives IT upgrades",
+    "dirham_weakness_impact": "negative — IT products priced in USD/EUR; weaker MAD compresses distributor margins",
+    "digitalization_impact": "positive — government and private sector digital transformation programs expand addressable market"
+  },
+  "Aluminium / Industrial Materials": {
+    "stocks": ["ALM"],
+    "sensitive_to": ["aluminum LME price", "electricity cost", "Morocco automotive and industrial sector growth", "construction activity", "Chinese aluminum export volumes"],
+    "aluminum_rise_impact": "positive — direct revenue uplift",
+    "electricity_cost_impact": "high sensitivity — aluminum production is one of the most electricity-intensive industrial processes",
+    "china_dumping_impact": "negative — Chinese overcapacity and subsidized exports depress global aluminum prices and undercut local producers",
+    "morocco_industrial_hub_impact": "positive — growth of automotive and aerospace manufacturing in Morocco (Renault, Stellantis, aerospace suppliers) drives local aluminum demand"
   },
   "Steel": {
     "stocks": ["SON"],
