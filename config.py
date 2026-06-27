@@ -12,10 +12,7 @@ GMAIL_USER = os.environ["GMAIL_USER"]
 GMAIL_APP_PASSWORD = os.environ["GMAIL_APP_PASSWORD"]
 RECIPIENT_EMAIL = os.environ["RECIPIENT_EMAIL"]
 
-REDDIT_CLIENT_ID = os.environ.get("REDDIT_CLIENT_ID", "")
-REDDIT_CLIENT_SECRET = os.environ.get("REDDIT_CLIENT_SECRET", "")
-REDDIT_USER_AGENT = os.environ.get("REDDIT_USER_AGENT", "Mizan/1.0")
-REDDIT_KEYWORDS = [
+MARKET_KEYWORDS = [
     "OCP", "ATW", "BCP", "BOA", "IAM", "MNG", "TQM", "ADH", "LBV", "CIH",
     "bourse", "MASI", "maroc", "marché", "investissement", "action", "dividende",
     "phosphate", "dirham", "Casablanca", "Morocco stock", "invest maroc",

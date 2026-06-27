@@ -152,32 +152,31 @@ def test_prompt_includes_past_performance_when_present():
     assert "BUY: 1 correct" in prompt
 
 
-def test_prompt_skips_reddit_when_empty():
+def test_prompt_skips_news_when_empty():
     from agent.prompts import build_morning_briefing_prompt
     context = {
         "bvc": {"data": {"stocks": [], "masi": {}}},
         "reddit_discussions": []
     }
     prompt = build_morning_briefing_prompt(context)
-    assert "REDDIT SENTIMENT" not in prompt
+    assert "STOCK-SPECIFIC NEWS" not in prompt
 
 
-def test_prompt_includes_reddit_when_present():
+def test_prompt_includes_news_when_present():
     from agent.prompts import build_morning_briefing_prompt
     context = {
         "bvc": {"data": {"stocks": [], "masi": {}}},
         "reddit_discussions": [
             {
-                "subreddit": "Maroc",
+                "source": "Medias24",
+                "ticker": "OCP",
                 "title": "OCP résultats positifs",
-                "score": 142,
-                "url": "https://reddit.com/test",
-                "top_comments": [
-                    {"text": "Bonne nouvelle", "score": 45, "notable_replies": []}
-                ]
+                "url": "https://medias24.com/test",
+                "published": "Fri, 27 Jun 2026",
+                "summary": "OCP annonce de bons résultats.",
             }
         ]
     }
     prompt = build_morning_briefing_prompt(context)
-    assert "REDDIT SENTIMENT" in prompt
+    assert "STOCK-SPECIFIC NEWS" in prompt
     assert "OCP résultats positifs" in prompt

@@ -20,7 +20,7 @@ MORNING_BRIEFING_SYSTEM = """You are an AI investment assistant specializing in 
 Your user is a beginner investor in Morocco learning as they invest. Explain reasoning in clear, educational terms — never use jargon without defining it.
 You have access to structured company profiles describing each BVC stock's business model, key revenue drivers, and macro sensitivities. Use these when explaining why a macro event (e.g. rising oil, weak dirham) affects a specific company.
 You also have a record of your past pick performance over the last 30 days — factor this into your confidence level.
-Reddit discussions reflect retail investor sentiment in Morocco — treat them as a supplementary signal, not a primary one.
+Stock-specific news articles surface targeted coverage of individual BVC companies — treat them as a supplementary signal, not a primary one.
 Respond ONLY with valid JSON matching the exact schema provided. No markdown fences, no extra text."""
 
 
@@ -84,16 +84,14 @@ def _build_past_performance_block(context: dict) -> str:
 
 
 def _build_reddit_block(context: dict) -> str:
-    discussions = context.get("reddit_discussions")
-    if not discussions:
+    articles = context.get("reddit_discussions")
+    if not articles:
         return ""
-    lines = ["REDDIT SENTIMENT (last 24h — supplementary signal only):"]
-    for post in discussions[:5]:
-        lines.append(f"  [r/{post['subreddit']}, {post['score']} upvotes] \"{post['title']}\"")
-        for comment in post.get("top_comments", [])[:3]:
-            lines.append(f"    → \"{comment['text'][:200]}\" ({comment['score']} upvotes)")
-            for reply in comment.get("notable_replies", [])[:2]:
-                lines.append(f"       ↳ \"{reply['text'][:150]}\" ({reply['score']} upvotes)")
+    lines = ["STOCK-SPECIFIC NEWS (Google News — supplementary signal only):"]
+    for a in articles[:8]:
+        ticker_tag = f"[{a['ticker']}] " if a.get("ticker") else ""
+        pub = (a.get("published", "") or "")[:16]
+        lines.append(f"  {ticker_tag}\"{a['title']}\" — {a.get('source', '')} {pub}")
     return "\n".join(lines)
 
 
