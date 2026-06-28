@@ -21,7 +21,11 @@ HTML_HEADERS = {**HEADERS, "Accept": "text/html,application/xhtml+xml"}
 
 
 def _get(url: str, params: dict | None = None) -> dict:
-    r = requests.get(url, headers=HEADERS, params=params, timeout=30)
+    try:
+        r = requests.get(url, headers=HEADERS, params=params, timeout=30)
+    except requests.exceptions.SSLError:
+        logger.warning("SSL verification failed on BVC API, retrying without verification")
+        r = requests.get(url, headers=HEADERS, params=params, timeout=30, verify=False)
     r.raise_for_status()
     return r.json()
 
