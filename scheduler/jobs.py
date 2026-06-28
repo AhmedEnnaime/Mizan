@@ -246,11 +246,12 @@ def run_morning_briefing(dry_run: bool = False) -> None:
         last_exc = None
         for attempt in range(2):
             try:
-                send_morning_briefing(html, health_html=health.to_html_footer())
                 health.email_sent = True
+                send_morning_briefing(html, health_html=health.to_html_footer())
                 last_exc = None
                 break
             except Exception as exc:
+                health.email_sent = False
                 last_exc = exc
                 logger.warning(
                     f"Morning briefing email attempt {attempt + 1} failed: {exc}"
