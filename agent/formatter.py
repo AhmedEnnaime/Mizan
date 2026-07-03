@@ -8,9 +8,9 @@ _env = Environment(
 )
 
 
-def format_morning_briefing(analysis: dict, date: str) -> str:
+def format_morning_briefing(analysis: dict, date: str, portfolio: list[dict] | None = None) -> str:
     template = _env.get_template("morning_briefing.html")
-    return template.render(date=date, **analysis)
+    return template.render(date=date, portfolio=portfolio or [], **analysis)
 
 
 def format_alert(analysis: dict) -> str:

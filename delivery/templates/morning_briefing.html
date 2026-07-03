@@ -30,6 +30,11 @@
     .week-list { padding-left: 20px; }
     .week-list li { margin-bottom: 6px; font-size: 14px; }
     .footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 20px; }
+    .portfolio-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .portfolio-table th { color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; padding: 4px 0; text-align: right; }
+    .portfolio-table th:first-child { text-align: left; }
+    .portfolio-table td { padding: 6px 0; border-top: 1px solid #eee; text-align: right; }
+    .portfolio-table td:first-child { text-align: left; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -60,6 +65,36 @@
     <div class="section-title">What's Happening</div>
     <p>{{ whats_happening }}</p>
   </div>
+
+  {% if portfolio %}
+  <div class="card">
+    <div class="section-title">Paper Portfolio</div>
+    <table class="portfolio-table">
+      <tr>
+        <th>Ticker</th>
+        <th>Shares</th>
+        <th>Avg Cost</th>
+        <th>Today</th>
+        <th>P&amp;L</th>
+      </tr>
+      {% for p in portfolio %}
+      <tr>
+        <td>{{ p.ticker }}</td>
+        <td>{{ p.shares }}</td>
+        <td>{{ "%.2f"|format(p.avg_cost_mad) }} MAD</td>
+        <td>{{ "%.2f"|format(p.current_price) ~ " MAD" if p.current_price is not none else "N/A" }}</td>
+        <td class="{{ 'up' if p.pnl_mad is not none and p.pnl_mad >= 0 else 'down' if p.pnl_mad is not none else '' }}">
+          {% if p.pnl_mad is not none %}
+            {{ "%+.0f"|format(p.pnl_mad) }} MAD ({{ "%+.1f"|format(p.pnl_pct) }}%)
+          {% else %}
+            N/A
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
 
   <div class="card">
     <div class="section-title">AI Picks</div>

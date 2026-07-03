@@ -237,7 +237,7 @@ def run_morning_briefing(dry_run: bool = False) -> None:
         logger.info(health.to_log_line())
         return
 
-    html = format_morning_briefing(analysis, date_str)
+    html = format_morning_briefing(analysis, date_str, portfolio=context.get("paper_portfolio", []))
     save_briefing(date_str, html, context)
 
     try:
