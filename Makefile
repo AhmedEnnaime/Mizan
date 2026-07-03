@@ -36,6 +36,15 @@ alert-check-dry:
 send-alert-check:
 	$(PYTHON) -c "from scheduler.jobs import run_alert_check; run_alert_check(dry_run=False)"
 
+buy:
+	$(PYTHON) -c "from paper_trading.cli import cmd_buy; cmd_buy('$(TICKER)', $(SHARES), $(PRICE))"
+
+sell:
+	$(PYTHON) -c "from paper_trading.cli import cmd_sell; cmd_sell('$(TICKER)', $(SHARES), $(PRICE))"
+
+portfolio:
+	$(PYTHON) -c "from paper_trading.cli import cmd_portfolio; cmd_portfolio()"
+
 run:
 	$(PYTHON) main.py
 
@@ -102,4 +111,4 @@ clean:
 .PHONY: install test test-coverage dry-run send-briefing alert-check-dry send-alert-check run \
         docker-build docker-up docker-logs docker-down \
         docker-dry-run docker-restart seed-history check-enrichment \
-        logs errors debug-last clean
+        logs errors debug-last clean buy sell portfolio
