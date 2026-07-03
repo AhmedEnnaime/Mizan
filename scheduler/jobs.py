@@ -198,9 +198,11 @@ def run_morning_briefing(dry_run: bool = False) -> None:
         from paper_trading.portfolio import compute_positions
         trades = get_paper_trades()
         if trades:
-            stocks = context["bvc"]["data"].get("stocks", [])
-            current_prices = {s["ticker"]: s["close"] for s in stocks if s.get("close")}
+            bvc_stocks = context["bvc"]["data"].get("stocks", [])
+            current_prices = {s["ticker"]: s["close"] for s in bvc_stocks if s.get("close")}
             context["paper_portfolio"] = compute_positions(trades, current_prices)
+        else:
+            context["paper_portfolio"] = []
     except Exception as exc:
         logger.warning(f"Paper portfolio enrichment failed: {exc}")
 

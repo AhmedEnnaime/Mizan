@@ -1,4 +1,3 @@
-import sys
 from unittest.mock import patch, MagicMock
 import pytest
 from paper_trading.cli import cmd_buy, cmd_sell, cmd_portfolio
@@ -35,6 +34,14 @@ def test_cmd_sell_records_valid_sell(capsys):
          patch("paper_trading.cli.add_paper_trade") as mock_add:
         cmd_sell("OCP", 5, 275.0)
         mock_add.assert_called_once_with("OCP", "sell", 5, 275.0)
+
+
+def test_cmd_sell_allows_selling_all_shares(capsys):
+    with patch("paper_trading.cli.init_db"), \
+         patch("paper_trading.cli.get_paper_trades", return_value=_trades(10)), \
+         patch("paper_trading.cli.add_paper_trade") as mock_add:
+        cmd_sell("OCP", 10, 275.0)
+        mock_add.assert_called_once_with("OCP", "sell", 10, 275.0)
 
 
 def test_cmd_portfolio_prints_text(capsys):
