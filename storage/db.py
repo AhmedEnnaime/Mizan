@@ -65,6 +65,15 @@ def init_db() -> None:
                 value REAL NOT NULL,
                 change_pct REAL
             );
+            CREATE TABLE IF NOT EXISTS paper_trades (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                ticker      TEXT    NOT NULL,
+                action      TEXT    NOT NULL CHECK(action IN ('buy', 'sell')),
+                shares      INTEGER NOT NULL CHECK(shares > 0),
+                price_mad   REAL    NOT NULL CHECK(price_mad > 0),
+                date        TEXT    NOT NULL,
+                created_at  TEXT    NOT NULL
+            );
         """)
 
 
@@ -150,4 +159,31 @@ def get_recent_ai_picks(days: int = 30) -> list[dict]:
             "SELECT date, ticker, pick, price_at_pick, reasoning FROM ai_picks WHERE date >= ? ORDER BY date DESC",
             (cutoff,),
         ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def add_paper_trade(ticker: str, action: str, shares: int, price_mad: float) -> None:
+    now = datetime.now(timezone.utc)
+    with get_connection() as conn:
+        conn.execute(
+            "INSERT INTO paper_trades (ticker, action, shares, price_mad, date, created_at) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (ticker.upper(), action, shares, price_mad,
+             now.date().isoformat(), now.isoformat()),
+        )
+
+
+def get_paper_trades(ticker: str | None = None) -> list[dict]:
+    with get_connection() as conn:
+        if ticker is not None:
+            rows = conn.execute(
+                "SELECT id, ticker, action, shares, price_mad, date, created_at "
+                "FROM paper_trades WHERE ticker = ? ORDER BY created_at ASC",
+                (ticker.upper(),),
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                "SELECT id, ticker, action, shares, price_mad, date, created_at "
+                "FROM paper_trades ORDER BY created_at ASC"
+            ).fetchall()
     return [dict(r) for r in rows]

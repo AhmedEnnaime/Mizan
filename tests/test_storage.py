@@ -6,7 +6,7 @@ def test_init_creates_all_tables(test_db):
         tables = {r[0] for r in conn.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
         ).fetchall()}
-    assert tables == {"prices", "briefings", "alerts", "ai_picks", "masi_daily"}
+    assert tables == {"prices", "briefings", "alerts", "ai_picks", "masi_daily", "paper_trades"}
 
 
 def test_upsert_price_and_retrieve(test_db):
