@@ -1,7 +1,7 @@
 import json
 
 
-_ENRICHMENT_KEYS = {"sector_map", "past_performance", "reddit_discussions"}
+_ENRICHMENT_KEYS = {"sector_map", "past_performance", "reddit_discussions", "paper_portfolio"}
 
 
 def _prune_context_for_dump(context: dict) -> dict:
@@ -83,6 +83,25 @@ def _build_past_performance_block(context: dict) -> str:
     return "\n".join(lines)
 
 
+def _build_portfolio_block(context: dict) -> str:
+    positions = context.get("paper_portfolio")
+    if not positions:
+        return ""
+    lines = ["PAPER PORTFOLIO (your virtual BVC positions — reference these when making picks):"]
+    for p in positions:
+        line = f"  {p['ticker']}: {p['shares']} shares @ avg {p['avg_cost_mad']:.2f} MAD"
+        if p.get("current_price") is not None:
+            sign = "+" if p["pnl_pct"] >= 0 else ""
+            line += (
+                f" | today {p['current_price']:.2f} MAD"
+                f" | {sign}{p['pnl_pct']:.1f}% ({sign}{p['pnl_mad']:.0f} MAD unrealised)"
+            )
+        else:
+            line += " | today N/A"
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def _build_reddit_block(context: dict) -> str:
     articles = context.get("reddit_discussions")
     if not articles:
@@ -101,6 +120,7 @@ def build_morning_briefing_prompt(context: dict) -> str:
         _build_sector_map_block(context),
         _build_past_performance_block(context),
         _build_reddit_block(context),
+        _build_portfolio_block(context),
     ]
     enrichment_section = "\n\n".join(b for b in blocks if b)
 

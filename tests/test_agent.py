@@ -180,3 +180,34 @@ def test_prompt_includes_news_when_present():
     prompt = build_morning_briefing_prompt(context)
     assert "STOCK-SPECIFIC NEWS" in prompt
     assert "OCP résultats positifs" in prompt
+
+
+def test_prompt_includes_portfolio_when_present():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {"data": {"stocks": [], "masi": {}}},
+        "paper_portfolio": [
+            {
+                "ticker": "OCP",
+                "shares": 10,
+                "avg_cost_mad": 261.0,
+                "current_price": 275.0,
+                "pnl_mad": 140.0,
+                "pnl_pct": 5.36,
+            }
+        ],
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "PAPER PORTFOLIO" in prompt
+    assert "OCP" in prompt
+    assert "261.00" in prompt
+
+
+def test_prompt_omits_portfolio_when_empty():
+    from agent.prompts import build_morning_briefing_prompt
+    context = {
+        "bvc": {"data": {"stocks": [], "masi": {}}},
+        "paper_portfolio": [],
+    }
+    prompt = build_morning_briefing_prompt(context)
+    assert "PAPER PORTFOLIO" not in prompt

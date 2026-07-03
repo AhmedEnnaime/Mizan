@@ -193,6 +193,17 @@ def run_morning_briefing(dry_run: bool = False) -> None:
         logger.warning(f"Enrichment pipeline failed: {exc}")
         health.add_warning(f"enrichment pipeline: {exc}")
 
+    try:
+        from storage.db import get_paper_trades
+        from paper_trading.portfolio import compute_positions
+        trades = get_paper_trades()
+        if trades:
+            stocks = context["bvc"]["data"].get("stocks", [])
+            current_prices = {s["ticker"]: s["close"] for s in stocks if s.get("close")}
+            context["paper_portfolio"] = compute_positions(trades, current_prices)
+    except Exception as exc:
+        logger.warning(f"Paper portfolio enrichment failed: {exc}")
+
     analysis = run_morning_analysis(context)
     health.ai_ok = "error" not in analysis
 
