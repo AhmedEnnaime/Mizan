@@ -143,7 +143,9 @@ def test_news_collect_skips_failed_feeds():
         {"name": "Bad Feed", "url": "https://nonexistent.invalid/rss"},
         {"name": "Good Feed", "url": str(FIXTURES / "news_sample.xml")},
     ]
-    with patch("collectors.news.RSS_FEEDS", feeds):
+    with patch("collectors.news.RSS_FEEDS", feeds), \
+         patch("collectors.news._scrape_ammc", return_value=[]), \
+         patch("collectors.news._scrape_bam", return_value=[]):
         result = collect()
     assert result["success"] is True
     assert len(result["data"]["articles"]) == 2

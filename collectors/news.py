@@ -28,7 +28,7 @@ def _fetch_feed(url: str, name: str) -> list[dict]:
 
 def _scrape_ammc() -> list[dict]:
     try:
-        url = "https://www.ammc.ma/fr/actualites/communiques-de-presse"
+        url = "https://www.ammc.ma/fr/actualites/communique-presse"
         resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
         resp.raise_for_status()
         soup = BeautifulSoup(resp.text, "lxml")
@@ -55,22 +55,24 @@ def _scrape_ammc() -> list[dict]:
 
 def _scrape_bam() -> list[dict]:
     try:
-        url = "https://www.bkam.ma/Politique-monetaire/Decisions-du-conseil/Communiques"
+        url = "https://www.bkam.ma/Politique-monetaire/Cadre-strategique/Decision-de-la-politique-monetaire/Communiques-de-presse"
         resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
         resp.raise_for_status()
         soup = BeautifulSoup(resp.text, "lxml")
         articles = []
-        for item in (soup.select(".views-row") or soup.select("article"))[:5]:
-            title_el = item.select_one("h3 a, h2 a, a")
-            date_el = item.select_one(".date, time, .field-date, span")
-            if not title_el:
+        for item in soup.select(".item-block-vis")[:5]:
+            link_el = item.select_one("a[href*='/Communiques/']")
+            if not link_el:
                 continue
-            href = title_el.get("href", "")
+            href = link_el.get("href", "")
             link = ("https://www.bkam.ma" + href) if href.startswith("/") else href
+            desc = item.select_one(".item-block-vis-desc")
+            raw = desc.get_text(separator=" ", strip=True) if desc else ""
+            title = raw.replace("Lire la suite", "").strip() or href.split("/")[-1].replace("-", " ").title()
             articles.append({
-                "title": title_el.get_text(strip=True),
+                "title": title,
                 "summary": "",
-                "published": date_el.get_text(strip=True) if date_el else "",
+                "published": "",
                 "link": link,
                 "source": "Bank Al-Maghrib",
             })
