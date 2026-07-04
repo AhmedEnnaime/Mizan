@@ -373,12 +373,18 @@ def run_alert_check(dry_run: bool = False) -> None:
                 except Exception as exc:
                     logger.error(f"Commodity shock alert failed for {name}: {exc}")
 
+    from storage.db import was_alert_sent_recently
     articles = news["data"].get("articles", [])
     for article in articles[:20]:
         title = article.get("title", "").lower()
         summary = article.get("summary", "").lower()
         text = title + " " + summary
         if any(kw in text for kw in BREAKING_NEWS_KEYWORDS):
+            article_id = article.get("link") or article.get("title", "")
+            trigger_key = f"breaking_news:{article_id}"
+            if was_alert_sent_recently(trigger_key, hours=24):
+                logger.debug(f"Breaking news already alerted: {article.get('title', '')!r}")
+                break
             logger.info(f"Breaking news detected: {article.get('title', '')!r}")
             context = {"article": article, "recent_news": articles[:5]}
             analysis = run_alert_analysis("breaking_news", context)
@@ -389,7 +395,7 @@ def run_alert_check(dry_run: bool = False) -> None:
             else:
                 try:
                     send_alert(html, None, "breaking_news")
-                    log_alert(None, "breaking_news", html)
+                    log_alert(None, trigger_key, html)
                 except Exception as exc:
                     logger.error(f"Breaking news alert delivery failed: {exc}")
             break  # Only one breaking news alert per cycle

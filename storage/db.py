@@ -127,6 +127,16 @@ def log_alert(ticker: str | None, trigger_reason: str, content: str) -> None:
         """, (ticker, trigger_reason, content, datetime.now(timezone.utc).isoformat()))
 
 
+def was_alert_sent_recently(trigger_reason: str, hours: int = 24) -> bool:
+    cutoff = (datetime.now(timezone.utc) - timedelta(hours=hours)).isoformat()
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT id FROM alerts WHERE trigger_reason = ? AND sent_at >= ? LIMIT 1",
+            (trigger_reason, cutoff),
+        ).fetchone()
+    return row is not None
+
+
 def insert_masi_daily(date: str, value: float, change_pct: float | None = None) -> None:
     with get_connection() as conn:
         conn.execute(
